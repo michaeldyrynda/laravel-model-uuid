@@ -12,6 +12,10 @@
 
 I find myself using UUID across multiple projects of late, and packaged up this functionality rather than copying and pasting it from project to project.
 
+**Note**: this package explicitly does not disable auto-incrementing on your Eloquent models. In terms of database indexing, it is generally more efficient to use auto-incrementing integers for your internal querying. Indexing your `uuid` column will make lookups against that column fast, without impacting queries between related models.
+
+For more information, check out [this post](https://www.percona.com/blog/2014/12/19/store-uuid-optimized-way/) on storing and working with UUID in an optimised manner.
+
 ## Code Samples
 
 In order to use this package, you simply need to import and use the trait within your Eloquent models.
