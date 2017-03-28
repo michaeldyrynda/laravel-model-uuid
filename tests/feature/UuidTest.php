@@ -6,8 +6,6 @@ use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Events\Dispatcher;
 use PHPUnit_Framework_TestCase;
-use Tests\CustomPost;
-use Tests\Post;
 
 class UuidTest extends PHPUnit_Framework_TestCase
 {
@@ -50,5 +48,27 @@ class UuidTest extends PHPUnit_Framework_TestCase
 
         $this->assertNull($post->uuid);
         $this->assertNotNull($post->customField);
+    }
+
+    /** @test */
+    public function you_can_find_a_model_by_its_uuid()
+    {
+        Post::create(['title' => 'test post', 'uuid' => 'test-uuid']);
+
+        $post = Post::whereUuid('test-uuid')->first();
+
+        $this->assertInstanceOf(Post::class, $post);
+        $this->assertEquals('test-uuid', $post->uuid);
+    }
+
+    /** @test */
+    public function you_can_find_a_model_by_its_uuid_when_using_a_custom_uuid_field_name()
+    {
+        $post = CustomPost::create(['title' => 'test post', 'customField' => 'custom-uuid']);
+
+        $post = CustomPost::whereUuid('custom-uuid')->first();
+
+        $this->assertInstanceOf(CustomPost::class, $post);
+        $this->assertEquals('custom-uuid', $post->customField);
     }
 }

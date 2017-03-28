@@ -19,7 +19,7 @@ trait GeneratesUuid
         'uuid1',
         'uuid3',
         'uuid4',
-        'uuid5'
+        'uuid5',
     ];
 
     public static function bootGeneratesUuid()
@@ -62,5 +62,18 @@ trait GeneratesUuid
     public function resolveUuidField()
     {
         return property_exists($this, 'uuidField') ? $this->uuidField : 'uuid';
+    }
+
+    /**
+     * Scope queries to find by UUID.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $uuid
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWhereUuid($query, $uuid)
+    {
+        return $query->where($this->resolveUuidField(), $uuid);
     }
 }

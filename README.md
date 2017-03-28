@@ -59,6 +59,12 @@ class Post extends Model
 }
 ```
 
+This trait also provides a query scope which will allow you to easily find your records based on their UUID, and respects any custom field name you choose.
+
+```php
+$post = Post::whereUuid($uuid)->first();
+```
+
 ## Installation
 
 This package is installed via [Composer](https://getcomposer.org/). To install, run the following command.
