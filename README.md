@@ -16,6 +16,8 @@ I find myself using UUID across multiple projects of late, and packaged up this 
 
 For more information, check out [this post](https://www.percona.com/blog/2014/12/19/store-uuid-optimized-way/) on storing and working with UUID in an optimised manner.
 
+Take a look at [laravel-efficient-uuid](https://github.com/michaeldyrynda/laravel-efficient-uuid) if you want to make it easy to generate migrations that efficiently store UUID in your database.
+
 ## Code Samples
 
 In order to use this package, you simply need to import and use the trait within your Eloquent models.
