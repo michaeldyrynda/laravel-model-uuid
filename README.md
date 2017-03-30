@@ -1,5 +1,5 @@
 # Laravel Model UUIDs
-## v1.0.1
+## v2.0.0
 
 [![Build Status](https://travis-ci.org/michaeldyrynda/laravel-model-uuid.svg?branch=master)](https://travis-ci.org/michaeldyrynda/laravel-model-uuid)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/?branch=master)
@@ -36,23 +36,7 @@ class Post extends Model
 }
 ```
 
-It is assumed that you already have a field named `uuid` in your database, which is used to store the generated value. Should you need to use a different field name, specify the protected property `$uuidField` in your model.
-
-```php
-<?php
-
-namespace App;
-
-use Dyrynda\Database\Support\GeneratesUuid;
-use Illuminate\Database\Eloquent\Model;
-
-class Post extends Model
-{
-    use GeneratesUuid;
-
-    protected $uuidField = 'unique_uuid_field';
-}
-```
+It is assumed that you already have a field named `uuid` in your database, which is used to store the generated value.
 
 By default, this package will use UUID version 4 values, however, you are welcome to use `uuid1`, `uuid3`, `uuid4`, or `uuid5` by specifying the protected property `$uuidVersion` in your model.
 
@@ -76,6 +60,24 @@ This trait also provides a query scope which will allow you to easily find your 
 
 ```php
 $post = Post::whereUuid($uuid)->first();
+```
+
+If you use the suggested [laravel-efficient-uuid](https://github.com/michaeldyrynda/laravel-efficient-uuid) package, you will need to add a cast to your model in order to correctly set and retrieve your UUID values. This will ensure your UUIDs are written to your (MySQL) database as binary and presented as strings.
+
+```php
+<?php
+
+namespace App;
+
+use Dyrynda\Database\Support\GeneratesUuid;
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    use GeneratesUuid;
+
+    protected $casts = ['uuid' => 'uuid'];
+}
 ```
 
 ## Installation
