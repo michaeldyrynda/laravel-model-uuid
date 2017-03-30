@@ -5,9 +5,7 @@ namespace Tests;
 use Dyrynda\Database\Support\GeneratesUuid;
 use Tests\Model;
 
-class CustomPost extends Model
+class CustomUncastPost extends Model
 {
     protected $uuidField = 'customField';
-
-    protected $casts = ['customField' => 'uuid'];
 }

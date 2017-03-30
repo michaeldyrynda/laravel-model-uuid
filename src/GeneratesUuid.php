@@ -2,6 +2,8 @@
 
 namespace Dyrynda\Database\Support;
 
+use Ramsey\Uuid\Uuid;
+
 /**
  * UUID generation trait.
  *
@@ -34,9 +36,13 @@ trait GeneratesUuid
             $uuidField = $model->resolveUuidField();
             $uuidVersion = $model->resolveUuidVersion();
 
-            if (! $model->{$uuidField}) {
-                $model->{$uuidField} = call_user_func("\Ramsey\Uuid\Uuid::{$uuidVersion}")->toString();
+            if (! isset($model->attributes[$uuidField]) || is_null($model->attributes[$uuidField])) {
+                $uuid = call_user_func("\Ramsey\Uuid\Uuid::{$uuidVersion}");
+            } else {
+                $uuid = call_user_func("\Ramsey\Uuid\Uuid::{$uuidVersion}")->fromString(strtolower($model->attributes[$uuidField]));
             }
+
+            $model->attributes[$uuidField] = $model->hasCast($uuidField) ? $uuid->getBytes() : $uuid->toString();
         });
     }
 
@@ -74,6 +80,24 @@ trait GeneratesUuid
      */
     public function scopeWhereUuid($query, $uuid)
     {
-        return $query->where($this->resolveUuidField(), $uuid);
+        $uuidField = $this->resolveUuidField();
+
+        if ($this->hasCast($uuidField)) {
+            return $query->where(
+                $uuidField,
+                call_user_func("\Ramsey\Uuid\Uuid::{$this->resolveUuidVersion()}")->fromString($uuid)->getBytes()
+            );
+        }
+
+        return $query->where($uuidField, $uuid);
+    }
+
+    protected function castAttribute($key, $value)
+    {
+        if ($key == $this->resolveUuidField() && ! is_null($value)) {
+            return Uuid::{$this->resolveUuidVersion()}()->fromBytes($value)->toString();
+        }
+
+        return parent::castAttribute($key, $value);
     }
 }
