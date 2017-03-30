@@ -23,6 +23,15 @@ trait GeneratesUuid
     ];
 
     /**
+     * Determine whether an attribute should be cast to a native type.
+     *
+     * @param  string  $key
+     * @param  array|string|null  $types
+     * @return bool
+     */
+    abstract public function hasCast($key, $types = null);
+
+    /**
      * Boot the trait, adding a creating observer.
      *
      * When persisting a new model instance, we resolve the UUID field, then set
