@@ -40,8 +40,7 @@ trait GeneratesUuid
             $model->attributes['uuid'] = $model->hasCast('uuid') ? $uuid->getBytes() : $uuid->toString();
         });
     }
-
-
+    
     /**
      * Resolve a UUID instance for the configured version.
      *
@@ -76,14 +75,9 @@ trait GeneratesUuid
      */
     public function scopeWhereUuid($query, $uuid)
     {
-        if ($this->hasCast('uuid')) {
-            return $query->where(
-                'uuid',
-                call_user_func("\Ramsey\Uuid\Uuid::{$this->resolveUuidVersion()}")->fromString($uuid)->getBytes()
-            );
-        }
-
-        return $query->where('uuid', $uuid);
+        return $this->hasCast('uuid')
+            ? $query->where('uuid', $this->resolveUuid()->fromString($uuid)->getBytes())
+            : $query->where('uuid', $uuid);
     }
 
     /**
@@ -96,7 +90,7 @@ trait GeneratesUuid
     protected function castAttribute($key, $value)
     {
         if ($key == 'uuid' && ! is_null($value)) {
-            return call_user_func("\Ramsey\Uuid\Uuid::{$this->resolveUuidVersion()}")->fromBytes($value)->toString();
+            return $this->resolveUuid()->fromBytes($value)->toString();
         }
 
         return parent::castAttribute($key, $value);
