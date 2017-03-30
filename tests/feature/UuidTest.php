@@ -20,7 +20,6 @@ class UuidTest extends PHPUnit_Framework_TestCase
         $manager->schema()->create('posts', function ($table) {
             $table->increments('id');
             $table->uuid('uuid')->nullable()->default(null);
-            $table->uuid('customField')->nullable()->default(null);
             $table->string('title');
         });
     }
@@ -36,39 +35,46 @@ class UuidTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_does_not_override_the_uuid_if_it_is_already_set()
     {
-        $post = Post::create(['title' => 'Test post', 'uuid' => 'uuid-already-set']);
+        $post = Post::create(['title' => 'Test post', 'uuid' => '24f6c768-6276-4f34-bfa1-e7c8ba9514ea']);
 
-        $this->assertEquals('uuid-already-set', $post->uuid);
-    }
-
-    /** @test */
-    public function you_can_set_a_custom_uuid_field_name()
-    {
-        $post = CustomPost::create(['title' => 'Test post']);
-
-        $this->assertNull($post->uuid);
-        $this->assertNotNull($post->customField);
+        $this->assertEquals('24f6c768-6276-4f34-bfa1-e7c8ba9514ea', $post->uuid);
     }
 
     /** @test */
     public function you_can_find_a_model_by_its_uuid()
     {
-        Post::create(['title' => 'test post', 'uuid' => 'test-uuid']);
+        Post::create(['title' => 'test post', 'uuid' => '55635d83-10bc-424f-bf3f-395ea7a5b47f']);
 
-        $post = Post::whereUuid('test-uuid')->first();
+        $post = Post::whereUuid('55635d83-10bc-424f-bf3f-395ea7a5b47F')->first();
 
         $this->assertInstanceOf(Post::class, $post);
-        $this->assertEquals('test-uuid', $post->uuid);
+        $this->assertEquals('55635d83-10bc-424f-bf3f-395ea7a5b47f', $post->uuid);
     }
 
     /** @test */
-    public function you_can_find_a_model_by_its_uuid_when_using_a_custom_uuid_field_name()
+    public function you_can_generate_a_uuid_without_casting()
     {
-        $post = CustomPost::create(['title' => 'test post', 'customField' => 'custom-uuid']);
+        $post = UncastPost::create(['title' => 'test post']);
 
-        $post = CustomPost::whereUuid('custom-uuid')->first();
+        $this->assertNotNull($post->uuid);
+    }
 
-        $this->assertInstanceOf(CustomPost::class, $post);
-        $this->assertEquals('custom-uuid', $post->customField);
+    /** @test */
+    public function you_can_specify_a_uuid_without_casting()
+    {
+        $post = UncastPost::create(['title' => 'test-post', 'uuid' => 'aa9832e0-5fea-492c-8fe2-6f2d1e209209']);
+
+        $this->assertEquals('aa9832e0-5fea-492c-8fe2-6f2d1e209209', $post->uuid);
+    }
+
+    /** @test */
+    public function you_can_find_a_model_by_uuid_without_casting()
+    {
+        UncastPost::create(['title' => 'test-post', 'uuid' => 'b270f651-4db8-407b-aade-8666aca2750e']);
+
+        $post = UncastPost::whereUuid('b270f651-4db8-407b-aade-8666aca2750e')->first();
+
+        $this->assertInstanceOf(UncastPost::class, $post);
+        $this->assertEquals('b270f651-4db8-407b-aade-8666aca2750e', $post->uuid);
     }
 }

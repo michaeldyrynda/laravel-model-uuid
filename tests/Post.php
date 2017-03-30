@@ -7,5 +7,5 @@ use Tests\Model;
 
 class Post extends Model
 {
-    //
+    protected $casts = ['uuid' => 'uuid'];
 }
