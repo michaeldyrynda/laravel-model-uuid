@@ -2,8 +2,6 @@
 
 namespace Dyrynda\Database\Support;
 
-use Ramsey\Uuid\Uuid;
-
 /**
  * UUID generation trait.
  *
@@ -24,26 +22,34 @@ trait GeneratesUuid
         'uuid5',
     ];
 
+    /**
+     * Boot the trait, adding a creating observer.
+     *
+     * When persisting a new model instance, we resolve the UUID field, then set
+     * a fresh UUID, taking into account if we need to cast to binary or not.
+     */
     public static function bootGeneratesUuid()
     {
-        /**
-         * Boot the traid, adding a creating observer.
-         *
-         * When persisting a new model instance, we resolve the UUID field, then set
-         * a fresh UUID
-         */
         static::creating(function ($model) {
-            $uuidField = $model->resolveUuidField();
-            $uuidVersion = $model->resolveUuidVersion();
+            $uuid = $model->resolveUuid();
 
-            if (! isset($model->attributes[$uuidField]) || is_null($model->attributes[$uuidField])) {
-                $uuid = call_user_func("\Ramsey\Uuid\Uuid::{$uuidVersion}");
-            } else {
-                $uuid = call_user_func("\Ramsey\Uuid\Uuid::{$uuidVersion}")->fromString(strtolower($model->attributes[$uuidField]));
+            if (isset($model->attributes['uuid']) && ! is_null($model->attributes['uuid'])) {
+                $uuid = $uuid->fromString(strtolower($model->attributes['uuid']));
             }
 
-            $model->attributes[$uuidField] = $model->hasCast($uuidField) ? $uuid->getBytes() : $uuid->toString();
+            $model->attributes['uuid'] = $model->hasCast('uuid') ? $uuid->getBytes() : $uuid->toString();
         });
+    }
+
+
+    /**
+     * Resolve a UUID instance for the configured version.
+     *
+     * @return \Ramsey\Uuid\Uuid
+     */
+    public function resolveUuid()
+    {
+        return call_user_func("\Ramsey\Uuid\Uuid::{$this->resolveUuidVersion()}");
     }
 
     /**
@@ -61,16 +67,6 @@ trait GeneratesUuid
     }
 
     /**
-     * Resolve the name of the field we should use for UUIDs.
-     *
-     * @return string
-     */
-    public function resolveUuidField()
-    {
-        return property_exists($this, 'uuidField') ? $this->uuidField : 'uuid';
-    }
-
-    /**
      * Scope queries to find by UUID.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
@@ -80,22 +76,27 @@ trait GeneratesUuid
      */
     public function scopeWhereUuid($query, $uuid)
     {
-        $uuidField = $this->resolveUuidField();
-
-        if ($this->hasCast($uuidField)) {
+        if ($this->hasCast('uuid')) {
             return $query->where(
-                $uuidField,
+                'uuid',
                 call_user_func("\Ramsey\Uuid\Uuid::{$this->resolveUuidVersion()}")->fromString($uuid)->getBytes()
             );
         }
 
-        return $query->where($uuidField, $uuid);
+        return $query->where('uuid', $uuid);
     }
 
+    /**
+     * Cast an attribute to a native PHP type.
+     *
+     * @param  string  $key
+     * @param  mixed  $value
+     * @return mixed
+     */
     protected function castAttribute($key, $value)
     {
-        if ($key == $this->resolveUuidField() && ! is_null($value)) {
-            return Uuid::{$this->resolveUuidVersion()}()->fromBytes($value)->toString();
+        if ($key == 'uuid' && ! is_null($value)) {
+            return call_user_func("\Ramsey\Uuid\Uuid::{$this->resolveUuidVersion()}")->fromBytes($value)->toString();
         }
 
         return parent::castAttribute($key, $value);

@@ -51,12 +51,4 @@ class UuidResolversTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('uuid4', $this->generator->resolveUuidVersion());
     }
-
-    /** @test */
-    public function it_resolved_custom_uuid_field_name()
-    {
-        $this->generator->uuidField = 'testing';
-
-        $this->assertEquals('testing', $this->generator->resolveUuidField());
-    }
 }
