@@ -15,6 +15,11 @@ namespace Dyrynda\Database\Support;
  */
 trait GeneratesUuid
 {
+    /**
+     * The UUID versions.
+     *
+     * @var array
+     */
     protected $uuidVersions = [
         'uuid1',
         'uuid3',
@@ -36,6 +41,8 @@ trait GeneratesUuid
      *
      * When persisting a new model instance, we resolve the UUID field, then set
      * a fresh UUID, taking into account if we need to cast to binary or not.
+     *
+     * @return void
      */
     public static function bootGeneratesUuid()
     {
