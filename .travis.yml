@@ -8,6 +8,10 @@ php:
 env:
   - ILLUMINATE_VERSION=5.3.*
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 matrix:
   include:
     - php: 5.6.4
@@ -24,10 +28,10 @@ matrix:
       env: ILLUMINATE_VERSION=5.4.*
 
 before_install:
-  - composer require "illuminate/database:${ILLUMINATE_VERSION}" --no-update -v
-  - composer require "illuminate/events:${ILLUMINATE_VERSION}" --no-update -v
+  - travis_retry composer require "illuminate/database:${ILLUMINATE_VERSION}" --no-update -v
+  - travis_retry composer require "illuminate/events:${ILLUMINATE_VERSION}" --no-update -v
 
-install: composer update --prefer-source --no-interaction --dev -v
+install: travis_retry composer update --prefer-source --no-interaction --dev -v
 
 script: vendor/bin/phpunit --debug -c phpunit.xml --coverage-clover=coverage.clover
 
