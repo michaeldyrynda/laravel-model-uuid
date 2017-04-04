@@ -7,6 +7,11 @@ use ReflectionClass;
 
 class UuidResolversTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|\Dyrynda\Database\Support\GeneratesUuid
+     */
+    protected $generator;
+
     public function setUp()
     {
         $this->generator = $this->getMockForTrait('Dyrynda\Database\Support\GeneratesUuid');
@@ -17,7 +22,7 @@ class UuidResolversTest extends PHPUnit_Framework_TestCase
     {
         $this->generator->uuidVersion = 'uuid1';
 
-        $this->assertEquals('uuid1', $this->generator->resolveUuidVersion());
+        $this->assertSame('uuid1', $this->generator->resolveUuidVersion());
     }
 
     /** @test */
@@ -25,7 +30,7 @@ class UuidResolversTest extends PHPUnit_Framework_TestCase
     {
         $this->generator->uuidVersion = 'uuid3';
 
-        $this->assertEquals('uuid3', $this->generator->resolveUuidVersion());
+        $this->assertSame('uuid3', $this->generator->resolveUuidVersion());
     }
 
     /** @test */
@@ -33,7 +38,7 @@ class UuidResolversTest extends PHPUnit_Framework_TestCase
     {
         $this->generator->uuidVersion = 'uuid4';
 
-        $this->assertEquals('uuid4', $this->generator->resolveUuidVersion());
+        $this->assertSame('uuid4', $this->generator->resolveUuidVersion());
     }
 
     /** @test */
@@ -41,7 +46,7 @@ class UuidResolversTest extends PHPUnit_Framework_TestCase
     {
         $this->generator->uuidVersion = 'uuid5';
 
-        $this->assertEquals('uuid5', $this->generator->resolveUuidVersion());
+        $this->assertSame('uuid5', $this->generator->resolveUuidVersion());
     }
 
     /** @test */
@@ -49,6 +54,6 @@ class UuidResolversTest extends PHPUnit_Framework_TestCase
     {
         $this->generator->uuidVersion = 'uuid999';
 
-        $this->assertEquals('uuid4', $this->generator->resolveUuidVersion());
+        $this->assertSame('uuid4', $this->generator->resolveUuidVersion());
     }
 }

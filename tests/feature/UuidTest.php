@@ -37,7 +37,7 @@ class UuidTest extends PHPUnit_Framework_TestCase
     {
         $post = Post::create(['title' => 'Test post', 'uuid' => '24f6c768-6276-4f34-bfa1-e7c8ba9514ea']);
 
-        $this->assertEquals('24f6c768-6276-4f34-bfa1-e7c8ba9514ea', $post->uuid);
+        $this->assertSame('24f6c768-6276-4f34-bfa1-e7c8ba9514ea', $post->uuid);
     }
 
     /** @test */
@@ -48,7 +48,7 @@ class UuidTest extends PHPUnit_Framework_TestCase
         $post = Post::whereUuid('55635d83-10bc-424f-bf3f-395ea7a5b47F')->first();
 
         $this->assertInstanceOf(Post::class, $post);
-        $this->assertEquals('55635d83-10bc-424f-bf3f-395ea7a5b47f', $post->uuid);
+        $this->assertSame('55635d83-10bc-424f-bf3f-395ea7a5b47f', $post->uuid);
     }
 
     /** @test */
@@ -64,7 +64,7 @@ class UuidTest extends PHPUnit_Framework_TestCase
     {
         $post = UncastPost::create(['title' => 'test-post', 'uuid' => 'aa9832e0-5fea-492c-8fe2-6f2d1e209209']);
 
-        $this->assertEquals('aa9832e0-5fea-492c-8fe2-6f2d1e209209', $post->uuid);
+        $this->assertSame('aa9832e0-5fea-492c-8fe2-6f2d1e209209', $post->uuid);
     }
 
     /** @test */
@@ -75,6 +75,6 @@ class UuidTest extends PHPUnit_Framework_TestCase
         $post = UncastPost::whereUuid('b270f651-4db8-407b-aade-8666aca2750e')->first();
 
         $this->assertInstanceOf(UncastPost::class, $post);
-        $this->assertEquals('b270f651-4db8-407b-aade-8666aca2750e', $post->uuid);
+        $this->assertSame('b270f651-4db8-407b-aade-8666aca2750e', $post->uuid);
     }
 }
