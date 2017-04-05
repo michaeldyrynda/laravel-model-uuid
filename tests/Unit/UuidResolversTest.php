@@ -18,7 +18,7 @@ class UuidResolversTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see \Tests\UuidResolversTest::it_handles_uuid_versions
+     * @see \Tests\Unit\UuidResolversTest::it_handles_uuid_versions
      * @return array
      */
     public function provider_for_it_handles_uuid_versions()
