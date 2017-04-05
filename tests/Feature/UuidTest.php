@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use Tests\Post;
-use Tests\UncastPost;
+use Tests\Fixtures\Post;
+use Tests\Fixtures\UncastPost;
 use PHPUnit_Framework_TestCase;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
