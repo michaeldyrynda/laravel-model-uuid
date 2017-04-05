@@ -2,10 +2,10 @@
 
 namespace Tests;
 
+use PHPUnit_Framework_TestCase;
+use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager;
-use Illuminate\Events\Dispatcher;
-use PHPUnit_Framework_TestCase;
 
 class UuidTest extends PHPUnit_Framework_TestCase
 {
