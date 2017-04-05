@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Unit;
 
 use PHPUnit_Framework_TestCase;
 use Dyrynda\Database\Support\GeneratesUuid;
@@ -18,7 +18,7 @@ class UuidResolversTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see \Tests\UuidResolversTest::it_handles_uuid_versions
+     * @see \Tests\Unit\UuidResolversTest::it_handles_uuid_versions
      * @return array
      */
     public function provider_for_it_handles_uuid_versions()
@@ -37,7 +37,7 @@ class UuidResolversTest extends PHPUnit_Framework_TestCase
      * @param string $version
      * @param string $resolved
      *
-     * @dataProvider \Tests\UuidResolversTest::provider_for_it_handles_uuid_versions
+     * @dataProvider \Tests\Unit\UuidResolversTest::provider_for_it_handles_uuid_versions
      */
     public function it_handles_uuid_versions($version, $resolved)
     {
