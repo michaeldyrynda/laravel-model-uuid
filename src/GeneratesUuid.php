@@ -107,7 +107,7 @@ trait GeneratesUuid
      */
     protected function castAttribute($key, $value)
     {
-        if ($key == 'uuid' && ! is_null($value)) {
+        if ($key === 'uuid' && ! is_null($value)) {
             return $this->resolveUuid()->fromBytes($value)->toString();
         }
 
