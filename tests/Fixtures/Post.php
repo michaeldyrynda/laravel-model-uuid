@@ -1,6 +1,8 @@
 <?php
 
-namespace Tests;
+namespace Tests\Fixtures;
+
+use Tests\Fixtures\Model;
 
 class Post extends Model
 {
