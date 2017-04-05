@@ -91,9 +91,11 @@ trait GeneratesUuid
      */
     public function scopeWhereUuid($query, $uuid)
     {
-        return $this->hasCast('uuid')
-            ? $query->where('uuid', $this->resolveUuid()->fromString($uuid)->getBytes())
-            : $query->where('uuid', $uuid);
+        if ($this->hasCast('uuid')) {
+            $uuid = $this->resolveUuid()->fromString($uuid)->getBytes();
+        }
+
+        return $query->where('uuid', $uuid);
     }
 
     /**
