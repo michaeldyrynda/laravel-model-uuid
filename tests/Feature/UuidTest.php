@@ -2,12 +2,12 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Container\Container;
-use Illuminate\Database\Capsule\Manager;
-use Illuminate\Events\Dispatcher;
-use PHPUnit_Framework_TestCase;
 use Tests\Fixtures\Post;
 use Tests\Fixtures\UncastPost;
+use PHPUnit_Framework_TestCase;
+use Illuminate\Events\Dispatcher;
+use Illuminate\Container\Container;
+use Illuminate\Database\Capsule\Manager;
 
 class UuidTest extends PHPUnit_Framework_TestCase
 {
