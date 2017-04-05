@@ -3,7 +3,6 @@
 namespace Tests;
 
 use PHPUnit_Framework_TestCase;
-use ReflectionClass;
 
 class UuidResolversTest extends PHPUnit_Framework_TestCase
 {
