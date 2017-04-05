@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Dyrynda\Database\Support\GeneratesUuid;
 use PHPUnit_Framework_TestCase;
 
 class UuidResolversTest extends PHPUnit_Framework_TestCase
@@ -13,46 +14,36 @@ class UuidResolversTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->generator = $this->getMockForTrait('Dyrynda\Database\Support\GeneratesUuid');
+        $this->generator = $this->getMockForTrait(GeneratesUuid::class);
     }
 
-    /** @test */
-    public function it_handles_uuid_version_1()
+    /**
+     * @see \Tests\UuidResolversTest::it_handles_uuid_versions
+     * @return array
+     */
+    public function provider_for_it_handles_uuid_versions()
     {
-        $this->generator->uuidVersion = 'uuid1';
-
-        $this->assertSame('uuid1', $this->generator->resolveUuidVersion());
+        return [
+            ['uuid1', 'uuid1'],
+            ['uuid3', 'uuid3'],
+            ['uuid4', 'uuid4'],
+            ['uuid5', 'uuid5'],
+            ['uuid999', 'uuid4'],
+        ];
     }
 
-    /** @test */
-    public function it_handles_uuid_version_3()
+
+    /**
+     * @test
+     * @param string $version
+     * @param string $resolved
+     *
+     * @dataProvider \Tests\UuidResolversTest::provider_for_it_handles_uuid_versions
+     */
+    public function it_handles_uuid_versions($version, $resolved)
     {
-        $this->generator->uuidVersion = 'uuid3';
+        $this->generator->uuidVersion = $version;
 
-        $this->assertSame('uuid3', $this->generator->resolveUuidVersion());
-    }
-
-    /** @test */
-    public function it_handles_uuid_version_4()
-    {
-        $this->generator->uuidVersion = 'uuid4';
-
-        $this->assertSame('uuid4', $this->generator->resolveUuidVersion());
-    }
-
-    /** @test */
-    public function it_handles_uuid_version_5()
-    {
-        $this->generator->uuidVersion = 'uuid5';
-
-        $this->assertSame('uuid5', $this->generator->resolveUuidVersion());
-    }
-
-    /** @test */
-    public function it_defaults_to_uuid_version_4()
-    {
-        $this->generator->uuidVersion = 'uuid999';
-
-        $this->assertSame('uuid4', $this->generator->resolveUuidVersion());
+        $this->assertSame($resolved, $this->generator->resolveUuidVersion());
     }
 }
