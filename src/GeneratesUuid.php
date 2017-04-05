@@ -56,7 +56,7 @@ trait GeneratesUuid
             $model->attributes['uuid'] = $model->hasCast('uuid') ? $uuid->getBytes() : $uuid->toString();
         });
     }
-    
+
     /**
      * Resolve a UUID instance for the configured version.
      *
