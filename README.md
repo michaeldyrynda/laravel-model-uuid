@@ -1,5 +1,5 @@
 # Laravel Model UUIDs
-## v2.0.1
+## v2.0.2
 
 [![Build Status](https://travis-ci.org/michaeldyrynda/laravel-model-uuid.svg?branch=master)](https://travis-ci.org/michaeldyrynda/laravel-model-uuid)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/?branch=master)
@@ -77,6 +77,32 @@ class Post extends Model
     use GeneratesUuid;
 
     protected $casts = ['uuid' => 'uuid'];
+}
+```
+
+## Route model binding
+
+Should you wish to leverage implicit route model binding on your `uuid` field, you'll need to override the `getRouteKeyName` method in your Eloquent model.
+
+```php
+public function getRouteKeyName()
+{
+    return 'uuid';
+}
+```
+
+*If you are using the [laravel-efficient-uuid](https://github.com/michaeldyrynda/laravel-efficient-uuid) package, implicit route model binding won't work out of the box.*
+
+Laravel will execute the query using the string representation of the `uuid` field when querying against the binary data stored in the database. In this instance, you will need to explicitly bind the parameter using the included scope in your `RouteServiceProvider`:
+
+```php
+// app/Providers/RouteServiceProvider.php
+
+public function boot()
+{
+    Route::bind('post', function ($post) {
+        return \App\Post::whereUuid($post)->first();
+    });
 }
 ```
 
