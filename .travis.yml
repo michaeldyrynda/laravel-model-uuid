@@ -25,9 +25,7 @@ matrix:
     - php: 7.1
       env: ILLUMINATE_VERSION=5.4.*
 
-before_install:
-  - travis_retry composer require "illuminate/database:${ILLUMINATE_VERSION}" --no-update -v
-  - travis_retry composer require "illuminate/events:${ILLUMINATE_VERSION}" --no-update -v
+before_install: travis_retry composer require "illuminate/database:${ILLUMINATE_VERSION}" "illuminate/events:${ILLUMINATE_VERSION}" --no-update -v
 
 install: travis_retry composer install --prefer-dist --no-interaction --no-suggest -v
 
