@@ -2,6 +2,8 @@
 
 namespace Dyrynda\Database\Support;
 
+use Ramsey\Uuid\Uuid;
+
 /**
  * UUID generation trait.
  *
@@ -68,7 +70,7 @@ trait GeneratesUuid
      */
     public function resolveUuid()
     {
-        return call_user_func("\Ramsey\Uuid\Uuid::{$this->resolveUuidVersion()}");
+        return call_user_func([Uuid::class, $this->resolveUuidVersion()]);
     }
 
     /**
