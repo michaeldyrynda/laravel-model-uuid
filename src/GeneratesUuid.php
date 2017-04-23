@@ -49,7 +49,7 @@ trait GeneratesUuid
         static::creating(function ($model) {
             $uuid = $model->resolveUuid();
 
-            if (isset($model->attributes['uuid']) && ! is_null($model->attributes['uuid'])) {
+            if (isset($model->attributes['uuid']) && $model->attributes['uuid'] !== null) {
                 $uuid = $uuid->fromString(strtolower($model->attributes['uuid']));
             }
 
@@ -107,7 +107,7 @@ trait GeneratesUuid
      */
     protected function castAttribute($key, $value)
     {
-        if ($key === 'uuid' && ! is_null($value)) {
+        if ($key === 'uuid' && $value !== null) {
             return $this->resolveUuid()->fromBytes($value)->toString();
         }
 
