@@ -47,9 +47,11 @@ trait GeneratesUuid
     public static function bootGeneratesUuid()
     {
         static::creating(function ($model) {
+            /* @var \Illuminate\Database\Eloquent\Model|static $model */
             $uuid = $model->resolveUuid();
 
             if (isset($model->attributes['uuid']) && ! is_null($model->attributes['uuid'])) {
+                /* @var \Ramsey\Uuid\Uuid $uuid */
                 $uuid = $uuid->fromString(strtolower($model->attributes['uuid']));
             }
 
