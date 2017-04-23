@@ -2,6 +2,12 @@
     "name": "dyrynda/laravel-model-uuid",
     "description": "This package allows you to easily work with UUIDs in your Laravel models.",
     "license": "MIT",
+    "keywords": [
+        "eloquent",
+        "laravel",
+        "model",
+        "uuid"
+    ],
     "authors": [
         {
             "name": "Michael Dyrynda",
