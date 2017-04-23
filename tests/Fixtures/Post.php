@@ -2,7 +2,7 @@
 
 namespace Tests\Fixtures;
 
-class Post extends AbstractModel
+class Post extends Model
 {
     /**
      * {@inheritdoc}
