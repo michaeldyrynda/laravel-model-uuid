@@ -12,6 +12,8 @@ namespace Dyrynda\Database\Support;
  * @copyright 2017 Michael Dyrynda
  * @author    Michael Dyrynda <michael@dyrynda.com.au>
  * @license   MIT
+ *
+ * @property  string  $uuidVersion
  */
 trait GeneratesUuid
 {
