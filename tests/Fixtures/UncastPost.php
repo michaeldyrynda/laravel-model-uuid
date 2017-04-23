@@ -2,7 +2,7 @@
 
 namespace Tests\Fixtures;
 
-class UncastPost extends Model
+class UncastPost extends AbstractModel
 {
     //
 }

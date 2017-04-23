@@ -2,7 +2,10 @@
 
 namespace Tests\Fixtures;
 
-class Post extends Model
+class Post extends AbstractModel
 {
+    /**
+     * {@inheritdoc}
+     */
     protected $casts = ['uuid' => 'uuid'];
 }
