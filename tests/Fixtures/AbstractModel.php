@@ -5,7 +5,7 @@ namespace Tests\Fixtures;
 use Dyrynda\Database\Support\GeneratesUuid;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 
-abstract class AbstractModel extends BaseModel
+abstract class Model extends BaseModel
 {
     use GeneratesUuid;
 
