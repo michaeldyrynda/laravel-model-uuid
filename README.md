@@ -7,6 +7,7 @@
 [![Latest Stable Version](https://poser.pugx.org/dyrynda/laravel-model-uuid/v/stable)](https://packagist.org/packages/dyrynda/laravel-model-uuid)
 [![Total Downloads](https://poser.pugx.org/dyrynda/laravel-model-uuid/downloads)](https://packagist.org/packages/dyrynda/laravel-model-uuid)
 [![License](https://poser.pugx.org/dyrynda/laravel-model-uuid/license)](https://packagist.org/packages/dyrynda/laravel-model-uuid)
+[![Dependency Status](https://www.versioneye.com/php/dyrynda:laravel-model-uuid/dev-master/badge?style=flat-square)](https://www.versioneye.com/php/dyrynda:laravel-model-uuid/dev-master)
 
 ## Introduction
 
