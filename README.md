@@ -28,8 +28,8 @@ In order to use this package, you simply need to import and use the trait within
 
 namespace App;
 
-use Dyrynda\Database\Support\GeneratesUuid;
 use Illuminate\Database\Eloquent\Model;
+use Dyrynda\Database\Support\GeneratesUuid;
 
 class Post extends Model
 {
@@ -46,8 +46,8 @@ By default, this package will use UUID version 4 values, however, you are welcom
 
 namespace App;
 
-use Dyrynda\Database\Support\GeneratesUuid;
 use Illuminate\Database\Eloquent\Model;
+use Dyrynda\Database\Support\GeneratesUuid;
 
 class Post extends Model
 {
@@ -70,8 +70,8 @@ If you use the suggested [laravel-efficient-uuid](https://github.com/michaeldyry
 
 namespace App;
 
-use Dyrynda\Database\Support\GeneratesUuid;
 use Illuminate\Database\Eloquent\Model;
+use Dyrynda\Database\Support\GeneratesUuid;
 
 class Post extends Model
 {
@@ -112,7 +112,7 @@ public function boot()
 This package is installed via [Composer](https://getcomposer.org/). To install, run the following command.
 
 ```bash
-composer require dyrynda/laravel-model-uuid
+composer require "dyrynda/laravel-model-uuid:~1.0"
 ```
 ## Support
 
