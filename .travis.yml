@@ -25,6 +25,8 @@ install: travis_retry composer install --prefer-dist --no-interaction --no-sugge
 
 script: vendor/bin/phpunit --debug -c phpunit.xml --coverage-clover=coverage.clover
 
+after_success: bash <(curl -s https://codecov.io/bash)
+
 after_script:
     - wget https://scrutinizer-ci.com/ocular.phar
     - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
