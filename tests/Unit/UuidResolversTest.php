@@ -8,16 +8,6 @@ use Dyrynda\Database\Support\GeneratesUuid;
 class UuidResolversTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Dyrynda\Database\Support\GeneratesUuid
-     */
-    protected $generator;
-
-    public function setUp()
-    {
-        $this->generator = $this->getMockForTrait(GeneratesUuid::class);
-    }
-
-    /**
      * @see \Tests\Unit\UuidResolversTest::it_handles_uuid_versions
      * @return array
      */
@@ -41,8 +31,10 @@ class UuidResolversTest extends PHPUnit_Framework_TestCase
      */
     public function it_handles_uuid_versions($version, $resolved)
     {
-        $this->generator->uuidVersion = $version;
+        /* @var \Dyrynda\Database\Support\GeneratesUuid $generator */
+        $generator = $this->getMockForTrait(GeneratesUuid::class);
+        $generator->uuidVersion = $version;
 
-        $this->assertSame($resolved, $this->generator->resolveUuidVersion());
+        $this->assertSame($resolved, $generator->resolveUuidVersion());
     }
 }
