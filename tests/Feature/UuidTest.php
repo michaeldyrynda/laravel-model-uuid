@@ -37,20 +37,24 @@ class UuidTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_does_not_override_the_uuid_if_it_is_already_set()
     {
-        $post = Post::create(['title' => 'Test post', 'uuid' => '24f6c768-6276-4f34-bfa1-e7c8ba9514ea']);
+        $uuid = '24f6c768-6276-4f34-bfa1-e7c8ba9514ea';
 
-        $this->assertSame('24f6c768-6276-4f34-bfa1-e7c8ba9514ea', $post->uuid);
+        $post = Post::create(['title' => 'Test post', 'uuid' => $uuid]);
+
+        $this->assertSame($uuid, $post->uuid);
     }
 
     /** @test */
     public function you_can_find_a_model_by_its_uuid()
     {
-        Post::create(['title' => 'test post', 'uuid' => '55635d83-10bc-424f-bf3f-395ea7a5b47f']);
+        $uuid = '55635d83-10bc-424f-bf3f-395ea7a5b47f';
 
-        $post = Post::whereUuid('55635d83-10bc-424f-bf3f-395ea7a5b47F')->first();
+        Post::create(['title' => 'test post', 'uuid' => $uuid]);
+
+        $post = Post::whereUuid(strtoupper($uuid))->first();
 
         $this->assertInstanceOf(Post::class, $post);
-        $this->assertSame('55635d83-10bc-424f-bf3f-395ea7a5b47f', $post->uuid);
+        $this->assertSame($uuid, $post->uuid);
     }
 
     /** @test */
@@ -64,19 +68,23 @@ class UuidTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function you_can_specify_a_uuid_without_casting()
     {
-        $post = UncastPost::create(['title' => 'test-post', 'uuid' => 'aa9832e0-5fea-492c-8fe2-6f2d1e209209']);
+        $uuid = 'aa9832e0-5fea-492c-8fe2-6f2d1e209209';
 
-        $this->assertSame('aa9832e0-5fea-492c-8fe2-6f2d1e209209', $post->uuid);
+        $post = UncastPost::create(['title' => 'test-post', 'uuid' => $uuid]);
+
+        $this->assertSame($uuid, $post->uuid);
     }
 
     /** @test */
     public function you_can_find_a_model_by_uuid_without_casting()
     {
-        UncastPost::create(['title' => 'test-post', 'uuid' => 'b270f651-4db8-407b-aade-8666aca2750e']);
+        $uuid = 'b270f651-4db8-407b-aade-8666aca2750e';
 
-        $post = UncastPost::whereUuid('b270f651-4db8-407b-aade-8666aca2750e')->first();
+        UncastPost::create(['title' => 'test-post', 'uuid' => $uuid]);
+
+        $post = UncastPost::whereUuid($uuid)->first();
 
         $this->assertInstanceOf(UncastPost::class, $post);
-        $this->assertSame('b270f651-4db8-407b-aade-8666aca2750e', $post->uuid);
+        $this->assertSame($uuid, $post->uuid);
     }
 }
