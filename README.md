@@ -112,7 +112,7 @@ public function boot()
 This package is installed via [Composer](https://getcomposer.org/). To install, run the following command.
 
 ```bash
-composer require "dyrynda/laravel-model-uuid"
+composer require "dyrynda/laravel-model-uuid:~2.0"
 ```
 ## Support
 
