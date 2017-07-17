@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Dyrynda\Database\Support\GeneratesUuid;
 
-class UuidResolversTest extends PHPUnit_Framework_TestCase
+class UuidResolversTest extends TestCase
 {
     /**
      * @see \Tests\Unit\UuidResolversTest::it_handles_uuid_versions
