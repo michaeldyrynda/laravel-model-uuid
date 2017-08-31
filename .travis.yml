@@ -14,10 +14,14 @@ matrix:
       env: ILLUMINATE_VERSION=5.3.*
     - php: 7.0
       env: ILLUMINATE_VERSION=5.4.*
+    - php: 7.0
+      env: ILLUMINATE_VERSION=5.5.*
     - php: 7.1
       env: ILLUMINATE_VERSION=5.3.*
     - php: 7.1
       env: ILLUMINATE_VERSION=5.4.*
+    - php: 7.1
+      env: ILLUMINATE_VERSION=5.5.*
 
 before_install: travis_retry composer require "illuminate/database:${ILLUMINATE_VERSION}" "illuminate/events:${ILLUMINATE_VERSION}" --no-update -v
 
