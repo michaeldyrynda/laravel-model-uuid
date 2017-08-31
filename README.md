@@ -1,5 +1,5 @@
 # Laravel Model UUIDs
-## v2.0.2
+## v3.0.0
 
 [![Build Status](https://travis-ci.org/michaeldyrynda/laravel-model-uuid.svg?branch=master)](https://travis-ci.org/michaeldyrynda/laravel-model-uuid)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/?branch=master)
@@ -18,6 +18,8 @@ I find myself using UUID across multiple projects of late, and packaged up this 
 For more information, check out [this post](https://www.percona.com/blog/2014/12/19/store-uuid-optimized-way/) on storing and working with UUID in an optimised manner.
 
 Take a look at [laravel-efficient-uuid](https://github.com/michaeldyrynda/laravel-efficient-uuid) if you want to make it easy to generate migrations that efficiently store UUID in your database.
+
+This package supports Laravel 5.5 as of version 3.0.0.
 
 ## Code Samples
 
@@ -112,7 +114,7 @@ public function boot()
 This package is installed via [Composer](https://getcomposer.org/). To install, run the following command.
 
 ```bash
-composer require "dyrynda/laravel-model-uuid:~2.0"
+composer require "dyrynda/laravel-model-uuid:~3.0"
 ```
 ## Support
 
