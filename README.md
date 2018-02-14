@@ -1,5 +1,5 @@
 # Laravel Model UUIDs
-## v3.0.0
+## v3.1.0
 
 [![Build Status](https://travis-ci.org/michaeldyrynda/laravel-model-uuid.svg?branch=master)](https://travis-ci.org/michaeldyrynda/laravel-model-uuid)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/?branch=master)
@@ -20,6 +20,8 @@ For more information, check out [this post](https://www.percona.com/blog/2014/12
 Take a look at [laravel-efficient-uuid](https://github.com/michaeldyrynda/laravel-efficient-uuid) if you want to make it easy to generate migrations that efficiently store UUID in your database.
 
 This package supports Laravel 5.5 as of version 3.0.0.
+
+This package supports Laravel 5.6 as of version 3.1.0.
 
 ## Code Samples
 
