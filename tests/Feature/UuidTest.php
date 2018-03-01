@@ -4,12 +4,13 @@ namespace Tests\Feature;
 
 use Tests\Fixtures\Post;
 use Tests\Fixtures\UncastPost;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use Tests\Fixtures\OrderedPost;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager;
 
-class UuidTest extends PHPUnit_Framework_TestCase
+class UuidTest extends TestCase
 {
     public static function setupBeforeClass()
     {
@@ -31,7 +32,7 @@ class UuidTest extends PHPUnit_Framework_TestCase
     {
         $post = Post::create(['title' => 'Test post']);
 
-        $this->assertNotNull($post);
+        $this->assertNotNull($post->uuid);
     }
 
     /** @test */
@@ -86,5 +87,14 @@ class UuidTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(UncastPost::class, $post);
         $this->assertSame($uuid, $post->uuid);
+    }
+
+    /** @test */
+    public function it_handles_time_ordered_uuids()
+    {
+        $post = OrderedPost::create(['title' => 'test-post']);
+
+        $this->assertInstanceOf(OrderedPost::class, $post);
+        $this->assertNotNull($post->uuid);
     }
 }

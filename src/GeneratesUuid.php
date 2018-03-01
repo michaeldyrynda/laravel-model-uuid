@@ -3,6 +3,7 @@
 namespace Dyrynda\Database\Support;
 
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 /**
  * UUID generation trait.
@@ -29,6 +30,7 @@ trait GeneratesUuid
         'uuid3',
         'uuid4',
         'uuid5',
+        'ordered',
     ];
 
     /**
@@ -70,7 +72,11 @@ trait GeneratesUuid
      */
     public function resolveUuid()
     {
-        return call_user_func([Uuid::class, $this->resolveUuidVersion()]);
+        if (($version = $this->resolveUuidVersion()) == 'ordered') {
+            return Str::orderedUuid();
+        }
+
+        return call_user_func([Uuid::class, $version]);
     }
 
     /**

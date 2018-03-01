@@ -19,6 +19,7 @@ class UuidResolversTest extends TestCase
             ['uuid4', 'uuid4'],
             ['uuid5', 'uuid5'],
             ['uuid999', 'uuid4'],
+            ['ordered', 'ordered'],
         ];
     }
 
