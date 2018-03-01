@@ -4,8 +4,8 @@ namespace Tests\Feature;
 
 use Tests\Fixtures\Post;
 use Tests\Fixtures\UncastPost;
-use Tests\Fixtures\OrderedPost;
 use PHPUnit\Framework\TestCase;
+use Tests\Fixtures\OrderedPost;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager;
