@@ -1,5 +1,5 @@
 # Laravel Model UUIDs
-## v3.1.0
+## v4.0.0
 
 [![Build Status](https://travis-ci.org/michaeldyrynda/laravel-model-uuid.svg?branch=master)](https://travis-ci.org/michaeldyrynda/laravel-model-uuid)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/?branch=master)
@@ -19,9 +19,7 @@ For more information, check out [this post](https://www.percona.com/blog/2014/12
 
 Take a look at [laravel-efficient-uuid](https://github.com/michaeldyrynda/laravel-efficient-uuid) if you want to make it easy to generate migrations that efficiently store UUID in your database.
 
-This package supports Laravel 5.5 as of version 3.0.0.
-
-This package supports Laravel 5.6 as of version 3.1.0.
+This package supports time-ordered UUIDs in Laravel 5.6 as of version 4.0.0.
 
 ## Code Samples
 
@@ -43,7 +41,7 @@ class Post extends Model
 
 It is assumed that you already have a field named `uuid` in your database, which is used to store the generated value.
 
-By default, this package will use UUID version 4 values, however, you are welcome to use `uuid1`, `uuid3`, `uuid4`, or `uuid5` by specifying the protected property `$uuidVersion` in your model.
+By default, this package will use UUID version 4 values, however, you are welcome to use `uuid1`, `uuid3`, `uuid4`, or `uuid5` by specifying the protected property `$uuidVersion` in your model. Should you wish to take advantage of ordered UUID (version 4) values that were introduced in Laravel 5.6, you should specify `ordered` as the `$uuidVersion` in your model.
 
 ```php
 <?php
@@ -116,7 +114,7 @@ public function boot()
 This package is installed via [Composer](https://getcomposer.org/). To install, run the following command.
 
 ```bash
-composer require "dyrynda/laravel-model-uuid:~3.0"
+composer require "dyrynda/laravel-model-uuid:~4.0"
 ```
 ## Support
 
