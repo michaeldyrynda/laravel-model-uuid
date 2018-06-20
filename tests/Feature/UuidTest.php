@@ -97,4 +97,12 @@ class UuidTest extends TestCase
         $this->assertInstanceOf(OrderedPost::class, $post);
         $this->assertNotNull($post->uuid);
     }
+
+    /** @test */
+    public function it_allows_configurable_uuid_column_names()
+    {
+        $post = CustomUuidPost::create(['title' => 'test-post']);
+
+        $this->assertNotNull($post->custom_uuid);
+    }
 }
