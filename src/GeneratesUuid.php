@@ -56,13 +56,23 @@ trait GeneratesUuid
             /* @var \Illuminate\Database\Eloquent\Model|static $model */
             $uuid = $model->resolveUuid();
 
-            if (isset($model->attributes['uuid']) && ! is_null($model->attributes['uuid'])) {
+            if (isset($model->attributes[$model->uuidColumn()]) && ! is_null($model->attributes[$model->uuidColumn()])) {
                 /* @var \Ramsey\Uuid\Uuid $uuid */
-                $uuid = $uuid->fromString(strtolower($model->attributes['uuid']));
+                $uuid = $uuid->fromString(strtolower($model->attributes[$model->uuidColumn()]));
             }
 
-            $model->attributes['uuid'] = $model->hasCast('uuid') ? $uuid->getBytes() : $uuid->toString();
+            $model->attributes[$model->uuidColumn()] = $model->hasCast('uuid') ? $uuid->getBytes() : $uuid->toString();
         });
+    }
+
+    /**
+     * The name of the column that should be used for the UUID.
+     *
+     * @return string
+     */
+    public function uuidColumn()
+    {
+        return 'uuid';
     }
 
     /**
@@ -103,11 +113,11 @@ trait GeneratesUuid
      */
     public function scopeWhereUuid($query, $uuid)
     {
-        if ($this->hasCast('uuid')) {
+        if ($this->hasCast($this->uuidColumn())) {
             $uuid = $this->resolveUuid()->fromString($uuid)->getBytes();
         }
 
-        return $query->where('uuid', $uuid);
+        return $query->where($this->uuidColumn(), $uuid);
     }
 
     /**
@@ -119,7 +129,7 @@ trait GeneratesUuid
      */
     protected function castAttribute($key, $value)
     {
-        if ($key === 'uuid' && ! is_null($value)) {
+        if ($key === $this->uuidColumn() && ! is_null($value)) {
             return $this->resolveUuid()->fromBytes($value)->toString();
         }
 

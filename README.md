@@ -1,5 +1,5 @@
 # Laravel Model UUIDs
-## v4.0.0
+## v4.0.1
 
 [![Build Status](https://travis-ci.org/michaeldyrynda/laravel-model-uuid.svg?branch=master)](https://travis-ci.org/michaeldyrynda/laravel-model-uuid)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/?branch=master)
@@ -39,7 +39,17 @@ class Post extends Model
 }
 ```
 
-It is assumed that you already have a field named `uuid` in your database, which is used to store the generated value.
+It is assumed that you already have a field named `uuid` in your database, which is used to store the generated value. If you wish to use a custom column name, for example if you want your primary `id` column to be a `UUID`, you can define a `uuidColumn` method in your model.
+
+```php
+class Post extends Model
+{
+    public function uuidColumn()
+    {
+        return 'custom_column';
+    }
+}
+```
 
 By default, this package will use UUID version 4 values, however, you are welcome to use `uuid1`, `uuid3`, `uuid4`, or `uuid5` by specifying the protected property `$uuidVersion` in your model. Should you wish to take advantage of ordered UUID (version 4) values that were introduced in Laravel 5.6, you should specify `ordered` as the `$uuidVersion` in your model.
 
