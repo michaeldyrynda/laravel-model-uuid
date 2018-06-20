@@ -67,7 +67,7 @@ trait GeneratesUuid
 
     /**
      * The name of the column that should be used for the UUID.
-     * 
+     *
      * @return string
      */
     public function uuidColumn()
