@@ -7,6 +7,7 @@ use Tests\Fixtures\UncastPost;
 use PHPUnit\Framework\TestCase;
 use Tests\Fixtures\OrderedPost;
 use Illuminate\Events\Dispatcher;
+use Tests\Fixtures\CustomUuidPost;
 use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager;
 
@@ -23,6 +24,7 @@ class UuidTest extends TestCase
         $manager->schema()->create('posts', function ($table) {
             $table->increments('id');
             $table->uuid('uuid')->nullable()->default(null);
+            $table->uuid('custom_uuid')->nullable()->default(null);
             $table->string('title');
         });
     }
