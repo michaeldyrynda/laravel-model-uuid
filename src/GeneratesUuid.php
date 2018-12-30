@@ -2,6 +2,7 @@
 
 namespace Dyrynda\Database\Support;
 
+use PascalDeVink\ShortUuid\ShortUuid;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Str;
 
@@ -16,7 +17,7 @@ use Illuminate\Support\Str;
  * @author    Michael Dyrynda <michael@dyrynda.com.au>
  * @license   MIT
  *
- * @property  string  $uuidVersion
+ * @property  string $uuidVersion
  */
 trait GeneratesUuid
 {
@@ -34,10 +35,18 @@ trait GeneratesUuid
     ];
 
     /**
+     * Determine whether we want to use short UUIDs ir not.
+     *
+     * @var bool
+     */
+    protected $short = false;
+
+    /**
      * Determine whether an attribute should be cast to a native type.
      *
-     * @param  string  $key
-     * @param  array|string|null  $types
+     * @param  string            $key
+     * @param  array|string|null $types
+     *
      * @return bool
      */
     abstract public function hasCast($key, $types = null);
@@ -56,12 +65,15 @@ trait GeneratesUuid
             /* @var \Illuminate\Database\Eloquent\Model|static $model */
             $uuid = $model->resolveUuid();
 
-            if (isset($model->attributes[$model->uuidColumn()]) && ! is_null($model->attributes[$model->uuidColumn()])) {
+            if (isset($model->attributes[$model->uuidColumn()]) && !is_null($model->attributes[$model->uuidColumn()])) {
                 /* @var \Ramsey\Uuid\Uuid $uuid */
                 $uuid = $uuid->fromString(strtolower($model->attributes[$model->uuidColumn()]));
             }
 
-            $model->attributes[$model->uuidColumn()] = $model->hasCast('uuid') ? $uuid->getBytes() : $uuid->toString();
+            $model->attributes[$model->uuidColumn()] =
+                $model->hasCast('uuid')
+                    ? $uuid->getBytes()
+                    : ($model->short ? $model->toShortUuid($uuid) : $uuid->toString());
         });
     }
 
@@ -106,8 +118,8 @@ trait GeneratesUuid
     /**
      * Scope queries to find by UUID.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $uuid
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  string                                $uuid
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -123,16 +135,41 @@ trait GeneratesUuid
     /**
      * Cast an attribute to a native PHP type.
      *
-     * @param  string  $key
+     * @param  string $key
      * @param  mixed  $value
+     *
      * @return mixed
      */
     protected function castAttribute($key, $value)
     {
-        if ($key === $this->uuidColumn() && ! is_null($value)) {
+        if ($key === $this->uuidColumn() && !is_null($value)) {
             return $this->resolveUuid()->fromBytes($value)->toString();
         }
 
         return parent::castAttribute($key, $value);
+    }
+
+    /**
+     * Convert long uuid to short
+     *
+     * @param Uuid $uuid
+     *
+     * @return string
+     */
+    public function toShortUuid(Uuid $uuid)
+    {
+        return (new ShortUuid())->encode($uuid);
+    }
+
+    /**
+     * Convert short uuid back to long
+     *
+     * @param string $uuid
+     *
+     * @return string
+     */
+    public function toLongUuid(string $uuid)
+    {
+        return (new ShortUuid())->decode($uuid)->toString();
     }
 }
