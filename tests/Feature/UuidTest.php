@@ -2,14 +2,15 @@
 
 namespace Tests\Feature;
 
-use Tests\Fixtures\Post;
-use Tests\Fixtures\UncastPost;
-use PHPUnit\Framework\TestCase;
-use Tests\Fixtures\OrderedPost;
-use Illuminate\Events\Dispatcher;
-use Tests\Fixtures\CustomUuidPost;
 use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager;
+use Illuminate\Events\Dispatcher;
+use PHPUnit\Framework\TestCase;
+use Tests\Fixtures\CustomUuidPost;
+use Tests\Fixtures\OrderedNonIdPost;
+use Tests\Fixtures\OrderedPost;
+use Tests\Fixtures\Post;
+use Tests\Fixtures\UncastPost;
 
 class UuidTest extends TestCase
 {
@@ -107,4 +108,21 @@ class UuidTest extends TestCase
 
         $this->assertNotNull($post->custom_uuid);
     }
+
+
+	/** @test */
+	public function it_converts_non_id_ordered_uuids()
+	{
+		$uuid = 'b270f651-4db8-407b-aade-8666aca2750e';
+
+		$post = OrderedNonIdPost::create(['title' => 'test-post', 'custom_uuid' => $uuid]);
+
+		$this->assertInstanceOf(OrderedNonIdPost::class, $post);
+		$this->assertNotNull($post->uuid);
+		$this->assertSame($uuid, $post->custom_uuid);
+
+		// Raw uuid is binary and not equal to string uuid
+		//$db_post = OrderedNonIdPost::find($post->id);
+		//$this->assertNotEquals($uuid, $db_post->getAttributes()['custom_uuid']);
+	}
 }

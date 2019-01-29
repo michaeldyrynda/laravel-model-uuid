@@ -2,8 +2,8 @@
 
 namespace Dyrynda\Database\Support;
 
-use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 
 /**
  * UUID generation trait.
@@ -127,12 +127,40 @@ trait GeneratesUuid
      * @param  mixed  $value
      * @return mixed
      */
-    protected function castAttribute($key, $value)
+	public function castAttribute($key, $value)
     {
-        if ($key === $this->uuidColumn() && ! is_null($value)) {
-            return $this->resolveUuid()->fromBytes($value)->toString();
-        }
+	    if ( ! is_null($value)) {
+		    if ($key === $this->uuidColumn() ) {
+			    return $this->resolveUuid()->fromBytes($value)->toString();
+		    } elseif (
+			    $this->hasCast($key) &&
+			    $this->getCastType($key) == 'uuid' &&
+			    $this->resolveUuidVersion() == 'ordered'
+		    ) {
+			    return Uuid::fromBytes( $value )->toString();
+		    }
+	    }
 
         return parent::castAttribute($key, $value);
     }
+
+	/**
+	 * Set an attribute value
+	 *
+	 * @param $key
+	 * @param $value
+	 *
+	 * @return mixed
+	 */
+	public function setAttribute($key, $value) {
+		if (
+			! empty($value) &&
+			$this->hasCast($key) &&
+			$this->getCastType($key) == 'uuid' &&
+			$this->resolveUuidVersion() == 'ordered'
+		) {
+			$value = Uuid::fromString( $value )->getBytes();
+		}
+		return parent::setAttribute($key, $value);
+	}
 }
