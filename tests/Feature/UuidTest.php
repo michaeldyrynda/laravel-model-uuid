@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Tests\Fixtures\Post;
 use Tests\Fixtures\UncastPost;
+use Tests\Fixtures\CustomCastUuidPost;
 use PHPUnit\Framework\TestCase;
 use Tests\Fixtures\OrderedPost;
 use Illuminate\Events\Dispatcher;
@@ -68,6 +69,14 @@ class UuidTest extends TestCase
         $this->assertNotNull($post->uuid);
     }
 
+    /** @test */
+    public function you_can_generate_a_uuid_with_casting_and_a_custom_field_name()
+    {
+        $post = CustomCastUuidPost::create(['title' => 'test post']);
+
+        $this->assertNotNull($post->custom_uuid);
+    }
+    
     /** @test */
     public function you_can_specify_a_uuid_without_casting()
     {
