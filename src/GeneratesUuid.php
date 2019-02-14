@@ -142,23 +142,23 @@ trait GeneratesUuid
         }
     }
 
-	/**
-	 * Set an attribute value
-	 *
-	 * @param $key
-	 * @param $value
-	 *
-	 * @return mixed
-	 */
-	public function setAttribute($key, $value) {
-		if (
-			! empty($value) &&
-			$this->hasCast($key) &&
-			$this->getCastType($key) == 'uuid' &&
-			$this->resolveUuidVersion() == 'ordered'
-		) {
-			$value = Uuid::fromString( $value )->getBytes();
-		}
-		return parent::setAttribute($key, $value);
-	}
+    /**
+     * Set an attribute value
+     *
+     * @param $key
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function setAttribute($key, $value)
+    {
+        if (trim($value) !== ''
+            && $this->hasCast($key, 'uuid')
+            && $this->resolveUuidVersion() == 'ordered'
+        ) {
+            $value = Uuid::fromString($value)->getBytes();
+        }
+        
+        return parent::setAttribute($key, $value);
+    }
 }
