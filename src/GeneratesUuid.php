@@ -127,21 +127,19 @@ trait GeneratesUuid
      * @param  mixed  $value
      * @return mixed
      */
-	public function castAttribute($key, $value)
+    protected function castAttribute($key, $value)
     {
-	    if ( ! is_null($value)) {
-		    if ($key === $this->uuidColumn() ) {
-			    return $this->resolveUuid()->fromBytes($value)->toString();
-		    } elseif (
-			    $this->hasCast($key) &&
-			    $this->getCastType($key) == 'uuid' &&
-			    $this->resolveUuidVersion() == 'ordered'
-		    ) {
-			    return Uuid::fromBytes( $value )->toString();
-		    }
-	    }
+        if (is_null($value)) {
+            return parent::castAttribute($key, $value);
+        }
 
-        return parent::castAttribute($key, $value);
+        if ($key === $this->uuidColumn()) {
+            return $this->resolveUuid()->fromBytes($value)->toString();
+        }
+        
+        if ($this->hasCast($key, 'uuid') && $this->resolveUuidVersion() == 'ordered') {
+            return Uuid::fromBytes($value)->toString();
+        }
     }
 
 	/**
