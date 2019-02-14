@@ -9,6 +9,7 @@ use Tests\Fixtures\OrderedPost;
 use Illuminate\Events\Dispatcher;
 use Tests\Fixtures\CustomUuidPost;
 use Illuminate\Container\Container;
+use Tests\Fixtures\CustomCastUuidPost;
 use Illuminate\Database\Capsule\Manager;
 
 class UuidTest extends TestCase
@@ -68,6 +69,14 @@ class UuidTest extends TestCase
         $this->assertNotNull($post->uuid);
     }
 
+    /** @test */
+    public function you_can_generate_a_uuid_with_casting_and_a_custom_field_name()
+    {
+        $post = CustomCastUuidPost::create(['title' => 'test post']);
+
+        $this->assertNotNull($post->custom_uuid);
+    }
+    
     /** @test */
     public function you_can_specify_a_uuid_without_casting()
     {

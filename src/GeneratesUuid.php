@@ -61,7 +61,7 @@ trait GeneratesUuid
                 $uuid = $uuid->fromString(strtolower($model->attributes[$model->uuidColumn()]));
             }
 
-            $model->attributes[$model->uuidColumn()] = $model->hasCast('uuid') ? $uuid->getBytes() : $uuid->toString();
+            $model->attributes[$model->uuidColumn()] = $model->hasCast($model->uuidColumn(), 'uuid') ? $uuid->getBytes() : $uuid->toString();
         });
     }
 
