@@ -76,7 +76,7 @@ class UuidTest extends TestCase
 
         $this->assertNotNull($post->custom_uuid);
     }
-    
+
     /** @test */
     public function you_can_specify_a_uuid_without_casting()
     {
