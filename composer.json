@@ -37,7 +37,7 @@
         }
     },
     "suggest": {
-        "dyrynda/laravel-efficient-uuid": "Override Laravel's default query grammar to efficiently store UUIDs. (~1.0)"
+        "dyrynda/laravel-efficient-uuid": "Override Laravel's default query grammar to efficiently store UUIDs."
     },
     "minimum-stability": "stable"
 }
