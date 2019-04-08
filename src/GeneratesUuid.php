@@ -82,7 +82,7 @@ trait GeneratesUuid
      *
      * @return array
      */
-    public function uuidColumns():array
+    public function uuidColumns()
     {
         return [$this->uuidColumn()];
     }
@@ -128,10 +128,8 @@ trait GeneratesUuid
      */
     public function scopeWhereUuid($query, $uuid, $uuidColumn = NULL)
     {
-        //print_r( $this->hasCast($uuid) );exit;
-        //get the first uuid column if is empty
+
         $uuidColumn = isset($uuidColumn) && in_array($uuidColumn, $this->uuidColumns()) ? $uuidColumn : $this->uuidColumns()[0];
-//die($this->hasCast($uuid));
         if ($this->hasCast($uuidColumn)) {
             $uuid = $this->resolveUuid()->fromString($uuid)->getBytes();
         }
@@ -148,7 +146,7 @@ trait GeneratesUuid
      */
     protected function castAttribute($key, $value)
     {
-        if (in_array($key, $this->uuidColumns())) {
+        if (in_array($key, $this->uuidColumns()) && !empty($value)) {
             return $this->resolveUuid()->fromBytes($value)->toString();
         }
 
