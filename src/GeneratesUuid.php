@@ -55,7 +55,7 @@ trait GeneratesUuid
         static::creating(function ($model) {
             /* @var \Illuminate\Database\Eloquent\Model|static $model */
             $uuid = $model->resolveUuid();
-            foreach($model->uuidColumns() as $item){
+            foreach($model->uuidColumns() as $item) {
                 if (isset($model->attributes[$item]) && ! is_null($model->attributes[$item])) {
                     /* @var \Ramsey\Uuid\Uuid $uuid */
                     $uuid = $uuid->fromString(strtolower($model->attributes[$item]));
@@ -126,7 +126,7 @@ trait GeneratesUuid
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWhereUuid($query, $uuid, $uuidColumn = NULL)
+    public function scopeWhereUuid($query, $uuid, $uuidColumn = null)
     {
 
         $uuidColumn = isset($uuidColumn) && in_array($uuidColumn, $this->uuidColumns()) ? $uuidColumn : $this->uuidColumns()[0];
@@ -146,7 +146,7 @@ trait GeneratesUuid
      */
     protected function castAttribute($key, $value)
     {
-        if (in_array($key, $this->uuidColumns()) && !empty($value)) {
+        if (in_array($key, $this->uuidColumns()) && ! empty($value)) {
             return $this->resolveUuid()->fromBytes($value)->toString();
         }
 
