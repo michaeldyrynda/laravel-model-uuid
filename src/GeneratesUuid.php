@@ -138,9 +138,7 @@ trait GeneratesUuid
         }
 
         if (is_array($uuid) || $uuid instanceof Arrayable) {
-            $query->whereIn($this->uuidColumn(), $uuid);
-
-            return $this;
+            return $query->whereIn($this->uuidColumn(), $uuid);
         }
 
         return $query->where($this->uuidColumn(), $uuid);
