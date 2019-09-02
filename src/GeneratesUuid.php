@@ -2,6 +2,7 @@
 
 namespace Dyrynda\Database\Support;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Str;
 
@@ -104,6 +105,25 @@ trait GeneratesUuid
     }
 
     /**
+     * Convert a uuid or an array of uuids to bytes.
+     * 
+     * @param array|string $uuid
+     * @return array|string
+     */
+    protected function bytesFromUuid($uuid)
+    {
+        if (is_array($uuid) || $uuid instanceof Arrayable) {
+            array_walk($uuid, function (&$uuid) {
+                $uuid = $this->resolveUuid()->fromString($uuid)->getBytes();
+            });
+
+            return $uuid;
+        }
+
+        return $this->resolveUuid()->fromString($uuid)->getBytes();
+    }
+
+    /**
      * Scope queries to find by UUID.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
@@ -114,7 +134,13 @@ trait GeneratesUuid
     public function scopeWhereUuid($query, $uuid)
     {
         if ($this->hasCast($this->uuidColumn())) {
-            $uuid = $this->resolveUuid()->fromString($uuid)->getBytes();
+            $uuid = $this->bytesFromUuid($uuid);
+        }
+
+        if (is_array($uuid) || $uuid instanceof Arrayable) {
+            $query->whereIn($this->uuidColumn(), $uuid);
+
+            return $this;
         }
 
         return $query->where($this->uuidColumn(), $uuid);
