@@ -15,7 +15,7 @@ use Illuminate\Database\Capsule\Manager;
 
 class UuidTest extends TestCase
 {
-    public static function setupBeforeClass()
+    public static function setupBeforeClass(): void
     {
         $manager = new Manager;
         $manager->addConnection(['driver' => 'sqlite', 'database' => ':memory:']);
