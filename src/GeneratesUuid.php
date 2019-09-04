@@ -42,7 +42,7 @@ trait GeneratesUuid
      * @param  array|string|null  $types
      * @return bool
      */
-     abstract public function hasCast($key, $types = null);
+    abstract public function hasCast($key, $types = null);
 
     /**
      * Boot the trait, adding a creating observer.
@@ -57,14 +57,13 @@ trait GeneratesUuid
         static::creating(function ($model) {
             /* @var \Illuminate\Database\Eloquent\Model|static $model */
             $uuid = $model->resolveUuid();
-            foreach($model->uuidColumns() as $item) {
+            foreach ($model->uuidColumns() as $item) {
                 if (isset($model->attributes[$item]) && ! is_null($model->attributes[$item])) {
                     /* @var \Ramsey\Uuid\Uuid $uuid */
                     $uuid = $uuid->fromString(strtolower($model->attributes[$item]));
                 }
                 $model->attributes[$item] = $model->hasCast($item, 'uuid') ? $uuid->getBytes() : $uuid->toString();
             }
-
         });
     }
 
