@@ -139,7 +139,7 @@ trait GeneratesUuid
     }
 
     /**
-     * Convert a single UUID or array of UUIDs to bytes
+     * Convert a single UUID or array of UUIDs to bytes.
      *
      * @param  \Illuminate\Contracts\Support\Arrayable|array|string  $uuid
      * @return array
