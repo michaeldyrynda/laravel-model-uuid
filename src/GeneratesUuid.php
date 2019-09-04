@@ -3,7 +3,10 @@
 namespace Dyrynda\Database\Support;
 
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * UUID generation trait.
@@ -50,18 +53,18 @@ trait GeneratesUuid
      *
      * @return void
      */
-    public static function bootGeneratesUuid()
+    public static function bootGeneratesUuid(): void
     {
         static::creating(function ($model) {
             /* @var \Illuminate\Database\Eloquent\Model|static $model */
             $uuid = $model->resolveUuid();
-
-            if (isset($model->attributes[$model->uuidColumn()]) && ! is_null($model->attributes[$model->uuidColumn()])) {
-                /* @var \Ramsey\Uuid\Uuid $uuid */
-                $uuid = $uuid->fromString(strtolower($model->attributes[$model->uuidColumn()]));
+            foreach ($model->uuidColumns() as $item) {
+                if (isset($model->attributes[$item]) && ! is_null($model->attributes[$item])) {
+                    /* @var \Ramsey\Uuid\Uuid $uuid */
+                    $uuid = $uuid->fromString(strtolower($model->attributes[$item]));
+                }
+                $model->attributes[$item] = $model->hasCast($item, 'uuid') ? $uuid->getBytes() : $uuid->toString();
             }
-
-            $model->attributes[$model->uuidColumn()] = $model->hasCast($model->uuidColumn(), 'uuid') ? $uuid->getBytes() : $uuid->toString();
         });
     }
 
@@ -70,9 +73,19 @@ trait GeneratesUuid
      *
      * @return string
      */
-    public function uuidColumn()
+    public function uuidColumn(): string
     {
         return 'uuid';
+    }
+
+    /**
+     * The names of the columns that should be used for the UUID.
+     *
+     * @return array
+     */
+    public function uuidColumns(): array
+    {
+        return [$this->uuidColumn()];
     }
 
     /**
@@ -80,7 +93,7 @@ trait GeneratesUuid
      *
      * @return \Ramsey\Uuid\Uuid
      */
-    public function resolveUuid()
+    public function resolveUuid(): Uuid
     {
         if (($version = $this->resolveUuidVersion()) == 'ordered') {
             return Str::orderedUuid();
@@ -94,7 +107,7 @@ trait GeneratesUuid
      *
      * @return string
      */
-    public function resolveUuidVersion()
+    public function resolveUuidVersion(): string
     {
         if (property_exists($this, 'uuidVersion') && in_array($this->uuidVersion, $this->uuidVersions)) {
             return $this->uuidVersion;
@@ -108,16 +121,40 @@ trait GeneratesUuid
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  string  $uuid
+     * @param  string  $uuidColumn
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWhereUuid($query, $uuid)
+    public function scopeWhereUuid($query, $uuid, $uuidColumn = null): Builder
     {
-        if ($this->hasCast($this->uuidColumn())) {
-            $uuid = $this->resolveUuid()->fromString($uuid)->getBytes();
+        $uuidColumn = ! is_null($uuidColumn) && in_array($uuidColumn, $this->uuidColumns())
+            ? $uuidColumn
+            : $this->uuidColumns()[0];
+
+        if ($this->hasCast($uuidColumn)) {
+            $uuid = $this->bytesFromUuid($uuid);
         }
 
-        return $query->where($this->uuidColumn(), $uuid);
+        return $query->whereIn($uuidColumn, Arr::wrap($uuid));
+    }
+
+    /**
+     * Convert a single UUID or array of UUIDs to bytes
+     *
+     * @param  \Illuminate\Contracts\Support\Arrayable|array|string  $uuid
+     * @return array
+     */
+    protected function bytesFromUuid($uuid): array
+    {
+        if (is_array($uuid) || $uuid instanceof Arrayable) {
+            array_walk($uuid, function (&$uuid) {
+                $uuid = $this->resolveUuid()->fromString($uuid)->getBytes();
+            });
+
+            return $uuid;
+        }
+
+        return Arr::wrap($this->resolveUuid()->fromString($uuid)->getBytes());
     }
 
     /**
@@ -129,7 +166,7 @@ trait GeneratesUuid
      */
     protected function castAttribute($key, $value)
     {
-        if ($key === $this->uuidColumn() && ! is_null($value)) {
+        if (in_array($key, $this->uuidColumns()) && ! empty($value)) {
             return $this->resolveUuid()->fromBytes($value)->toString();
         }
 

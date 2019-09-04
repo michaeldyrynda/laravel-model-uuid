@@ -9,12 +9,13 @@ use Tests\Fixtures\OrderedPost;
 use Illuminate\Events\Dispatcher;
 use Tests\Fixtures\CustomUuidPost;
 use Illuminate\Container\Container;
+use Tests\Fixtures\MultipleUuidPost;
 use Tests\Fixtures\CustomCastUuidPost;
 use Illuminate\Database\Capsule\Manager;
 
 class UuidTest extends TestCase
 {
-    public static function setupBeforeClass()
+    public static function setupBeforeClass(): void
     {
         $manager = new Manager;
         $manager->addConnection(['driver' => 'sqlite', 'database' => ':memory:']);
@@ -55,10 +56,55 @@ class UuidTest extends TestCase
 
         Post::create(['title' => 'test post', 'uuid' => $uuid]);
 
-        $post = Post::whereUuid(strtoupper($uuid))->first();
+        $post = Post::whereUuid($uuid)->first();
 
         $this->assertInstanceOf(Post::class, $post);
         $this->assertSame($uuid, $post->uuid);
+    }
+
+    /** @test */
+    public function you_can_find_a_model_by_custom_uuid_parameter()
+    {
+        $uuid = '6499332d-25e1-4d75-bd92-c6ded0820fb3';
+        $custom_uuid = '99635d83-05bc-424f-bf3f-395ea7a5b323';
+
+        MultipleUuidPost::create(['title' => 'test post', 'uuid' => $uuid, 'custom_uuid' => $custom_uuid]);
+
+        $post1 = MultipleUuidPost::whereUuid($uuid)->first();
+        $this->assertInstanceOf(MultipleUuidPost::class, $post1);
+        $this->assertSame($uuid, $post1->uuid);
+
+        $post2 = MultipleUuidPost::whereUuid($uuid, 'uuid')->first();
+        $this->assertInstanceOf(MultipleUuidPost::class, $post2);
+        $this->assertSame($uuid, $post2->uuid);
+
+        $post3 = MultipleUuidPost::whereUuid($custom_uuid, 'custom_uuid')->first();
+        $this->assertInstanceOf(MultipleUuidPost::class, $post3);
+        $this->assertSame($custom_uuid, $post3->custom_uuid);
+    }
+
+    /** @test */
+    public function you_can_search_by_array_of_uuids()
+    {
+        $first = Post::create(['title' => 'first post', 'uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
+        $second = Post::create(['title' => 'second post', 'uuid' => 'c7c26456-ddb0-45cd-9b1c-318296cce7a3']);
+
+        $this->assertEquals(2, Post::whereUuid([
+            '8ab48e77-d9cd-4fe7-ace5-A5A428590C18',
+            'c7c26456-ddb0-45cd-9b1c-318296cce7a3',
+        ])->count());
+    }
+
+    /** @test */
+    public function you_can_search_by_array_of_uuids_for_custom_column()
+    {
+        $first = CustomCastUuidPost::create(['title' => 'first post', 'custom_uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
+        $second = CustomCastUuidPost::create(['title' => 'second post', 'custom_uuid' => 'c7c26456-ddb0-45cd-9b1c-318296cce7a3']);
+
+        $this->assertEquals(2, CustomCastUuidPost::whereUuid([
+            '8ab48e77-d9cd-4fe7-ace5-A5A428590C18',
+            'c7c26456-ddb0-45cd-9b1c-318296cce7a3',
+        ], 'custom_uuid')->count());
     }
 
     /** @test */

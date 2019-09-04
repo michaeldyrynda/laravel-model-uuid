@@ -1,5 +1,5 @@
 # Laravel Model UUIDs
-## v4.1.0
+## v5.0.0
 
 [![Build Status](https://travis-ci.org/michaeldyrynda/laravel-model-uuid.svg?branch=master)](https://travis-ci.org/michaeldyrynda/laravel-model-uuid)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/?branch=master)
@@ -44,9 +44,21 @@ It is assumed that you already have a field named `uuid` in your database, which
 ```php
 class Post extends Model
 {
-    public function uuidColumn()
+    public function uuidColumn(): string
     {
         return 'custom_column';
+    }
+}
+```
+
+You can have multiple UUID columns in each table by specifying an array in the `uuidColumns` method. When querying using the `whereUuid` scope, the default column - specified by `uuidColumn` will be used.
+
+```php
+class Post extends Model
+{
+    public function uuidColumns(): array
+    {
+        return ['uuid', 'custom_column'];
     }
 }
 ```
@@ -72,7 +84,17 @@ class Post extends Model
 This trait also provides a query scope which will allow you to easily find your records based on their UUID, and respects any custom field name you choose.
 
 ```php
+// Find a specific post with the default (uuid) column name
 $post = Post::whereUuid($uuid)->first();
+
+// Find multiple posts with the default (uuid) column name
+$post = Post::whereUuid([$first, $second])->get();
+
+// Find a specific post with a custom column name
+$post = Post::whereUuid($uuid, 'custom_column')->first();
+
+// Find multiple posts with a custom column name
+$post = Post::whereUuid([$first, $second], 'custom_column')->get();
 ```
 
 If you use the suggested [laravel-efficient-uuid](https://github.com/michaeldyrynda/laravel-efficient-uuid) package, you will need to add a cast to your model in order to correctly set and retrieve your UUID values. This will ensure your UUIDs are written to your (MySQL) database as binary and presented as strings.
@@ -124,7 +146,7 @@ public function boot()
 This package is installed via [Composer](https://getcomposer.org/). To install, run the following command.
 
 ```bash
-composer require "dyrynda/laravel-model-uuid:~4.1"
+composer require dyrynda/laravel-model-uuid
 ```
 ## Support
 
