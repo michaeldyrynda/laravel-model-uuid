@@ -3,7 +3,9 @@
 namespace Dyrynda\Database\Support;
 
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * UUID generation trait.
@@ -128,13 +130,34 @@ trait GeneratesUuid
      */
     public function scopeWhereUuid($query, $uuid, $uuidColumn = null)
     {
+        $uuidColumn = ! is_null($uuidColumn) && in_array($uuidColumn, $this->uuidColumns())
+            ? $uuidColumn
+            : $this->uuidColumns()[0];
 
-        $uuidColumn = isset($uuidColumn) && in_array($uuidColumn, $this->uuidColumns()) ? $uuidColumn : $this->uuidColumns()[0];
         if ($this->hasCast($uuidColumn)) {
-            $uuid = $this->resolveUuid()->fromString($uuid)->getBytes();
+            $uuid = $this->bytesFromUuid($uuid);
         }
 
-        return $query->where($uuidColumn, $uuid);
+        return $query->whereIn($uuidColumn, Arr::wrap($uuid));
+    }
+
+    /**
+     * Convert a single UUID or array of UUIDs to bytes
+     *
+     * @param  \Illuminate\Contracts\Support\Arrayable|array|string  $uuid
+     * @return array
+     */
+    protected function bytesFromUuid($uuid)
+    {
+        if (is_array($uuid) || $uuid instanceof Arrayable) {
+            array_walk($uuid, function (&$uuid) {
+                $uuid = $this->resolveUuid()->fromString($uuid)->getBytes();
+            });
+
+            return $uuid;
+        }
+
+        return $this->resolveUuid()->fromString($uuid)->getBytes();
     }
 
     /**
