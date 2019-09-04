@@ -56,7 +56,7 @@ class UuidTest extends TestCase
 
         Post::create(['title' => 'test post', 'uuid' => $uuid]);
 
-        $post = Post::whereUuid(strtoupper($uuid))->first();
+        $post = Post::whereUuid($uuid)->first();
 
         $this->assertInstanceOf(Post::class, $post);
         $this->assertSame($uuid, $post->uuid);
