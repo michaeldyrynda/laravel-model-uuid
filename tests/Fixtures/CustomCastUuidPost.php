@@ -9,7 +9,7 @@ class CustomCastUuidPost extends Model
      */
     protected $casts = ['custom_uuid' => 'uuid'];
 
-    public function uuidColumn()
+    public function uuidColumn(): string
     {
         return 'custom_uuid';
     }

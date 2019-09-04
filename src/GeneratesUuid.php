@@ -5,6 +5,7 @@ namespace Dyrynda\Database\Support;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
@@ -52,7 +53,7 @@ trait GeneratesUuid
      *
      * @return void
      */
-    public static function bootGeneratesUuid()
+    public static function bootGeneratesUuid(): void
     {
         static::creating(function ($model) {
             /* @var \Illuminate\Database\Eloquent\Model|static $model */
@@ -72,30 +73,27 @@ trait GeneratesUuid
      *
      * @return string
      */
-    public function uuidColumn()
+    public function uuidColumn(): string
     {
         return 'uuid';
     }
-
 
     /**
      * The names of the columns that should be used for the UUID.
      *
      * @return array
      */
-    public function uuidColumns()
+    public function uuidColumns(): array
     {
         return [$this->uuidColumn()];
     }
-
-
 
     /**
      * Resolve a UUID instance for the configured version.
      *
      * @return \Ramsey\Uuid\Uuid
      */
-    public function resolveUuid()
+    public function resolveUuid(): Uuid
     {
         if (($version = $this->resolveUuidVersion()) == 'ordered') {
             return Str::orderedUuid();
@@ -109,7 +107,7 @@ trait GeneratesUuid
      *
      * @return string
      */
-    public function resolveUuidVersion()
+    public function resolveUuidVersion(): string
     {
         if (property_exists($this, 'uuidVersion') && in_array($this->uuidVersion, $this->uuidVersions)) {
             return $this->uuidVersion;
@@ -127,7 +125,7 @@ trait GeneratesUuid
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWhereUuid($query, $uuid, $uuidColumn = null)
+    public function scopeWhereUuid($query, $uuid, $uuidColumn = null): Builder
     {
         $uuidColumn = ! is_null($uuidColumn) && in_array($uuidColumn, $this->uuidColumns())
             ? $uuidColumn
@@ -146,7 +144,7 @@ trait GeneratesUuid
      * @param  \Illuminate\Contracts\Support\Arrayable|array|string  $uuid
      * @return array
      */
-    protected function bytesFromUuid($uuid)
+    protected function bytesFromUuid($uuid): array
     {
         if (is_array($uuid) || $uuid instanceof Arrayable) {
             array_walk($uuid, function (&$uuid) {
@@ -156,7 +154,7 @@ trait GeneratesUuid
             return $uuid;
         }
 
-        return $this->resolveUuid()->fromString($uuid)->getBytes();
+        return Arr::wrap($this->resolveUuid()->fromString($uuid)->getBytes());
     }
 
     /**

@@ -9,7 +9,7 @@ class MultipleUuidPost extends Model
      */
     protected $casts = ['uuid' => 'uuid', 'custom_uuid' => 'uuid'];
 
-    public function uuidColumns()
+    public function uuidColumns(): array
     {
         return ['uuid', 'custom_uuid'];
     }
