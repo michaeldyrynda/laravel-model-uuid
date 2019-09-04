@@ -9,6 +9,7 @@ use Tests\Fixtures\OrderedPost;
 use Illuminate\Events\Dispatcher;
 use Tests\Fixtures\CustomUuidPost;
 use Illuminate\Container\Container;
+use Tests\Fixtures\MultipleUuidPost;
 use Tests\Fixtures\CustomCastUuidPost;
 use Illuminate\Database\Capsule\Manager;
 
@@ -59,6 +60,27 @@ class UuidTest extends TestCase
 
         $this->assertInstanceOf(Post::class, $post);
         $this->assertSame($uuid, $post->uuid);
+    }
+
+    /** @test */
+    public function you_can_find_a_model_by_custom_uuid_parameter()
+    {
+        $uuid = '6499332d-25e1-4d75-bd92-c6ded0820fb3';
+        $custom_uuid = '99635d83-05bc-424f-bf3f-395ea7a5b323';
+
+        MultipleUuidPost::create(['title' => 'test post', 'uuid' => $uuid, 'custom_uuid' => $custom_uuid]);
+
+        $post1 = MultipleUuidPost::whereUuid(strtoupper($uuid))->first();
+        $this->assertInstanceOf(MultipleUuidPost::class, $post1);
+        $this->assertSame($uuid, $post1->uuid);
+
+        $post2 = MultipleUuidPost::whereUuid(strtoupper($uuid), 'uuid')->first();
+        $this->assertInstanceOf(MultipleUuidPost::class, $post2);
+        $this->assertSame($uuid, $post2->uuid);
+
+        $post3 = MultipleUuidPost::whereUuid(strtoupper($custom_uuid), 'custom_uuid')->first();
+        $this->assertInstanceOf(MultipleUuidPost::class, $post3);
+        $this->assertSame($custom_uuid, $post3->custom_uuid);
     }
 
     /** @test */
