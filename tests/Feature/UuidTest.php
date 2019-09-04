@@ -70,15 +70,15 @@ class UuidTest extends TestCase
 
         MultipleUuidPost::create(['title' => 'test post', 'uuid' => $uuid, 'custom_uuid' => $custom_uuid]);
 
-        $post1 = MultipleUuidPost::whereUuid(strtoupper($uuid))->first();
+        $post1 = MultipleUuidPost::whereUuid($uuid)->first();
         $this->assertInstanceOf(MultipleUuidPost::class, $post1);
         $this->assertSame($uuid, $post1->uuid);
 
-        $post2 = MultipleUuidPost::whereUuid(strtoupper($uuid), 'uuid')->first();
+        $post2 = MultipleUuidPost::whereUuid($uuid, 'uuid')->first();
         $this->assertInstanceOf(MultipleUuidPost::class, $post2);
         $this->assertSame($uuid, $post2->uuid);
 
-        $post3 = MultipleUuidPost::whereUuid(strtoupper($custom_uuid), 'custom_uuid')->first();
+        $post3 = MultipleUuidPost::whereUuid($custom_uuid, 'custom_uuid')->first();
         $this->assertInstanceOf(MultipleUuidPost::class, $post3);
         $this->assertSame($custom_uuid, $post3->custom_uuid);
     }
