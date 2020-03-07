@@ -2,11 +2,11 @@
 
 namespace Dyrynda\Database\Support;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Database\Eloquent\Builder;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Ramsey\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * UUID generation trait.
@@ -56,14 +56,16 @@ trait GeneratesUuid
     public static function bootGeneratesUuid(): void
     {
         static::creating(function ($model) {
-            /* @var \Illuminate\Database\Eloquent\Model|static $model */
-            $uuid = $model->resolveUuid();
             foreach ($model->uuidColumns() as $item) {
+                /* @var \Illuminate\Database\Eloquent\Model|static $model */
+                $uuid = $model->resolveUuid();
+
                 if (isset($model->attributes[$item]) && ! is_null($model->attributes[$item])) {
                     /* @var \Ramsey\Uuid\Uuid $uuid */
                     $uuid = $uuid->fromString(strtolower($model->attributes[$item]));
                 }
-                $model->attributes[$item] = $model->hasCast($item, 'uuid') ? $uuid->getBytes() : $uuid->toString();
+
+                $model->{$item} = strtolower($uuid->toString());
             }
         });
     }
@@ -131,11 +133,9 @@ trait GeneratesUuid
             ? $uuidColumn
             : $this->uuidColumns()[0];
 
-        if ($this->hasCast($uuidColumn)) {
-            $uuid = $this->bytesFromUuid($uuid);
-        }
-
-        return $query->whereIn($uuidColumn, Arr::wrap($uuid));
+        return $query->whereIn($uuidColumn, array_map(function ($uuid) {
+            return strtolower($uuid);
+        }, Arr::wrap($uuid)));
     }
 
     /**
@@ -155,21 +155,5 @@ trait GeneratesUuid
         }
 
         return Arr::wrap($this->resolveUuid()->fromString($uuid)->getBytes());
-    }
-
-    /**
-     * Cast an attribute to a native PHP type.
-     *
-     * @param  string  $key
-     * @param  mixed  $value
-     * @return mixed
-     */
-    protected function castAttribute($key, $value)
-    {
-        if (in_array($key, $this->uuidColumns()) && ! empty($value)) {
-            return $this->resolveUuid()->fromBytes($value)->toString();
-        }
-
-        return parent::castAttribute($key, $value);
     }
 }

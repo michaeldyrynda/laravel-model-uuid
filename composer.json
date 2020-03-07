@@ -16,10 +16,10 @@
         }
     ],
     "require": {
-        "php": "^7.2",
-        "illuminate/database": "^6.0",
-        "illuminate/events": "^6.0",
-        "illuminate/support": "^6.0",
+        "php": "^7.2.5",
+        "illuminate/database": "^6.0|^7.0",
+        "illuminate/events": "^6.0|^7.0",
+        "illuminate/support": "^6.0|^7.0",
         "ramsey/uuid": "~3.7",
         "moontoast/math": "^1.1"
     },
