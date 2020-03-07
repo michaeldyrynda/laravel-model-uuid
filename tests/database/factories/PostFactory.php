@@ -2,13 +2,13 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use Tests\Fixtures\Post;
 use Faker\Generator as Faker;
-use Tests\Fixtures\OrderedPost;
-use Tests\Fixtures\CustomUuidPost;
-use Tests\Fixtures\MultipleUuidPost;
-use Tests\Fixtures\EfficientUuidPost;
 use Tests\Fixtures\CustomCastUuidPost;
+use Tests\Fixtures\CustomUuidPost;
+use Tests\Fixtures\EfficientUuidPost;
+use Tests\Fixtures\MultipleUuidPost;
+use Tests\Fixtures\OrderedPost;
+use Tests\Fixtures\Post;
 
 $factory->define(CustomCastUuidPost::class, function (Faker $faker) {
     return [
