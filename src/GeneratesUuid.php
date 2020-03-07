@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Support\Arrayable;
+use Ramsey\Uuid\Exception\InvalidUuidStringException;
 
 /**
  * UUID generation trait.
@@ -62,7 +63,11 @@ trait GeneratesUuid
 
                 if (isset($model->attributes[$item]) && ! is_null($model->attributes[$item])) {
                     /* @var \Ramsey\Uuid\Uuid $uuid */
-                    $uuid = $uuid->fromString(strtolower($model->attributes[$item]));
+                    try {
+                        $uuid = $uuid->fromString(strtolower($model->attributes[$item]));
+                    } catch (InvalidUuidStringException $e) {
+                        $uuid = $uuid->fromBytes($model->attributes[$item]);
+                    }
                 }
 
                 $model->{$item} = strtolower($uuid->toString());

@@ -3,16 +3,15 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Ramsey\Uuid\Uuid;
 use Tests\Fixtures\Post;
 use Tests\Fixtures\UncastPost;
-use PHPUnit\Framework\TestCase;
 use Tests\Fixtures\OrderedPost;
-use Illuminate\Events\Dispatcher;
 use Tests\Fixtures\CustomUuidPost;
-use Illuminate\Container\Container;
 use Tests\Fixtures\MultipleUuidPost;
+use Tests\Fixtures\EfficientUuidPost;
 use Tests\Fixtures\CustomCastUuidPost;
-use Illuminate\Database\Capsule\Manager;
+use Illuminate\Foundation\Testing\WithFaker;
 
 class UuidTest extends TestCase
 {
@@ -148,5 +147,40 @@ class UuidTest extends TestCase
         $post = CustomUuidPost::create(['title' => 'test-post']);
 
         $this->assertNotNull($post->custom_uuid);
+    }
+
+    /**
+     * @test
+     * @dataProvider factoriesWithUuidProvider
+     */
+    public function it_handles_working_with_various_uuid_casts($model, $column)
+    {
+        tap(factory($model)->create(), function ($post) use ($column) {
+            $this->assertNotNull($post->{$column});
+        });
+    }
+
+    /** @test */
+    public function it_handles_setting_an_efficient_uuid()
+    {
+        tap(EfficientUuidPost::create([
+            'title' => 'Efficient uuid post',
+            'efficient_uuid' => $uuid = $this->faker->uuid,
+        ]), function ($post) use ($uuid) {
+            $this->assertEquals($uuid, $post->efficient_uuid);
+            $this->assertSame(
+                Uuid::uuid4()->fromString($uuid)->getBytes(),
+                $post->getRawOriginal('efficient_uuid')
+            );
+        });
+    }
+
+    public function factoriesWithUuidProvider(): array
+    {
+        return [
+            'regular uuid' => [Post::class, 'uuid'],
+            'custom uuid' => [CustomUuidPost::class, 'custom_uuid'],
+            'efficient uuid' => [EfficientUuidPost::class, 'efficient_uuid'],
+        ];
     }
 }
