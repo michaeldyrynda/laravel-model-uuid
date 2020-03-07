@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Dyrynda\Database\LaravelEfficientUuidServiceProvider;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
 {
