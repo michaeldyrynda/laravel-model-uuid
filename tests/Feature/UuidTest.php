@@ -2,16 +2,16 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Container\Container;
-use Illuminate\Database\Capsule\Manager;
-use Illuminate\Events\Dispatcher;
-use PHPUnit\Framework\TestCase;
-use Tests\Fixtures\CustomCastUuidPost;
-use Tests\Fixtures\CustomUuidPost;
-use Tests\Fixtures\MultipleUuidPost;
-use Tests\Fixtures\OrderedPost;
 use Tests\Fixtures\Post;
 use Tests\Fixtures\UncastPost;
+use PHPUnit\Framework\TestCase;
+use Tests\Fixtures\OrderedPost;
+use Illuminate\Events\Dispatcher;
+use Tests\Fixtures\CustomUuidPost;
+use Illuminate\Container\Container;
+use Tests\Fixtures\MultipleUuidPost;
+use Tests\Fixtures\CustomCastUuidPost;
+use Illuminate\Database\Capsule\Manager;
 
 class UuidTest extends TestCase
 {

@@ -2,11 +2,11 @@
 
 namespace Dyrynda\Database\Support;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Database\Eloquent\Builder;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Ramsey\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * UUID generation trait.
