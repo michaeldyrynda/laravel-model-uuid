@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Tests\TestCase;
 use Tests\Fixtures\Post;
 use Tests\Fixtures\UncastPost;
 use PHPUnit\Framework\TestCase;
@@ -15,21 +16,7 @@ use Illuminate\Database\Capsule\Manager;
 
 class UuidTest extends TestCase
 {
-    public static function setupBeforeClass(): void
-    {
-        $manager = new Manager;
-        $manager->addConnection(['driver' => 'sqlite', 'database' => ':memory:']);
-        $manager->setEventDispatcher(new Dispatcher(new Container));
-        $manager->setAsGlobal();
-        $manager->bootEloquent();
-
-        $manager->schema()->create('posts', function ($table) {
-            $table->increments('id');
-            $table->uuid('uuid')->nullable()->default(null);
-            $table->uuid('custom_uuid')->nullable()->default(null);
-            $table->string('title');
-        });
-    }
+    use WithFaker;
 
     /** @test */
     public function it_sets_the_uuid_when_creating_a_new_model()
