@@ -2,8 +2,8 @@
 
 namespace Tests\Fixtures;
 
+use Dyrynda\Database\Casts\EfficientUuid;
 use Dyrynda\Database\Support\GeneratesUuid;
-use Dyrynda\Database\Support\Casts\EfficientUuid;
 
 class EfficientUuidPost extends Model
 {
