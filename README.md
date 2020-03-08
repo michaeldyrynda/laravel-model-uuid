@@ -1,5 +1,5 @@
 # Laravel Model UUIDs
-## v6.0.0
+## v6.0.1
 
 [![Build Status](https://travis-ci.org/michaeldyrynda/laravel-model-uuid.svg?branch=master)](https://travis-ci.org/michaeldyrynda/laravel-model-uuid)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/?branch=master)
@@ -105,7 +105,7 @@ If you use the suggested [laravel-efficient-uuid](https://github.com/michaeldyry
 
 namespace App;
 
-use Dyrynda\Database\Support\Casts\EfficientUuid;
+use Dyrynda\Database\Casts\EfficientUuid;
 use Dyrynda\Database\Support\GeneratesUuid;
 use Illuminate\Database\Eloquent\Model;
 
