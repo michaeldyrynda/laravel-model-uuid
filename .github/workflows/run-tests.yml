@@ -3,6 +3,15 @@ name: run-tests
 on: [push, pull_request]
 
 jobs:
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: model_uuid
+        ports:
+          3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     test:
         runs-on: ${{ matrix.os }}
         strategy:
@@ -42,4 +51,8 @@ jobs:
 
             -   name: Execute tests
                 run: vendor/bin/phpunit
+                env:
+                  DB_CONNECTION: mysql
+                  DB_DATABASE: model_uuid
+                  DB_PORT: ${{ job.services.mysql.ports[3306] }}
 
