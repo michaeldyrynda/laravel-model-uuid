@@ -2,10 +2,10 @@
 
 namespace Tests;
 
+use Dyrynda\Database\LaravelEfficientUuidServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Dyrynda\Database\LaravelEfficientUuidServiceProvider;
 
 class TestCase extends OrchestraTestCase
 {
