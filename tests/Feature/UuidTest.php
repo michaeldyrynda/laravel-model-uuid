@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Ramsey\Uuid\Uuid;
 use Tests\Fixtures\CustomCastUuidPost;
@@ -16,7 +15,7 @@ use Tests\TestCase;
 
 class UuidTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use WithFaker;
 
     /** @test */
     public function it_sets_the_uuid_when_creating_a_new_model()
