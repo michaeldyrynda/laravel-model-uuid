@@ -2,20 +2,21 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 use Ramsey\Uuid\Uuid;
-use Tests\Fixtures\CustomCastUuidPost;
-use Tests\Fixtures\CustomUuidPost;
-use Tests\Fixtures\EfficientUuidPost;
-use Tests\Fixtures\MultipleUuidPost;
-use Tests\Fixtures\OrderedPost;
 use Tests\Fixtures\Post;
 use Tests\Fixtures\UncastPost;
-use Tests\TestCase;
+use Tests\Fixtures\OrderedPost;
+use Tests\Fixtures\CustomUuidPost;
+use Tests\Fixtures\MultipleUuidPost;
+use Tests\Fixtures\EfficientUuidPost;
+use Tests\Fixtures\CustomCastUuidPost;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UuidTest extends TestCase
 {
-    use WithFaker;
+    use RefreshDatabase, WithFaker;
 
     /** @test */
     public function it_sets_the_uuid_when_creating_a_new_model()

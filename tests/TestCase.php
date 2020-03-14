@@ -2,14 +2,10 @@
 
 namespace Tests;
 
-use Dyrynda\Database\LaravelEfficientUuidServiceProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
 {
-    use RefreshDatabase;
-
     public function setUp(): void
     {
         parent::setUp();
