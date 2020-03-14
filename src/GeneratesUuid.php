@@ -2,12 +2,12 @@
 
 namespace Dyrynda\Database\Support;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Database\Eloquent\Builder;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Support\Arrayable;
 use Ramsey\Uuid\Exception\InvalidUuidStringException;
-use Ramsey\Uuid\Uuid;
 
 /**
  * UUID generation trait.
@@ -138,9 +138,15 @@ trait GeneratesUuid
             ? $uuidColumn
             : $this->uuidColumns()[0];
 
-        return $query->whereIn($uuidColumn, array_map(function ($uuid) {
-            return strtolower($uuid);
-        }, Arr::wrap($uuid)));
+        $uuid = array_map(function ($uuid) {
+            return Str::lower($uuid);
+        }, Arr::wrap($uuid));
+
+        if ($this->isClassCastable($uuidColumn)) {
+            $uuid = $this->bytesFromUuid($uuid);
+        }
+
+        return $query->whereIn($uuidColumn, Arr::wrap($uuid));
     }
 
     /**
