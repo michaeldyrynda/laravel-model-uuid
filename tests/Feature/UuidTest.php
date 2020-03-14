@@ -2,17 +2,17 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Ramsey\Uuid\Uuid;
+use Tests\Fixtures\CustomCastUuidPost;
+use Tests\Fixtures\CustomUuidPost;
+use Tests\Fixtures\EfficientUuidPost;
+use Tests\Fixtures\MultipleUuidPost;
+use Tests\Fixtures\OrderedPost;
 use Tests\Fixtures\Post;
 use Tests\Fixtures\UncastPost;
-use Tests\Fixtures\OrderedPost;
-use Tests\Fixtures\CustomUuidPost;
-use Tests\Fixtures\MultipleUuidPost;
-use Tests\Fixtures\EfficientUuidPost;
-use Tests\Fixtures\CustomCastUuidPost;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class UuidTest extends TestCase
 {
