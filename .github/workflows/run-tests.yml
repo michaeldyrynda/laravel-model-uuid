@@ -55,5 +55,6 @@ jobs:
                 env:
                   DB_CONNECTION: mysql
                   DB_DATABASE: model_uuid
+                  DB_USERNAME: root
                   DB_PORT: ${{ job.services.mysql.ports[3306] }}
 
