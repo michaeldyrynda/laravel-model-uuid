@@ -3,8 +3,8 @@
 namespace Tests;
 
 use Dyrynda\Database\LaravelEfficientUuidServiceProvider;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
