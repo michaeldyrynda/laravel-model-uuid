@@ -21,7 +21,7 @@
         "illuminate/events": "^7.0",
         "illuminate/support": "^7.0",
         "ramsey/uuid": "~3.7",
-        "moontoast/math": "^1.1"
+        "brick/math": "^0.8"
     },
     "autoload": {
         "psr-4": {
