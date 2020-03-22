@@ -8,7 +8,7 @@
 [![Total Downloads](https://poser.pugx.org/dyrynda/laravel-model-uuid/downloads)](https://packagist.org/packages/dyrynda/laravel-model-uuid)
 [![License](https://poser.pugx.org/dyrynda/laravel-model-uuid/license)](https://packagist.org/packages/dyrynda/laravel-model-uuid)
 [![Dependency Status](https://www.versioneye.com/php/dyrynda:laravel-model-uuid/dev-master/badge?style=flat-square)](https://www.versioneye.com/php/dyrynda:laravel-model-uuid/dev-master)
-[![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen?style=for-the-badge)](https://offset.earth/treeware?gift-trees)
+[![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen)](https://plant.treeware.earth/michaeldyrynda/laravel-model-uuid)
 
 ## Introduction
 
@@ -166,6 +166,6 @@ You're free to use this package, but if it makes it to your production environme
 
 It’s now common knowledge that one of the best tools to tackle the climate crisis and keep our temperatures from rising above 1.5C is to plant trees. If you support this package and contribute to the Treeware forest you’ll be creating employment for local families and restoring wildlife habitats.
 
-You can buy trees [here](https://offset.earth/treeware)
+You can buy trees [here](https://plant.treeware.earth/michaeldyrynda/laravel-model-uuid)
 
 Read more about Treeware at [treeware.earth](https://treeware.earth)
