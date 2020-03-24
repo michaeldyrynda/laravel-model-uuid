@@ -20,7 +20,7 @@
         "illuminate/database": "^7.0",
         "illuminate/events": "^7.0",
         "illuminate/support": "^7.0",
-        "ramsey/uuid": "~3.7",
+        "ramsey/uuid": "^4.0",
         "moontoast/math": "^1.1"
     },
     "autoload": {
