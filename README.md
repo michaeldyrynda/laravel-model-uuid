@@ -1,5 +1,4 @@
 # Laravel Model UUIDs
-## v6.0.2
 
 [![Build Status](https://github.com/michaeldyrynda/laravel-model-uuid/workflows/run-tests/badge.svg)](https://github.com/michaeldyrynda/laravel-model-uuid/actions?query=workflow%3Arun-tests)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/michaeldyrynda/laravel-model-uuid/?branch=master)
