@@ -74,6 +74,11 @@ trait GeneratesUuid
                 $model->{$item} = strtolower($uuid->toString());
             }
         });
+
+        // Prevents change for the uuid of a record after it is set.
+        static::saving(function ($model) {
+            $model->id = $model->getOriginal('uuid');
+        });
     }
 
     /**
