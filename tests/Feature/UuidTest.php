@@ -194,7 +194,7 @@ class UuidTest extends TestCase
         ]), function ($post) use ($uuid) {
             $this->assertEquals($uuid, $post->efficient_uuid);
             $this->assertSame(
-                Uuid::uuid4()->fromString($uuid)->getBytes(),
+                Uuid::fromString($uuid)->getBytes(),
                 $post->getRawOriginal('efficient_uuid')
             );
         });

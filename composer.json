@@ -20,7 +20,7 @@
         "illuminate/database": "^7.3",
         "illuminate/events": "^7.3",
         "illuminate/support": "^7.3",
-        "ramsey/uuid": "^4.0"
+        "ramsey/uuid": "^4.1"
     },
     "autoload": {
         "psr-4": {

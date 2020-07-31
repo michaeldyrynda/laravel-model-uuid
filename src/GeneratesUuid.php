@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Exception\InvalidUuidStringException;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * UUID generation trait.
@@ -65,9 +66,9 @@ trait GeneratesUuid
                 if (isset($model->attributes[$item]) && ! is_null($model->attributes[$item])) {
                     /* @var \Ramsey\Uuid\Uuid $uuid */
                     try {
-                        $uuid = $uuid->fromString(strtolower($model->attributes[$item]));
+                        $uuid = Uuid::fromString(strtolower($model->attributes[$item]));
                     } catch (InvalidUuidStringException $e) {
-                        $uuid = $uuid->fromBytes($model->attributes[$item]);
+                        $uuid = Uuid::fromBytes($model->attributes[$item]);
                     }
                 }
 
@@ -99,9 +100,9 @@ trait GeneratesUuid
     /**
      * Resolve a UUID instance for the configured version.
      *
-     * @return \Ramsey\Uuid\Uuid
+     * @return \Ramsey\Uuid\UuidInterface
      */
-    public function resolveUuid(): Uuid
+    public function resolveUuid(): UuidInterface
     {
         if (($version = $this->resolveUuidVersion()) == 'ordered') {
             return Str::orderedUuid();
@@ -160,12 +161,12 @@ trait GeneratesUuid
     {
         if (is_array($uuid) || $uuid instanceof Arrayable) {
             array_walk($uuid, function (&$uuid) {
-                $uuid = $this->resolveUuid()->fromString($uuid)->getBytes();
+                $uuid = Uuid::fromString($uuid)->getBytes();
             });
 
             return $uuid;
         }
 
-        return Arr::wrap($this->resolveUuid()->fromString($uuid)->getBytes());
+        return Arr::wrap(Uuid::fromString($uuid)->getBytes());
     }
 }
