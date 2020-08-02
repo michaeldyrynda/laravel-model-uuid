@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Exception\InvalidUuidStringException;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * UUID generation trait.
@@ -31,9 +32,7 @@ trait GeneratesUuid
      */
     protected $uuidVersions = [
         'uuid1',
-        'uuid3',
         'uuid4',
-        'uuid5',
         'uuid6',
         'ordered',
     ];
@@ -65,9 +64,9 @@ trait GeneratesUuid
                 if (isset($model->attributes[$item]) && ! is_null($model->attributes[$item])) {
                     /* @var \Ramsey\Uuid\Uuid $uuid */
                     try {
-                        $uuid = $uuid->fromString(strtolower($model->attributes[$item]));
+                        $uuid = Uuid::fromString(strtolower($model->attributes[$item]));
                     } catch (InvalidUuidStringException $e) {
-                        $uuid = $uuid->fromBytes($model->attributes[$item]);
+                        $uuid = Uuid::fromBytes($model->attributes[$item]);
                     }
                 }
 
@@ -99,15 +98,11 @@ trait GeneratesUuid
     /**
      * Resolve a UUID instance for the configured version.
      *
-     * @return \Ramsey\Uuid\Uuid
+     * @return \Ramsey\Uuid\UuidInterface
      */
-    public function resolveUuid(): Uuid
+    public function resolveUuid(): UuidInterface
     {
-        if (($version = $this->resolveUuidVersion()) == 'ordered') {
-            return Str::orderedUuid();
-        }
-
-        return call_user_func([Uuid::class, $version]);
+        return call_user_func([Uuid::class, $this->resolveUuidVersion()]);
     }
 
     /**
@@ -118,7 +113,7 @@ trait GeneratesUuid
     public function resolveUuidVersion(): string
     {
         if (property_exists($this, 'uuidVersion') && in_array($this->uuidVersion, $this->uuidVersions)) {
-            return $this->uuidVersion;
+            return $this->uuidVersion === 'ordered' ? 'uuid6' : $this->uuidVersion;
         }
 
         return 'uuid4';
@@ -160,12 +155,12 @@ trait GeneratesUuid
     {
         if (is_array($uuid) || $uuid instanceof Arrayable) {
             array_walk($uuid, function (&$uuid) {
-                $uuid = $this->resolveUuid()->fromString($uuid)->getBytes();
+                $uuid = Uuid::fromString($uuid)->getBytes();
             });
 
             return $uuid;
         }
 
-        return Arr::wrap($this->resolveUuid()->fromString($uuid)->getBytes());
+        return Arr::wrap(Uuid::fromString($uuid)->getBytes());
     }
 }

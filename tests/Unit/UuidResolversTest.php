@@ -15,12 +15,10 @@ class UuidResolversTest extends TestCase
     {
         return [
             ['uuid1', 'uuid1'],
-            ['uuid3', 'uuid3'],
             ['uuid4', 'uuid4'],
-            ['uuid5', 'uuid5'],
             ['uuid6', 'uuid6'],
+            ['ordered', 'uuid6'],
             ['uuid999', 'uuid4'],
-            ['ordered', 'ordered'],
         ];
     }
 

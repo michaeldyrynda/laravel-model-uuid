@@ -3,6 +3,9 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\WithFaker;
+use Ramsey\Uuid\Nonstandard\UuidV6;
+use Ramsey\Uuid\Rfc4122\UuidV1;
+use Ramsey\Uuid\Rfc4122\UuidV4;
 use Ramsey\Uuid\Uuid;
 use Tests\Fixtures\CustomCastUuidPost;
 use Tests\Fixtures\CustomUuidPost;
@@ -11,6 +14,9 @@ use Tests\Fixtures\MultipleUuidPost;
 use Tests\Fixtures\OrderedPost;
 use Tests\Fixtures\Post;
 use Tests\Fixtures\UncastPost;
+use Tests\Fixtures\Uuid1Post;
+use Tests\Fixtures\Uuid4Post;
+use Tests\Fixtures\Uuid6Post;
 use Tests\TestCase;
 
 class UuidTest extends TestCase
@@ -194,9 +200,20 @@ class UuidTest extends TestCase
         ]), function ($post) use ($uuid) {
             $this->assertEquals($uuid, $post->efficient_uuid);
             $this->assertSame(
-                Uuid::uuid4()->fromString($uuid)->getBytes(),
+                Uuid::fromString($uuid)->getBytes(),
                 $post->getRawOriginal('efficient_uuid')
             );
+        });
+    }
+
+    /**
+     * @test
+     * @dataProvider uuidVersionsProvider
+     */
+    public function it_handles_supported_uuid_versions($model, $version)
+    {
+        tap($model::create(['title' => 'test title']), function ($model) use ($version) {
+            $this->assertEquals($version, Uuid::fromString($model->uuid)->getVersion());
         });
     }
 
@@ -206,6 +223,16 @@ class UuidTest extends TestCase
             'regular uuid' => [Post::class, 'uuid'],
             'custom uuid' => [CustomUuidPost::class, 'custom_uuid'],
             'efficient uuid' => [EfficientUuidPost::class, 'efficient_uuid'],
+        ];
+    }
+
+    public function uuidVersionsProvider(): array
+    {
+        return [
+            'uuid1' => [Uuid1Post::class, Uuid::UUID_TYPE_TIME],
+            'uuid4' => [Uuid4Post::class, Uuid::UUID_TYPE_RANDOM],
+            'uuid6' => [Uuid6Post::class, Uuid::UUID_TYPE_PEABODY],
+            'ordered' => [OrderedPost::class, Uuid::UUID_TYPE_PEABODY],
         ];
     }
 }

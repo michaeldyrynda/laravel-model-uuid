@@ -20,7 +20,7 @@
         "illuminate/database": "^7.3",
         "illuminate/events": "^7.3",
         "illuminate/support": "^7.3",
-        "ramsey/uuid": "^4.0"
+        "ramsey/uuid": "^4.1"
     },
     "autoload": {
         "psr-4": {
@@ -28,7 +28,7 @@
         }
     },
     "require-dev": {
-        "dyrynda/laravel-efficient-uuid": "^4.0",
+        "dyrynda/laravel-efficient-uuid": "^4.1",
         "orchestra/testbench": "^5.0",
         "phpunit/phpunit": "^8.0",
         "nunomaduro/collision": "^4.1"

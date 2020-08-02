@@ -19,7 +19,9 @@ For more information, check out [this post](https://www.percona.com/blog/2014/12
 
 Take a look at [laravel-efficient-uuid](https://github.com/michaeldyrynda/laravel-efficient-uuid) if you want to make it easy to generate migrations that efficiently store UUID in your database.
 
-This package supports time-ordered UUIDs in Laravel 5.6 as of version 4.0.0.
+If you require compatibility with `ramsey/uuid` >= 4.1, please use version >= 5.0.0 of this package.
+
+As of version 5.0, this package supports only UUID versions 1, 4, and 6 (ordered).
 
 ## Code Samples
 
