@@ -123,7 +123,7 @@ trait GeneratesUuid
      * Scope queries to find by UUID.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $uuid
+     * @param  string|array  $uuid
      * @param  string  $uuidColumn
      *
      * @return \Illuminate\Database\Eloquent\Builder
