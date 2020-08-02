@@ -3,9 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\WithFaker;
-use Ramsey\Uuid\Nonstandard\UuidV6;
-use Ramsey\Uuid\Rfc4122\UuidV1;
-use Ramsey\Uuid\Rfc4122\UuidV4;
 use Ramsey\Uuid\Uuid;
 use Tests\Fixtures\CustomCastUuidPost;
 use Tests\Fixtures\CustomUuidPost;
