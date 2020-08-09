@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use Dyrynda\Database\Casts\EfficientUuid;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\WithFaker;
 use Ramsey\Uuid\Uuid;
 use Tests\Fixtures\CustomCastUuidPost;
@@ -200,6 +202,32 @@ class UuidTest extends TestCase
                 Uuid::fromString($uuid)->getBytes(),
                 $post->getRawOriginal('efficient_uuid')
             );
+        });
+    }
+
+    /** @test */
+    public function it_handles_a_null_uuid_column()
+    {
+        tap(Model::withoutEvents(function () {
+            return Post::create([
+                'title' => 'Nullable uuid',
+                'uuid' => null,
+            ]);
+        }), function ($post) {
+            $this->assertNull($post->uuid);
+        });
+    }
+
+    /** @test */
+    public function it_handles_a_null_efficient_uuid_column()
+    {
+        tap(Model::withoutEvents(function () {
+            return EfficientUuidPost::create([
+                'title' => 'Nullable uuid',
+                'efficient_uuid' => null,
+            ]);
+        }), function ($post) {
+            $this->assertNull($post->efficient_uuid);
         });
     }
 

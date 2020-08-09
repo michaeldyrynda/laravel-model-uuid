@@ -28,7 +28,7 @@
         }
     },
     "require-dev": {
-        "dyrynda/laravel-efficient-uuid": "^4.1",
+        "dyrynda/laravel-efficient-uuid": "^4.1.1",
         "orchestra/testbench": "^5.0",
         "phpunit/phpunit": "^8.0",
         "nunomaduro/collision": "^4.1"
