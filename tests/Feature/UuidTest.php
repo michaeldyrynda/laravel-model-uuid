@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use Dyrynda\Database\Casts\EfficientUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\WithFaker;
 use Ramsey\Uuid\Uuid;
