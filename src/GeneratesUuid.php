@@ -22,6 +22,7 @@ use Ramsey\Uuid\UuidInterface;
  * @license   MIT
  *
  * @property  string  $uuidVersion
+ * @method  static \Illuminate\Database\Eloquent\Builder  whereUuid(string $uuid)
  */
 trait GeneratesUuid
 {
