@@ -84,7 +84,9 @@ trait GeneratesUuid
      */
     public function uuidColumns(): array
     {
-        return [$this->uuidColumn()];
+        return  collect($this->casts)->filter(function ($value, $key) {
+            return 'Dyrynda\Database\Casts\EfficientUuid' === $value;
+        })->keys()->toArray();
     }
 
     /**
