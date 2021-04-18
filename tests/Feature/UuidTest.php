@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\WithFaker;
 use Ramsey\Uuid\Uuid;
+use Tests\Fixtures\Comment;
 use Tests\Fixtures\CustomCastUuidPost;
 use Tests\Fixtures\CustomUuidPost;
 use Tests\Fixtures\EfficientUuidPost;
@@ -238,6 +239,22 @@ class UuidTest extends TestCase
     {
         tap($model::create(['title' => 'test title']), function ($model) use ($version) {
             $this->assertEquals($version, Uuid::fromString($model->uuid)->getVersion());
+        });
+    }
+
+    /** @test */
+    public function it_handles_queries_with_multiple_uuid_columns()
+    {
+        $post = factory(Post::class)->create([
+            'uuid' => '4e6c964d-4e9b-4023-be0e-f5a6529b7184',
+        ]);
+        $comment = $post->comments()->save(factory(Comment::class)->make([
+            'uuid' => '8b8f4d17-e2b9-4f9d-9b1d-4e94ef5db644',
+        ]));
+
+        tap($post->comments()->whereUuid($comment->uuid)->first(), function ($comment) {
+            $this->assertNotNull($comment);
+            $this->assertEquals('4e6c964d-4e9b-4023-be0e-f5a6529b7184', $comment->post->uuid);
         });
     }
 

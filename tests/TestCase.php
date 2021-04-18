@@ -36,5 +36,12 @@ class TestCase extends OrchestraTestCase
             $table->efficientUuid('efficient_uuid')->nullable();
             $table->string('title');
         });
+
+        $app['db']->connection()->getSchemaBuilder()->create('comments', function (Blueprint $table) {
+            $table->increments('id');
+            $table->foreignId('post_id');
+            $table->uuid('uuid')->nullable();
+            $table->text('body');
+        });
     }
 }
