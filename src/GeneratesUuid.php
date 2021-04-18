@@ -134,10 +134,10 @@ trait GeneratesUuid
             $uuid = $this->bytesFromUuid($uuid);
         }
 
-        // Qualify the given column name by the model's table.
-        $uuidColumn = $this->qualifyColumn($uuidColumn);
-
-        return $query->whereIn($uuidColumn, Arr::wrap($uuid));
+        return $query->whereIn(
+            $this->qualifyColumn($uuidColumn),
+            Arr::wrap($uuid)
+        );
     }
 
     /**
