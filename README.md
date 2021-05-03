@@ -83,6 +83,26 @@ class Post extends Model
 }
 ```
 
+Whilst not recommended, if you _do_ choose to use a UUID as your primary model key (`id`), be sure to configure your model for this setup correctly. Not updating these properties will lead to Laravel attempting to convert your `id` column to an integer, which will be cast to `0`. When used in combination with [`laravel-efficient-uuid`](https://github.com/michaeldyrynda/laravel-efficient-uuid), this casting will result in a `Ramsey\Uuid\Exception\InvalidUuidStringException` being thrown.
+
+```php
+<?php
+
+namespace App;
+
+use Dyrynda\Database\Support\GeneratesUuid;
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    use GeneratesUuid;
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+}
+```
+
 This trait also provides a query scope which will allow you to easily find your records based on their UUID, and respects any custom field name you choose.
 
 ```php
