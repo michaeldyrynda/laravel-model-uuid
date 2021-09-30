@@ -142,10 +142,27 @@ class Post extends Model
 
 ## Route model binding
 
-Should you wish to leverage implicit route model binding on your `uuid` field, you'll need to override the `getRouteKeyName` method in your Eloquent model.
+From 6.5.0, should you wish to leverage implicit route model binding on your `uuid` field, you may use the `BindsOnUuid` trait, which will use the configured `uuidColumn` by default.
 
 ```php
-public function getRouteKeyName()
+<?php
+
+namespace App;
+
+use Dyrynda\Database\Support\BindsOnUuid;
+use Dyrynda\Database\Support\GeneratesUuid;
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    use BindsOnUuid, GeneratesUuid;
+}
+```
+
+Should you require additional control over the binding, or are using < 6.5.0 of this package, you may override the `getRouteKeyName` method directly.
+
+```php
+public function getRouteKeyName(): string
 {
     return 'uuid';
 }
