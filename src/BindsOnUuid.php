@@ -19,4 +19,14 @@ trait BindsOnUuid
 	{
 		return self::whereUuid($value, $field)->firstOrFail();
 	}
+
+	/**
+	 * Get the route key for the model.
+	 *
+	 * @return string
+	 */
+	public function getRouteKeyName(): string
+	{
+		return $this->uuidColumn();
+	}
 }

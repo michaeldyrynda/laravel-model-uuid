@@ -17,9 +17,10 @@ class BindUuidTest extends TestCase
 
 		Route::middleware('bindings')->get('/posts/{post}', function (UuidRouteBoundPost $post) {
 			return $post;
-		});
+		})->name('posts.show');
 
 		$this->get('/posts/' . $post->uuid)->assertSuccessful();
+		$this->get(route('posts.show', $post))->assertSuccessful();
 	}
 
 	/** @test */
@@ -29,9 +30,10 @@ class BindUuidTest extends TestCase
 
 		Route::middleware('bindings')->get('/posts/{post}', function (UuidRouteBoundPost $post) {
 			return $post;
-		});
+		})->name('posts.show');
 
 		$this->get('/posts/' . $post->custom_uuid)->assertNotFound();
+		$this->get(route('posts.show', $post->custom_uuid))->assertNotFound();
 	}
 
 	/** @test */
@@ -41,9 +43,10 @@ class BindUuidTest extends TestCase
 
 		Route::middleware('bindings')->get('/posts/{post}', function (CustomUuidRouteBoundPost $post) {
 			return $post;
-		});
+		})->name('posts.show');
 
 		$this->get('/posts/' . $post->custom_uuid)->assertSuccessful();
+		$this->get(route('posts.show', $post))->assertSuccessful();
 	}
 
 	/** @test */
@@ -53,9 +56,10 @@ class BindUuidTest extends TestCase
 
 		Route::middleware('bindings')->get('/posts/{post}', function (CustomUuidRouteBoundPost $post) {
 			return $post;
-		});
+		})->name('posts.show');
 
 		$this->get('/posts/' . $post->uuid)->assertNotFound();
+		$this->get(route('posts.show', $post->uuid))->assertNotFound();
 	}
 
 	/** @test */
@@ -65,9 +69,10 @@ class BindUuidTest extends TestCase
 
 		Route::middleware('bindings')->get('/posts/{post:custom_uuid}', function (MultipleUuidRouteBoundPost $post) {
 			return $post;
-		});
+		})->name('posts.show');
 
 		$this->get('/posts/' . $post->custom_uuid)->assertSuccessful();
+		$this->get(route('posts.show', $post))->assertSuccessful();
 	}
 
 	/** @test */
