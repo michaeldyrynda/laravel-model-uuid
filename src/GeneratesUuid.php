@@ -21,8 +21,9 @@ use Ramsey\Uuid\UuidInterface;
  * @author    Michael Dyrynda <michael@dyrynda.com.au>
  * @license   MIT
  *
- * @property  string  $uuidVersion
- * @method  static \Illuminate\Database\Eloquent\Builder  whereUuid(string $uuid)
+ * @property string $uuidVersion
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder  whereUuid(string $uuid)
  */
 trait GeneratesUuid
 {
@@ -117,7 +118,6 @@ trait GeneratesUuid
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  string|array  $uuid
      * @param  string  $uuidColumn
-     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWhereUuid($query, $uuid, $uuidColumn = null): Builder

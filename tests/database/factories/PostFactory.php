@@ -5,13 +5,13 @@
 use Faker\Generator as Faker;
 use Tests\Fixtures\CustomCastUuidPost;
 use Tests\Fixtures\CustomUuidPost;
+use Tests\Fixtures\CustomUuidRouteBoundPost;
 use Tests\Fixtures\EfficientUuidPost;
 use Tests\Fixtures\MultipleUuidPost;
+use Tests\Fixtures\MultipleUuidRouteBoundPost;
 use Tests\Fixtures\OrderedPost;
 use Tests\Fixtures\Post;
 use Tests\Fixtures\UuidRouteBoundPost;
-use Tests\Fixtures\CustomUuidRouteBoundPost;
-use Tests\Fixtures\MultipleUuidRouteBoundPost;
 
 $factory->define(CustomCastUuidPost::class, function (Faker $faker) {
     return [
@@ -64,25 +64,25 @@ $factory->define(UncastPostPost::class, function (Faker $faker) {
 });
 
 $factory->define(CustomUuidRouteBoundPost::class, function (Faker $faker) {
-	return [
-		'uuid' => $faker->uuid,
-		'custom_uuid' => $faker->uuid,
-		'title' => $faker->sentence,
-	];
+    return [
+        'uuid' => $faker->uuid,
+        'custom_uuid' => $faker->uuid,
+        'title' => $faker->sentence,
+    ];
 });
 
 $factory->define(UuidRouteBoundPost::class, function (Faker $faker) {
-	return [
-		'uuid' => $faker->uuid,
-		'custom_uuid' => $faker->uuid,
-		'title' => $faker->sentence,
-	];
+    return [
+        'uuid' => $faker->uuid,
+        'custom_uuid' => $faker->uuid,
+        'title' => $faker->sentence,
+    ];
 });
 
 $factory->define(MultipleUuidRouteBoundPost::class, function (Faker $faker) {
-	return [
-		'uuid' => $faker->uuid,
-		'custom_uuid' => $faker->uuid,
-		'title' => $faker->sentence,
-	];
+    return [
+        'uuid' => $faker->uuid,
+        'custom_uuid' => $faker->uuid,
+        'title' => $faker->sentence,
+    ];
 });

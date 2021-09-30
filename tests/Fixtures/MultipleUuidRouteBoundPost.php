@@ -6,12 +6,12 @@ use Dyrynda\Database\Support\BindsOnUuid;
 
 class MultipleUuidRouteBoundPost extends Model
 {
-	use BindsOnUuid;
+    use BindsOnUuid;
 
-	public function uuidColumns(): array
-	{
-		return [
-			'uuid', 'custom_uuid'
-		];
-	}
+    public function uuidColumns(): array
+    {
+        return [
+            'uuid', 'custom_uuid',
+        ];
+    }
 }

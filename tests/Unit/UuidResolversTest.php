@@ -9,6 +9,7 @@ class UuidResolversTest extends TestCase
 {
     /**
      * @see \Tests\Unit\UuidResolversTest::it_handles_uuid_versions
+     *
      * @return array
      */
     public function provider_for_it_handles_uuid_versions()
@@ -24,8 +25,9 @@ class UuidResolversTest extends TestCase
 
     /**
      * @test
-     * @param string $version
-     * @param string $resolved
+     *
+     * @param  string  $version
+     * @param  string  $resolved
      *
      * @dataProvider \Tests\Unit\UuidResolversTest::provider_for_it_handles_uuid_versions
      */
