@@ -82,8 +82,9 @@ class BindUuidTest extends TestCase
 
 		Route::middleware('bindings')->get('/posts/{post:custom_uuid}', function (MultipleUuidRouteBoundPost $post) {
 			return $post;
-		});
+		})->name('posts.show');
 
-		$this->get('/posts/' . $post->custom_uuid)->assertSuccessful();
+		$this->get('/posts/' . $post->uuid)->assertNotFound();
+		$this->get(route('posts.show', $post->uuid))->assertNotFound();
 	}
 }
