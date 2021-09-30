@@ -6,10 +6,10 @@ use Dyrynda\Database\Support\BindsOnUuid;
 
 class UuidRouteBoundPost extends Model
 {
-	use BindsOnUuid;
+    use BindsOnUuid;
 
-	public function uuidColumn(): string
-	{
-		return 'uuid';
-	}
+    public function uuidColumn(): string
+    {
+        return 'uuid';
+    }
 }
