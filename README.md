@@ -23,6 +23,14 @@ If you require compatibility with `ramsey/uuid` >= 4.1, please use version >= 6.
 
 As of version 6.2.0, this package supports only UUID versions 1, 4, and 6 (ordered).
 
+## Installation
+
+This package is installed via [Composer](https://getcomposer.org/). To install, run the following command.
+
+```bash
+composer require dyrynda/laravel-model-uuid
+```
+
 ## Code Samples
 
 In order to use this package, you simply need to import and use the trait within your Eloquent models.
@@ -183,13 +191,6 @@ public function boot()
 }
 ```
 
-## Installation
-
-This package is installed via [Composer](https://getcomposer.org/). To install, run the following command.
-
-```bash
-composer require dyrynda/laravel-model-uuid
-```
 ## Support
 
 If you are having general issues with this package, feel free to contact me on [Twitter](https://twitter.com/michaeldyrynda).
