@@ -22,6 +22,7 @@ use Ramsey\Uuid\UuidInterface;
  * @license   MIT
  *
  * @property string $uuidVersion
+ * @property bool $ignoreEmptyUuidColumns
  *
  * @method static \Illuminate\Database\Eloquent\Builder  whereUuid(string $uuid)
  */
@@ -50,7 +51,13 @@ trait GeneratesUuid
     public static function bootGeneratesUuid(): void
     {
         static::creating(function ($model) {
-            foreach ($model->uuidColumns() as $item) {
+            $uuidColumns = $model->uuidColumns();
+
+            if ($model->ignoreEmptyUuidColumns) {
+                $uuidColumns = array_keys(array_filter($model->only($uuidColumns)));
+            }
+
+            foreach ($uuidColumns as $item) {
                 /* @var \Illuminate\Database\Eloquent\Model|static $model */
                 $uuid = $model->resolveUuid();
 
