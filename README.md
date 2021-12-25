@@ -21,7 +21,7 @@ Take a look at [laravel-efficient-uuid](https://github.com/michaeldyrynda/larave
 
 If you require compatibility with `ramsey/uuid` >= 4.1, please use version >= 6.2.0 of this package.
 
-As of version 6.2.0, this package supports only UUID versions 1, 4, and 6 (ordered).
+As of version 6.2.0, this package supports only UUID versions 1 (`uuid1`), 4 (`uuid4`), 6 (`uuid6` - ordered) and `ordered` ([Laravels ordered UUID v4](https://laravel.com/docs/master/helpers#method-str-ordered-uuid)).
 
 ## Code Samples
 
@@ -65,7 +65,7 @@ class Post extends Model
 }
 ```
 
-By default, this package will use UUID version 4 values, however, you are welcome to use `uuid1`, `uuid3`, `uuid4`, or `uuid5` by specifying the protected property `$uuidVersion` in your model. Should you wish to take advantage of ordered UUID (version 4) values that were introduced in Laravel 5.6, you should specify `ordered` as the `$uuidVersion` in your model.
+By default, this package will use UUID version 4 values, however, you are welcome to use `uuid1`, `uuid4`, or `uuid6` by specifying the protected property `$uuidVersion` in your model. Should you wish to take advantage of [ordered UUID (version 4) values that were introduced in Laravel 5.6](https://laravel.com/docs/master/helpers#method-str-ordered-uuid), you should specify `ordered` as the `$uuidVersion` in your model.
 
 ```php
 <?php
