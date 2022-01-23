@@ -17,9 +17,9 @@
     ],
     "require": {
         "php": "^7.3|^8.0",
-        "illuminate/database": "^8.12",
-        "illuminate/events": "^8.12",
-        "illuminate/support": "^8.12",
+        "illuminate/database": "^8.12|^9.0",
+        "illuminate/events": "^8.12|^9.0",
+        "illuminate/support": "^8.12|^9.0",
         "ramsey/uuid": "^4.1"
     },
     "autoload": {
