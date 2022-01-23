@@ -30,8 +30,7 @@
     "require-dev": {
         "dyrynda/laravel-efficient-uuid": "^4.3",
         "laravel/legacy-factories": "^1.0.4",
-        "nunomaduro/collision": "^5.0",
-        "orchestra/testbench": "^6.0",
+        "orchestra/testbench": "^6.0|^7.0",
         "phpunit/phpunit": "^9.3"
     },
     "autoload-dev": {
