@@ -20,7 +20,7 @@ jobs:
           - php: 7.4
             laravel: '^9.0'
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.os }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }}
 
     services:
       mysql:
@@ -51,7 +51,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "illuminate/contracts=^${{ matrix.laravel }}" --prefer-dist --no-interaction --no-update
+          composer require "illuminate/contracts=${{ matrix.laravel }}" --prefer-dist --no-interaction --no-update
           composer update --prefer-dist --no-interaction --no-suggest --no-progress
 
       - name: Execute tests
