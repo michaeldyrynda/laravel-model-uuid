@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Support\Facades\Route;
 use Tests\Fixtures\CustomUuidRouteBoundPost;
 use Tests\Fixtures\MultipleUuidRouteBoundPost;
@@ -15,7 +16,7 @@ class BindUuidTest extends TestCase
     {
         $post = factory(UuidRouteBoundPost::class)->create();
 
-        Route::middleware('bindings')->get('/posts/{post}', function (UuidRouteBoundPost $post) {
+        Route::middleware(SubstituteBindings::class)->get('/posts/{post}', function (UuidRouteBoundPost $post) {
             return $post;
         })->name('posts.show');
 
@@ -28,7 +29,7 @@ class BindUuidTest extends TestCase
     {
         $post = factory(UuidRouteBoundPost::class)->create();
 
-        Route::middleware('bindings')->get('/posts/{post}', function (UuidRouteBoundPost $post) {
+        Route::middleware(SubstituteBindings::class)->get('/posts/{post}', function (UuidRouteBoundPost $post) {
             return $post;
         })->name('posts.show');
 
@@ -41,7 +42,7 @@ class BindUuidTest extends TestCase
     {
         $post = factory(CustomUuidRouteBoundPost::class)->create();
 
-        Route::middleware('bindings')->get('/posts/{post}', function (CustomUuidRouteBoundPost $post) {
+        Route::middleware(SubstituteBindings::class)->get('/posts/{post}', function (CustomUuidRouteBoundPost $post) {
             return $post;
         })->name('posts.show');
 
@@ -54,7 +55,7 @@ class BindUuidTest extends TestCase
     {
         $post = factory(CustomUuidRouteBoundPost::class)->create();
 
-        Route::middleware('bindings')->get('/posts/{post}', function (CustomUuidRouteBoundPost $post) {
+        Route::middleware(SubstituteBindings::class)->get('/posts/{post}', function (CustomUuidRouteBoundPost $post) {
             return $post;
         })->name('posts.show');
 
@@ -67,7 +68,7 @@ class BindUuidTest extends TestCase
     {
         $post = factory(MultipleUuidRouteBoundPost::class)->create();
 
-        Route::middleware('bindings')->get('/posts/{post:custom_uuid}', function (MultipleUuidRouteBoundPost $post) {
+        Route::middleware(SubstituteBindings::class)->get('/posts/{post:custom_uuid}', function (MultipleUuidRouteBoundPost $post) {
             return $post;
         })->name('posts.show');
 
@@ -80,7 +81,7 @@ class BindUuidTest extends TestCase
     {
         $post = factory(MultipleUuidRouteBoundPost::class)->create();
 
-        Route::middleware('bindings')->get('/posts/{post:custom_uuid}', function (MultipleUuidRouteBoundPost $post) {
+        Route::middleware(SubstituteBindings::class)->get('/posts/{post:custom_uuid}', function (MultipleUuidRouteBoundPost $post) {
             return $post;
         })->name('posts.show');
 
