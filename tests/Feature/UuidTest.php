@@ -206,6 +206,21 @@ class UuidTest extends TestCase
     }
 
     /** @test */
+    public function it_handles_an_invalid_uuid()
+    {
+        $uuid = 'b270f651-4db8-407b-aade-8666aca2750e';
+
+        EfficientUuidPost::create(['title' => 'efficient uuid', 'efficient_uuid' => $uuid]);
+
+        $post = EfficientUuidPost::whereUuid('invalid uuid')->first();
+        $this->assertNull($post);
+
+        $post = EfficientUuidPost::whereUuid(['invalid uuid', 'b270f651-4db8-407b-aade-8666aca2750e'])->first();
+        $this->assertInstanceOf(EfficientUuidPost::class, $post);
+        $this->assertSame($uuid, $post->efficient_uuid);
+    }
+
+    /** @test */
     public function it_handles_a_null_uuid_column()
     {
         tap(Model::withoutEvents(function () {
