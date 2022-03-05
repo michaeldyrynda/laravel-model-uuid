@@ -163,7 +163,7 @@ trait GeneratesUuid
      * @param  \Illuminate\Contracts\Support\Arrayable|array|string  $uuid
      * @return array
      */
-    protected function normaliseUuids($uuid) : array
+    protected function normaliseUuids($uuid): array
     {
         $uuid = array_map(fn ($uuid) => Str::lower($uuid), Arr::wrap($uuid));
 

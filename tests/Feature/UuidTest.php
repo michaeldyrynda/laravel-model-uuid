@@ -119,7 +119,7 @@ class UuidTest extends TestCase
         $this->assertEquals(2, Post::whereUuid([
             '8ab48e77-d9cd-4fe7-ace5-A5A428590C18',
             'c7c26456-ddb0-45cd-9b1c-318296cce7a3',
-            'this is invalid'
+            'this is invalid',
         ])->count());
     }
 
