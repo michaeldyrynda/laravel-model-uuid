@@ -126,9 +126,7 @@ trait GeneratesUuid
             ? $uuidColumn
             : $this->uuidColumns()[0];
 
-        $uuid = array_map(function ($uuid) {
-            return Str::lower($uuid);
-        }, Arr::wrap($uuid));
+        $uuid = $this->normaliseUuids($uuid);
 
         if ($this->isClassCastable($uuidColumn)) {
             $uuid = $this->bytesFromUuid($uuid);
@@ -157,5 +155,20 @@ trait GeneratesUuid
         }
 
         return Arr::wrap(Uuid::fromString($uuid)->getBytes());
+    }
+
+    /**
+     * Normalises a single or array of input UUIDs, filtering any invalid UUIDs.
+     *
+     * @param  \Illuminate\Contracts\Support\Arrayable|array|string  $uuid
+     * @return array
+     */
+    protected function normaliseUuids($uuid) : array
+    {
+        $uuid = array_map(fn ($uuid) => Str::lower($uuid), Arr::wrap($uuid));
+
+        $uuid = array_filter($uuid, fn ($uuid) => Uuid::isValid($uuid));
+
+        return $uuid;
     }
 }
