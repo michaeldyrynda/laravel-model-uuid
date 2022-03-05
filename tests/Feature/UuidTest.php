@@ -111,6 +111,19 @@ class UuidTest extends TestCase
     }
 
     /** @test */
+    public function you_can_search_by_array_of_uuids_which_contains_an_invalid_uuid()
+    {
+        $first = EfficientUuidPost::create(['title' => 'first post', 'uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
+        $second = EfficientUuidPost::create(['title' => 'second post', 'uuid' => 'c7c26456-ddb0-45cd-9b1c-318296cce7a3']);
+
+        $this->assertEquals(2, Post::whereUuid([
+            '8ab48e77-d9cd-4fe7-ace5-A5A428590C18',
+            'c7c26456-ddb0-45cd-9b1c-318296cce7a3',
+            'this is invalid'
+        ])->count());
+    }
+
+    /** @test */
     public function you_can_generate_a_uuid_without_casting()
     {
         $post = UncastPost::create(['title' => 'test post']);
@@ -214,10 +227,6 @@ class UuidTest extends TestCase
 
         $post = EfficientUuidPost::whereUuid('invalid uuid')->first();
         $this->assertNull($post);
-
-        $post = EfficientUuidPost::whereUuid(['invalid uuid', 'b270f651-4db8-407b-aade-8666aca2750e'])->first();
-        $this->assertInstanceOf(EfficientUuidPost::class, $post);
-        $this->assertSame($uuid, $post->efficient_uuid);
     }
 
     /** @test */
