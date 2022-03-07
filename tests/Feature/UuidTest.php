@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\WithFaker;
 use Ramsey\Uuid\Uuid;
 use Tests\Fixtures\Comment;
@@ -225,8 +226,9 @@ class UuidTest extends TestCase
 
         EfficientUuidPost::create(['title' => 'efficient uuid', 'efficient_uuid' => $uuid]);
 
-        $post = EfficientUuidPost::whereUuid('invalid uuid')->first();
-        $this->assertNull($post);
+        $this->expectException(ModelNotFoundException::class);
+
+        EfficientUuidPost::whereUuid('invalid uuid')->firstOrFail();
     }
 
     /** @test */
