@@ -165,9 +165,13 @@ trait GeneratesUuid
      */
     protected function normaliseUuids($uuid): array
     {
-        $uuid = array_map(fn ($uuid) => Str::lower($uuid), Arr::wrap($uuid));
+        $uuid = array_map(function ($uuid) {
+            return Str::lower($uuid);
+        }, Arr::wrap($uuid));
 
-        $uuid = array_filter($uuid, fn ($uuid) => Uuid::isValid($uuid));
+        $uuid = array_filter($uuid, function ($uuid) {
+            return Uuid::isValid($uuid);
+        });
 
         return $uuid;
     }
