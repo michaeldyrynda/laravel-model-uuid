@@ -10,9 +10,11 @@ use Tests\Fixtures\Comment;
 use Tests\Fixtures\CustomCastUuidPost;
 use Tests\Fixtures\CustomUuidPost;
 use Tests\Fixtures\EfficientUuidPost;
+use Tests\Fixtures\MultipleEfficientUuidPost;
 use Tests\Fixtures\MultipleUuidPost;
 use Tests\Fixtures\OrderedPost;
 use Tests\Fixtures\Post;
+use Tests\Fixtures\PrimaryEfficientUuidPost;
 use Tests\Fixtures\UncastPost;
 use Tests\Fixtures\Uuid1Post;
 use Tests\Fixtures\Uuid4Post;
@@ -282,6 +284,52 @@ class UuidTest extends TestCase
             $this->assertNotNull($comment);
             $this->assertEquals('4e6c964d-4e9b-4023-be0e-f5a6529b7184', $comment->post->uuid);
         });
+    }
+
+    /** @test */
+    public function it_handles_updating_an_efficient_uuid_model_with_multiple_casts()
+    {
+        $post = factory(MultipleEfficientUuidPost::class)->create();
+
+        $post->update([
+            'title' => 'The title is updated',
+        ]);
+
+        $this->assertEquals('The title is updated', $post->fresh()->title);
+    }
+
+    /** @test */
+    public function it_handles_saving_an_efficient_uuid_model_with_multiple_casts()
+    {
+        $post = factory(MultipleEfficientUuidPost::class)->create();
+
+        $post->title = 'The title updated';
+        $post->save();
+
+        $this->assertEquals('The title updated', $post->fresh()->title);
+    }
+
+    /** @test */
+    public function it_handles_updating_an_efficient_uuid_model_with_multiple_casts_and_a_primary_efficient_id()
+    {
+        $post = factory(PrimaryEfficientUuidPost::class)->create();
+
+        $post->update([
+            'title' => 'The title is updated',
+        ]);
+
+        $this->assertEquals('The title is updated', $post->fresh()->title);
+    }
+
+    /** @test */
+    public function it_handles_saving_an_efficient_uuid_model_with_multiple_casts_and_a_primary_efficient_id()
+    {
+        $post = factory(PrimaryEfficientUuidPost::class)->create();
+
+        $post->title = 'The title is updated';
+        $post->save();
+
+        $this->assertEquals('The title is updated', $post->fresh()->title);
     }
 
     public function factoriesWithUuidProvider(): array

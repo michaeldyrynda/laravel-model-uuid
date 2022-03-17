@@ -7,10 +7,12 @@ use Tests\Fixtures\CustomCastUuidPost;
 use Tests\Fixtures\CustomUuidPost;
 use Tests\Fixtures\CustomUuidRouteBoundPost;
 use Tests\Fixtures\EfficientUuidPost;
+use Tests\Fixtures\MultipleEfficientUuidPost;
 use Tests\Fixtures\MultipleUuidPost;
 use Tests\Fixtures\MultipleUuidRouteBoundPost;
 use Tests\Fixtures\OrderedPost;
 use Tests\Fixtures\Post;
+use Tests\Fixtures\PrimaryEfficientUuidPost;
 use Tests\Fixtures\UuidRouteBoundPost;
 
 $factory->define(CustomCastUuidPost::class, function (Faker $faker) {
@@ -29,6 +31,22 @@ $factory->define(CustomUuidPost::class, function (Faker $faker) {
 
 $factory->define(EfficientUuidPost::class, function (Faker $faker) {
     return [
+        'efficient_uuid' => $faker->uuid,
+        'title' => $faker->sentence,
+    ];
+});
+
+$factory->define(MultipleEfficientUuidPost::class, function (Faker $faker) {
+    return [
+        'efficient_uuid' => $faker->uuid,
+        'another_efficient_uuid' => $faker->uuid,
+        'title' => $faker->sentence,
+    ];
+});
+
+$factory->define(PrimaryEfficientUuidPost::class, function (Faker $faker) {
+    return [
+        'id' => $faker->uuid,
         'efficient_uuid' => $faker->uuid,
         'title' => $faker->sentence,
     ];
