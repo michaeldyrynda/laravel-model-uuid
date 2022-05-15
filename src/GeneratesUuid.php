@@ -133,7 +133,7 @@ trait GeneratesUuid
         }
 
         return $query->when(
-            is_array($uuid), 
+            is_array($uuid),
             function (Builder $query) use ($uuidColumn, $uuid) {
                 $query->whereIn($this->qualifyColumn($uuidColumn), Arr::wrap($uuid));
             },
