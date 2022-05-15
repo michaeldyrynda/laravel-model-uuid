@@ -132,9 +132,14 @@ trait GeneratesUuid
             $uuid = $this->bytesFromUuid($uuid);
         }
 
-        return $query->whereIn(
-            $this->qualifyColumn($uuidColumn),
-            Arr::wrap($uuid)
+        return $query->when(
+            is_array($uuid), 
+            function (Builder $query) use ($uuidColumn, $uuid) {
+                $query->whereIn($this->qualifyColumn($uuidColumn), Arr::wrap($uuid));
+            },
+            function (Builder $query) use ($uuidColumn, $uuid) {
+                $query->where($this->qualifyColumn($uuidColumn), $uuid);
+            }
         );
     }
 
