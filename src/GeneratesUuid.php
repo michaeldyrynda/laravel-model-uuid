@@ -36,6 +36,7 @@ trait GeneratesUuid
         'uuid1',
         'uuid4',
         'uuid6',
+        'uuid7',
         'ordered',
     ];
 
@@ -49,7 +50,7 @@ trait GeneratesUuid
      */
     public static function bootGeneratesUuid(): void
     {
-        static::creating(function ($model) {
+        static::creating(static function ($model) {
             foreach ($model->uuidColumns() as $item) {
                 /* @var \Illuminate\Database\Eloquent\Model|static $model */
                 $uuid = $model->resolveUuid();
