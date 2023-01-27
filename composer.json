@@ -1,5 +1,5 @@
 {
-    "name": "dyrynda/laravel-model-uuid",
+    "name": "bethinkpl/laravel-model-uuid",
     "description": "This package allows you to easily work with UUIDs in your Laravel models.",
     "license": "MIT",
     "keywords": [
