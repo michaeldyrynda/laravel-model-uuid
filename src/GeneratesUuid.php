@@ -36,6 +36,7 @@ trait GeneratesUuid
         'uuid1',
         'uuid4',
         'uuid6',
+        'uuid7',
         'ordered',
     ];
 
