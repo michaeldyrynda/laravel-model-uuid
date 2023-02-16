@@ -10,6 +10,6 @@ class Uuid4Post extends Model
 
     public function uuidVersion(): string
     {
-       return 'uuid4';
+        return 'uuid4';
     }
 }
