@@ -4,5 +4,8 @@ namespace Tests\Fixtures;
 
 class OrderedPost extends Model
 {
-    protected $uuidVersion = 'ordered';
+    public function uuidVersion(): string
+    {
+        return 'ordered';
+    }
 }
