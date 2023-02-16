@@ -8,5 +8,8 @@ class Uuid6Post extends Model
 {
     use GeneratesUuid;
 
-    protected $uuidVersion = 'uuid6';
+    public function uuidVersion(): string
+    {
+       return 'uuid6';
+    }
 }

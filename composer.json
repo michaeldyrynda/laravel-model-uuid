@@ -16,11 +16,11 @@
         }
     ],
     "require": {
-        "php": "^7.3|^8.0",
-        "illuminate/database": "^8.12|^9.0|^10.0",
-        "illuminate/events": "^8.12|^9.0|^10.0",
-        "illuminate/support": "^8.12|^9.0|^10.0",
-        "ramsey/uuid": "^4.1"
+        "php": "^8.1",
+        "illuminate/database": "^10.0",
+        "illuminate/events": "^10.0",
+        "illuminate/support": "^10.0",
+        "ramsey/uuid": "^4.7"
     },
     "autoload": {
         "psr-4": {
@@ -28,10 +28,10 @@
         }
     },
     "require-dev": {
-        "dyrynda/laravel-efficient-uuid": "^4.5.2",
-        "laravel/legacy-factories": "^1.0.4",
-        "orchestra/testbench": "^6.0|^7.0|^8.0",
-        "phpunit/phpunit": "^9.3"
+        "dyrynda/laravel-efficient-uuid": "^5.0",
+        "laravel/legacy-factories": "^1.3",
+        "orchestra/testbench": "^8.0",
+        "phpunit/phpunit": "^9.6.0 || ^10.0.7"
     },
     "autoload-dev": {
         "psr-4": {
@@ -48,7 +48,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "6.x-dev"
+            "dev-main": "7.x-dev"
         }
     }
 }

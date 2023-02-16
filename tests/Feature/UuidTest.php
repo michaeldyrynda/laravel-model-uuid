@@ -284,7 +284,7 @@ class UuidTest extends TestCase
         });
     }
 
-    public function factoriesWithUuidProvider(): array
+    public static function factoriesWithUuidProvider(): array
     {
         return [
             'regular uuid' => [Post::class, 'uuid'],
@@ -293,7 +293,7 @@ class UuidTest extends TestCase
         ];
     }
 
-    public function uuidVersionsProvider(): array
+    public static function uuidVersionsProvider(): array
     {
         return [
             'uuid1' => [Uuid1Post::class, Uuid::UUID_TYPE_TIME],

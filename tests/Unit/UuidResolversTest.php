@@ -7,12 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class UuidResolversTest extends TestCase
 {
-    /**
-     * @see \Tests\Unit\UuidResolversTest::it_handles_uuid_versions
-     *
-     * @return array
-     */
-    public function provider_for_it_handles_uuid_versions()
+    public static function provider_for_it_handles_uuid_versions(): array
     {
         return [
             ['uuid1', 'uuid1'],
@@ -29,13 +24,15 @@ class UuidResolversTest extends TestCase
      * @param  string  $version
      * @param  string  $resolved
      *
-     * @dataProvider \Tests\Unit\UuidResolversTest::provider_for_it_handles_uuid_versions
+     * @dataProvider provider_for_it_handles_uuid_versions
      */
     public function it_handles_uuid_versions($version, $resolved)
     {
         /* @var \Dyrynda\Database\Support\GeneratesUuid $generator */
-        $generator = $this->getMockForTrait(GeneratesUuid::class);
-        $generator->uuidVersion = $version;
+        $generator = $this->getMockForTrait(GeneratesUuid::class, mockedMethods: [
+            'uuidVersion',
+        ]);
+        $generator->method('uuidVersion')->willReturn($version);
 
         $this->assertSame($resolved, $generator->resolveUuidVersion());
     }

@@ -98,6 +98,11 @@ trait GeneratesUuid
         return call_user_func([Uuid::class, $this->resolveUuidVersion()]);
     }
 
+    public function uuidVersion(): string
+    {
+        return 'uuid4';
+    }
+
     /**
      * Resolve the UUID version to use when setting the UUID value. Default to uuid4.
      *
@@ -105,8 +110,12 @@ trait GeneratesUuid
      */
     public function resolveUuidVersion(): string
     {
-        if (property_exists($this, 'uuidVersion') && in_array($this->uuidVersion, $this->uuidVersions)) {
-            return $this->uuidVersion === 'ordered' ? 'uuid6' : $this->uuidVersion;
+        if (($uuidVersion = $this->uuidVersion()) === 'ordered') {
+            $uuidVersion = 'uuid6';
+        }
+
+        if (in_array($uuidVersion, $this->uuidVersions)) {
+            return $uuidVersion;
         }
 
         return 'uuid4';
