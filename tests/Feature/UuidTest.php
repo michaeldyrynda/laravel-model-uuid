@@ -17,6 +17,7 @@ use Tests\Fixtures\UncastPost;
 use Tests\Fixtures\Uuid1Post;
 use Tests\Fixtures\Uuid4Post;
 use Tests\Fixtures\Uuid6Post;
+use Tests\Fixtures\Uuid7Post;
 use Tests\TestCase;
 
 class UuidTest extends TestCase
@@ -298,8 +299,9 @@ class UuidTest extends TestCase
         return [
             'uuid1' => [Uuid1Post::class, Uuid::UUID_TYPE_TIME],
             'uuid4' => [Uuid4Post::class, Uuid::UUID_TYPE_RANDOM],
-            'uuid6' => [Uuid6Post::class, Uuid::UUID_TYPE_PEABODY],
-            'ordered' => [OrderedPost::class, Uuid::UUID_TYPE_PEABODY],
+            'uuid6' => [Uuid6Post::class, Uuid::UUID_TYPE_REORDERED_TIME],
+            'uuid7' => [Uuid7Post::class, Uuid::UUID_TYPE_UNIX_TIME],
+            'ordered' => [OrderedPost::class, Uuid::UUID_TYPE_REORDERED_TIME],
         ];
     }
 }
