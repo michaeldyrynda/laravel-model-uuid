@@ -49,6 +49,9 @@ jobs:
           composer require "illuminate/contracts=${{ matrix.laravel }}" --prefer-dist --no-interaction --no-update
           composer update --prefer-dist --no-interaction --no-progress
 
+      - name: Lint
+        run: vendor/bin/pint --test
+
       - name: Execute tests
         run: vendor/bin/phpunit
         env:
