@@ -44,8 +44,6 @@ trait GeneratesUuid
      *
      * When persisting a new model instance, we resolve the UUID field, then set
      * a fresh UUID, taking into account if we need to cast to binary or not.
-     *
-     * @return void
      */
     public static function bootGeneratesUuid(): void
     {
@@ -70,8 +68,6 @@ trait GeneratesUuid
 
     /**
      * The name of the column that should be used for the UUID.
-     *
-     * @return string
      */
     public function uuidColumn(): string
     {
@@ -80,8 +76,6 @@ trait GeneratesUuid
 
     /**
      * The names of the columns that should be used for the UUID.
-     *
-     * @return array
      */
     public function uuidColumns(): array
     {
@@ -90,8 +84,6 @@ trait GeneratesUuid
 
     /**
      * Resolve a UUID instance for the configured version.
-     *
-     * @return \Ramsey\Uuid\UuidInterface
      */
     public function resolveUuid(): UuidInterface
     {
@@ -105,8 +97,6 @@ trait GeneratesUuid
 
     /**
      * Resolve the UUID version to use when setting the UUID value. Default to uuid4.
-     *
-     * @return string
      */
     public function resolveUuidVersion(): string
     {
@@ -127,7 +117,6 @@ trait GeneratesUuid
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  string|array  $uuid
      * @param  string  $uuidColumn
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWhereUuid($query, $uuid, $uuidColumn = null): Builder
     {
@@ -151,7 +140,6 @@ trait GeneratesUuid
      * Convert a single UUID or array of UUIDs to bytes.
      *
      * @param  \Illuminate\Contracts\Support\Arrayable|array|string  $uuid
-     * @return array
      */
     protected function bytesFromUuid($uuid): array
     {
@@ -170,7 +158,6 @@ trait GeneratesUuid
      * Normalises a single or array of input UUIDs, filtering any invalid UUIDs.
      *
      * @param  \Illuminate\Contracts\Support\Arrayable|array|string  $uuid
-     * @return array
      */
     protected function normaliseUuids($uuid): array
     {

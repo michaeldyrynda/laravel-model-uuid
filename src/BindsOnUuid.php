@@ -12,7 +12,6 @@ trait BindsOnUuid
      *
      * @param  string  $value
      * @param  null|string  $field
-     * @return \Illuminate\Database\Eloquent\Model
      */
     public function resolveRouteBinding($value, $field = null): Model
     {
@@ -21,8 +20,6 @@ trait BindsOnUuid
 
     /**
      * Get the route key for the model.
-     *
-     * @return string
      */
     public function getRouteKeyName(): string
     {

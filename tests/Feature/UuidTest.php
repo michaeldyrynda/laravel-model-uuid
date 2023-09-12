@@ -195,6 +195,7 @@ class UuidTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider factoriesWithUuidProvider
      */
     public function it_handles_working_with_various_uuid_casts($model, $column)
@@ -259,6 +260,7 @@ class UuidTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider uuidVersionsProvider
      */
     public function it_handles_supported_uuid_versions($model, $version)
