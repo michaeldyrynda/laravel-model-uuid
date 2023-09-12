@@ -67,6 +67,21 @@ class Post extends Model
 }
 ```
 
+A default column name can also be configured. Simply create a config file called `config/model-uuid.php` and edit its contents. For example, to change the default UUID column name to `uuid_binary`, modify `config/model-uuid.php` like so:
+
+```php
+<?php
+
+return [
+    /**
+     * The default column name which should be used to store the generated UUID value.
+     * Note: This can still be overwritten by declaring a `uuidColumn()` method in your model(s).
+     */
+    'default_column_name' => 'uuid',
+];
+
+```
+
 By default, this package will use UUID version 4 values, however, you are welcome to use `uuid1`, `uuid4`, or `uuid6` by specifying the protected property `$uuidVersion` in your model. Should you wish to take advantage of [ordered UUID (version 4) values that were introduced in Laravel 5.6](https://laravel.com/docs/master/helpers#method-str-ordered-uuid), you should specify `ordered` as the `$uuidVersion` in your model.
 
 ```php
