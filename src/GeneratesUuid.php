@@ -23,7 +23,7 @@ use Ramsey\Uuid\UuidInterface;
  *
  * @property string $uuidVersion
  *
- * @method static \Illuminate\Database\Eloquent\Builder  whereUuid(string $uuid)
+ * @method static \Illuminate\Database\Eloquent\Builder whereUuid(string $uuid)
  */
 trait GeneratesUuid
 {

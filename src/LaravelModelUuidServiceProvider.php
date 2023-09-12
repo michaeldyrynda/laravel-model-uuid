@@ -14,7 +14,7 @@ class LaravelModelUuidServiceProvider extends ServiceProvider
     public function register()
     {
         // Load package configuration file
-        $configPath = __DIR__ . '/../config/model-uuid.php';
+        $configPath = __DIR__.'/../config/model-uuid.php';
         $this->mergeConfigFrom($configPath, 'model-uuid');
 
         // Add ability to publish the configuration file
