@@ -67,7 +67,7 @@ class Post extends Model
 }
 ```
 
-A default column name can also be configured. Simply create a config file called `config/model-uuid.php` and edit its contents. For example, to change the default UUID column name to `uuid_binary`, modify `config/model-uuid.php` like so:
+A default column name can also be configured. Simply create a config file called `config/model-uuid.php` and edit its contents. For example, to change the default UUID column name to `uuid_binary`, modify your `config/model-uuid.php` like so:
 
 ```php
 <?php
@@ -77,7 +77,7 @@ return [
      * The default column name which should be used to store the generated UUID value.
      * Note: This can still be overwritten by declaring a `uuidColumn()` method in your model(s).
      */
-    'default_column_name' => 'uuid',
+    'default_column_name' => 'uuid_binary',
 ];
 
 ```
