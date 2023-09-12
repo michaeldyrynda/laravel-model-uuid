@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use Dyrynda\Database\Support\GeneratesUuid;
 use Config;
+use Dyrynda\Database\Support\GeneratesUuid;
 use Tests\TestCase;
 
 class GeneratesUuidTest extends TestCase
@@ -13,7 +13,8 @@ class GeneratesUuidTest extends TestCase
      */
     public function it_gets_default_column_name()
     {
-        $testModelThatGeneratesUuid = new class() {
+        $testModelThatGeneratesUuid = new class()
+        {
             use GeneratesUuid;
         };
 
