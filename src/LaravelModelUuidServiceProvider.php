@@ -2,22 +2,19 @@
 
 namespace Dyrynda\Database\Support;
 
-use Illuminate\Support\ServiceProvider;
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
+use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class LaravelModelUuidServiceProvider extends ServiceProvider
+class LaravelModelUuidServiceProvider extends PackageServiceProvider
 {
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
-    public function register()
+    public function configurePackage(Package $package): void
     {
-        // Load package configuration file
-        $configPath = __DIR__.'/../config/model-uuid.php';
-        $this->mergeConfigFrom($configPath, 'model-uuid');
-
-        // Add ability to publish the configuration file
-        $this->publishes([$configPath => config_path('model-uuid.php')], 'config');
+        $package
+            ->name('model-uuid')
+            ->hasConfigFile()
+            ->hasInstallCommand(function (InstallCommand $command) {
+                $command->publishConfigFile();
+            });
     }
 }
