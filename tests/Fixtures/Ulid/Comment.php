@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Fixtures;
+namespace Tests\Fixtures\Ulid;
 
 class Comment extends Model
 {
-    protected $table = 'comments';
+    protected $table = 'ulid_comments';
 
     public function post()
     {

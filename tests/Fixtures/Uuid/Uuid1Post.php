@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Fixtures;
+namespace Tests\Fixtures\Uuid;
 
 use Dyrynda\Database\Support\GeneratesUuid;
 

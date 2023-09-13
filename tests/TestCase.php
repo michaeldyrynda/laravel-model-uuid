@@ -29,7 +29,7 @@ class TestCase extends OrchestraTestCase
     {
         Schema::dropAllTables();
 
-        $app['db']->connection()->getSchemaBuilder()->create('posts', function (Blueprint $table) {
+        $app['db']->connection()->getSchemaBuilder()->create('uuid_posts', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid')->nullable();
             $table->uuid('custom_uuid')->nullable();
@@ -37,10 +37,24 @@ class TestCase extends OrchestraTestCase
             $table->string('title');
         });
 
-        $app['db']->connection()->getSchemaBuilder()->create('comments', function (Blueprint $table) {
+        $app['db']->connection()->getSchemaBuilder()->create('uuid_comments', function (Blueprint $table) {
             $table->increments('id');
             $table->foreignId('post_id');
             $table->uuid('uuid')->nullable();
+            $table->text('body');
+        });
+
+        $app['db']->connection()->getSchemaBuilder()->create('ulid_posts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->ulid('ulid')->nullable();
+            $table->ulid('custom_ulid')->nullable();
+            $table->string('title');
+        });
+
+        $app['db']->connection()->getSchemaBuilder()->create('ulid_comments', function (Blueprint $table) {
+            $table->increments('id');
+            $table->foreignId('post_id');
+            $table->ulid('ulid')->nullable();
             $table->text('body');
         });
     }

@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Fixtures;
+namespace Tests\Fixtures\Uuid;
 
 use Dyrynda\Database\Support\GeneratesUuid;
 
-class Uuid4Post extends Model
+class Uuid6Post extends Model
 {
     use GeneratesUuid;
 
     public function uuidVersion(): string
     {
-        return 'uuid4';
+        return 'uuid6';
     }
 }

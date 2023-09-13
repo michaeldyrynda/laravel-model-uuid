@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Fixtures;
+namespace Tests\Fixtures\Uuid;
 
 use Dyrynda\Database\Support\GeneratesUuid;
 use Illuminate\Database\Eloquent\Model as BaseModel;
@@ -12,7 +12,7 @@ abstract class Model extends BaseModel
     /**
      * {@inheritdoc}
      */
-    protected $table = 'posts';
+    protected $table = 'uuid_posts';
 
     /**
      * {@inheritdoc}
