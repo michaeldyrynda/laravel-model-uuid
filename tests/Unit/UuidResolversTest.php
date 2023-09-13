@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Dyrynda\Database\Support\GeneratesUuid;
+use Mockery;
 use PHPUnit\Framework\TestCase;
 
 class UuidResolversTest extends TestCase
@@ -29,12 +30,14 @@ class UuidResolversTest extends TestCase
      */
     public function it_handles_uuid_versions($version, $resolved)
     {
-        /* @var \Dyrynda\Database\Support\GeneratesUuid $generator */
-        $generator = $this->getMockForTrait(GeneratesUuid::class, mockedMethods: [
-            'uuidVersion',
-        ]);
-        $generator->method('uuidVersion')->willReturn($version);
+        $generator = Mockery::mock(UuidTestClass::class)->makePartial();
+        $generator->shouldReceive('uuidVersion')->once()->andReturn($version);
 
         $this->assertSame($resolved, $generator->resolveUuidVersion());
     }
+}
+
+class UuidTestClass
+{
+    use GeneratesUuid;
 }

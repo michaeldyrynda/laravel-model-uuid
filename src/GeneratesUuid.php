@@ -72,7 +72,7 @@ trait GeneratesUuid
      */
     public function uuidColumn(): string
     {
-        return 'uuid';
+        return config('model-uuid.column_name', 'uuid');
     }
 
     /**
