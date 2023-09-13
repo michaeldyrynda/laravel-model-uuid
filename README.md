@@ -67,22 +67,11 @@ class Post extends Model
 }
 ```
 
-A default column name can also be configured. Simply create a config file called `config/model-uuid.php` and edit its contents. For example, to change the default UUID column name to `uuid_binary`, modify your `config/model-uuid.php` like so:
+The package will use `uuid` as the column name to store the generated UUID value by default. If you prefer a different name, you may change the `model-uuid.column_name` config variable.
 
-```php
-<?php
+You may also override the `uuidColumn` method on a per-model basis.
 
-return [
-    /**
-     * The default column name which should be used to store the generated UUID value.
-     * Note: This can still be overwritten by declaring a `uuidColumn()` method in your model(s).
-     */
-    'default_column_name' => 'uuid_binary',
-];
-
-```
-
-By default, this package will use UUID version 4 values, however, you are welcome to use `uuid1`, `uuid4`, or `uuid6` by specifying the protected property `$uuidVersion` in your model. Should you wish to take advantage of [ordered UUID (version 4) values that were introduced in Laravel 5.6](https://laravel.com/docs/master/helpers#method-str-ordered-uuid), you should specify `ordered` as the `$uuidVersion` in your model.
+By default, this package will use UUID version 4 values, however, you are welcome to use `uuid1`, `uuid4`, `uuid6`, or `uuid7` by specifying the protected property `$uuidVersion` in your model. Should you wish to take advantage of [ordered UUID (version 4) values that were introduced in Laravel 5.6](https://laravel.com/docs/master/helpers#method-str-ordered-uuid), you should specify `ordered` as the `$uuidVersion` in your model.
 
 ```php
 <?php
@@ -210,6 +199,13 @@ This package is installed via [Composer](https://getcomposer.org/). To install, 
 ```bash
 composer require dyrynda/laravel-model-uuid
 ```
+
+If you wish to override default configuration, you may publish the configuration file to your application.
+
+```bash
+php artisan vendor:publish --tag=model-uuid-config
+```
+
 ## Support
 
 If you are having general issues with this package, feel free to contact me on [Twitter](https://twitter.com/michaeldyrynda).

@@ -24,7 +24,7 @@ class GeneratesUuidTest extends TestCase
             'The UUID column should be "uuid" when no default is configured.'
         );
 
-        Config::set('model-uuid.default_column_name', 'uuid_custom');
+        Config::set('model-uuid.column_name', 'uuid_custom');
         $this->assertSame(
             $testModelThatGeneratesUuid->uuidColumn(),
             'uuid_custom',
