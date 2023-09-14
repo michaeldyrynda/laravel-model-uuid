@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Fixtures;
+namespace Tests\Fixtures\Uuid;
 
 class CustomCastUuidPost extends Model
 {

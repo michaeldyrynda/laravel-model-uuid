@@ -4,9 +4,9 @@ namespace Tests\Feature;
 
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Support\Facades\Route;
-use Tests\Fixtures\CustomUuidRouteBoundPost;
-use Tests\Fixtures\MultipleUuidRouteBoundPost;
-use Tests\Fixtures\UuidRouteBoundPost;
+use Tests\Fixtures\Uuid\CustomUuidRouteBoundPost;
+use Tests\Fixtures\Uuid\MultipleUuidRouteBoundPost;
+use Tests\Fixtures\Uuid\UuidRouteBoundPost;
 use Tests\TestCase;
 
 class BindUuidTest extends TestCase

@@ -3,8 +3,8 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use Faker\Generator as Faker;
-use Tests\Fixtures\Comment;
-use Tests\Fixtures\Post;
+use Tests\Fixtures\Ulid\Comment;
+use Tests\Fixtures\Ulid\Post;
 
 $factory->define(Comment::class, function (Faker $faker) {
     return [

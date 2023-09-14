@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Fixtures;
+namespace Tests\Fixtures\Uuid;
 
 use Dyrynda\Database\Support\BindsOnUuid;
 
-class CustomUuidRouteBoundPost extends Model
+class UuidRouteBoundPost extends Model
 {
     use BindsOnUuid;
 
     public function uuidColumn(): string
     {
-        return 'custom_uuid';
+        return 'uuid';
     }
 }
