@@ -15,9 +15,9 @@ class EfficientUuidExistsRuleTest extends TestCase
         /** @var \Tests\Fixtures\EfficientUuidPost $post */
         $post = factory(EfficientUuidPost::class)->create();
 
-        $rule = new EfficientUuidExists(EfficientUuidPost::class);
+        $rule = new EfficientUuidExists(EfficientUuidPost::class, 'efficient_uuid');
 
-        $this->assertTrue($rule->passes('uuid', $post->uuid));
+        $this->assertTrue($rule->passes('efficient_uuid', $post->efficient_uuid));
     }
 
     /** @test */
@@ -46,8 +46,8 @@ class EfficientUuidExistsRuleTest extends TestCase
         /** @var \Tests\Fixtures\EfficientUuidPost $post */
         $post = factory(EfficientUuidPost::class)->create();
 
-        $rule = new EfficientUuidExists(EfficientUuidPost::class, 'custom_uuid');
+        $rule = new EfficientUuidExists(EfficientUuidPost::class, 'custom_efficient_uuid');
 
-        $this->assertTrue($rule->passes('custom_uuid', $post->custom_uuid));
+        $this->assertTrue($rule->passes('custom_efficient_uuid', $post->custom_efficient_uuid));
     }
 }

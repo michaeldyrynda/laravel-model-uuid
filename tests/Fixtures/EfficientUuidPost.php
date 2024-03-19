@@ -16,6 +16,8 @@ class EfficientUuidPost extends Model
     protected $casts = [
         'uuid' => EfficientUuid::class,
         'custom_uuid' => EfficientUuid::class,
+        'efficient_uuid' => EfficientUuid::class,
+        'custom_efficient_uuid' => EfficientUuid::class,
     ];
 
     public function uuidColumn(): string
@@ -25,6 +27,11 @@ class EfficientUuidPost extends Model
 
     public function uuidColumns(): array
     {
-        return ['uuid', 'custom_uuid'];
+        return [
+            'uuid',
+            'custom_uuid',
+            'efficient_uuid',
+            'custom_efficient_uuid',
+        ];
     }
 }

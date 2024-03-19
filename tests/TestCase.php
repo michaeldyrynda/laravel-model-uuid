@@ -34,6 +34,7 @@ class TestCase extends OrchestraTestCase
             $table->uuid('uuid')->nullable();
             $table->uuid('custom_uuid')->nullable();
             $table->efficientUuid('efficient_uuid')->nullable();
+            $table->efficientUuid('custom_efficient_uuid')->nullable();
             $table->string('title');
         });
 
