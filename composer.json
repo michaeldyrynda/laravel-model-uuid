@@ -18,7 +18,7 @@
     "require": {
         "php": "^8.1",
         "illuminate/container": "^10.0 || ^11.0",
-        "illumiante/contracts": "^10.0 || ^11.0",
+        "illuminate/contracts": "^10.0 || ^11.0",
         "illuminate/database": "^10.0 || ^11.0",
         "illuminate/events": "^10.0 || ^11.0",
         "illuminate/support": "^10.0 || ^11.0",
