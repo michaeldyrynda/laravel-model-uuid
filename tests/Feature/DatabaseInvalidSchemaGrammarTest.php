@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use Dyrynda\Database\Exceptions\UnknownGrammarClass;
+use Dyrynda\Database\Support\Exceptions\UnknownGrammarClass;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Grammars\SqlServerGrammar;

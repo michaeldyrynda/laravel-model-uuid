@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Dyrynda\Database\LaravelEfficientUuidServiceProvider;
+use Dyrynda\Database\Support\LaravelModelUuidServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
@@ -21,7 +21,7 @@ class TestCase extends OrchestraTestCase
     public function getPackageProviders($app)
     {
         return [
-            LaravelEfficientUuidServiceProvider::class,
+            LaravelModelUuidServiceProvider::class,
         ];
     }
 
