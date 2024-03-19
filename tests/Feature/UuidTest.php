@@ -79,8 +79,8 @@ class UuidTest extends TestCase
     /** @test */
     public function you_can_search_by_array_of_uuids()
     {
-        $first = Post::create(['title' => 'first post', 'uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
-        $second = Post::create(['title' => 'second post', 'uuid' => 'c7c26456-ddb0-45cd-9b1c-318296cce7a3']);
+        Post::create(['title' => 'first post', 'uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
+        Post::create(['title' => 'second post', 'uuid' => 'c7c26456-ddb0-45cd-9b1c-318296cce7a3']);
 
         $this->assertEquals(2, Post::whereUuid([
             '8ab48e77-d9cd-4fe7-ace5-A5A428590C18',
@@ -91,8 +91,8 @@ class UuidTest extends TestCase
     /** @test */
     public function you_can_search_by_array_of_efficient_uuids()
     {
-        $first = EfficientUuidPost::create(['title' => 'first post', 'efficient_uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
-        $second = EfficientUuidPost::create(['title' => 'second post', 'efficient_uuid' => 'c7c26456-ddb0-45cd-9b1c-318296cce7a3']);
+        EfficientUuidPost::create(['title' => 'first post', 'uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
+        EfficientUuidPost::create(['title' => 'second post', 'uuid' => 'c7c26456-ddb0-45cd-9b1c-318296cce7a3']);
 
         $this->assertEquals(2, EfficientUuidPost::whereUuid([
             '8ab48e77-d9cd-4fe7-ace5-A5A428590C18',
@@ -103,8 +103,8 @@ class UuidTest extends TestCase
     /** @test */
     public function you_can_search_by_array_of_uuids_for_custom_column()
     {
-        $first = CustomCastUuidPost::create(['title' => 'first post', 'custom_uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
-        $second = CustomCastUuidPost::create(['title' => 'second post', 'custom_uuid' => 'c7c26456-ddb0-45cd-9b1c-318296cce7a3']);
+        CustomCastUuidPost::create(['title' => 'first post', 'custom_uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
+        CustomCastUuidPost::create(['title' => 'second post', 'custom_uuid' => 'c7c26456-ddb0-45cd-9b1c-318296cce7a3']);
 
         $this->assertEquals(2, CustomCastUuidPost::whereUuid([
             '8ab48e77-d9cd-4fe7-ace5-A5A428590C18',
@@ -115,8 +115,8 @@ class UuidTest extends TestCase
     /** @test */
     public function you_can_search_by_array_of_uuids_which_contains_an_invalid_uuid()
     {
-        $first = EfficientUuidPost::create(['title' => 'first post', 'uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
-        $second = EfficientUuidPost::create(['title' => 'second post', 'uuid' => 'c7c26456-ddb0-45cd-9b1c-318296cce7a3']);
+        Post::create(['title' => 'first post', 'uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
+        Post::create(['title' => 'second post', 'uuid' => 'c7c26456-ddb0-45cd-9b1c-318296cce7a3']);
 
         $this->assertEquals(2, Post::whereUuid([
             '8ab48e77-d9cd-4fe7-ace5-A5A428590C18',
@@ -169,12 +169,12 @@ class UuidTest extends TestCase
     {
         $uuid = 'b270f651-4db8-407b-aade-8666aca2750e';
 
-        EfficientUuidPost::create(['title' => 'efficient uuid', 'efficient_uuid' => $uuid]);
+        EfficientUuidPost::create(['title' => 'efficient uuid', 'uuid' => $uuid]);
 
         $post = EfficientUuidPost::whereUuid($uuid)->first();
 
         $this->assertInstanceOf(EfficientUuidPost::class, $post);
-        $this->assertSame($uuid, $post->efficient_uuid);
+        $this->assertSame($uuid, $post->uuid);
     }
 
     /** @test */
@@ -211,12 +211,12 @@ class UuidTest extends TestCase
     {
         tap(EfficientUuidPost::create([
             'title' => 'Efficient uuid post',
-            'efficient_uuid' => $uuid = $this->faker->uuid,
+            'uuid' => $uuid = $this->faker->uuid,
         ]), function ($post) use ($uuid) {
-            $this->assertEquals($uuid, $post->efficient_uuid);
+            $this->assertEquals($uuid, $post->uuid);
             $this->assertSame(
                 Uuid::fromString($uuid)->getBytes(),
-                $post->getRawOriginal('efficient_uuid')
+                $post->getRawOriginal('uuid')
             );
         });
     }
@@ -226,7 +226,7 @@ class UuidTest extends TestCase
     {
         $uuid = 'b270f651-4db8-407b-aade-8666aca2750e';
 
-        EfficientUuidPost::create(['title' => 'efficient uuid', 'efficient_uuid' => $uuid]);
+        EfficientUuidPost::create(['title' => 'efficient uuid', 'uuid' => $uuid]);
 
         $this->expectException(ModelNotFoundException::class);
 
@@ -252,10 +252,10 @@ class UuidTest extends TestCase
         tap(Model::withoutEvents(function () {
             return EfficientUuidPost::create([
                 'title' => 'Nullable uuid',
-                'efficient_uuid' => null,
+                'custom_uuid' => null,
             ]);
         }), function ($post) {
-            $this->assertNull($post->efficient_uuid);
+            $this->assertNull($post->custom_uuid);
         });
     }
 
@@ -292,7 +292,7 @@ class UuidTest extends TestCase
         return [
             'regular uuid' => [Post::class, 'uuid'],
             'custom uuid' => [CustomUuidPost::class, 'custom_uuid'],
-            'efficient uuid' => [EfficientUuidPost::class, 'efficient_uuid'],
+            'efficient uuid' => [EfficientUuidPost::class, 'uuid'],
         ];
     }
 
