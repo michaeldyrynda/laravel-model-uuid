@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Dyrynda\Database\LaravelEfficientUuidServiceProvider;
+use Dyrynda\Database\Support\LaravelModelUuidServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
@@ -21,7 +21,7 @@ class TestCase extends OrchestraTestCase
     public function getPackageProviders($app)
     {
         return [
-            LaravelEfficientUuidServiceProvider::class,
+            LaravelModelUuidServiceProvider::class,
         ];
     }
 
@@ -34,6 +34,7 @@ class TestCase extends OrchestraTestCase
             $table->uuid('uuid')->nullable();
             $table->uuid('custom_uuid')->nullable();
             $table->efficientUuid('efficient_uuid')->nullable();
+            $table->efficientUuid('custom_efficient_uuid')->nullable();
             $table->string('title');
         });
 

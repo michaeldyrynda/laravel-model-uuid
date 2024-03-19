@@ -17,6 +17,8 @@
     ],
     "require": {
         "php": "^8.1",
+        "illuminate/container": "^10.0 || ^11.0",
+        "illuminate/contracts": "^10.0 || ^11.0",
         "illuminate/database": "^10.0 || ^11.0",
         "illuminate/events": "^10.0 || ^11.0",
         "illuminate/support": "^10.0 || ^11.0",
@@ -29,7 +31,6 @@
         }
     },
     "require-dev": {
-        "dyrynda/laravel-efficient-uuid": "^5.0",
         "laravel/legacy-factories": "^1.3",
         "laravel/pint": "^1.13",
         "orchestra/testbench": "^8.0 || ^9.0",
@@ -39,9 +40,6 @@
         "psr-4": {
             "Tests\\": "tests/"
         }
-    },
-    "suggest": {
-        "dyrynda/laravel-efficient-uuid": "Override Laravel's default query grammar to efficiently store UUIDs."
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

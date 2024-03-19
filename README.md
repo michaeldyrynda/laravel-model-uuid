@@ -135,7 +135,7 @@ If you use the suggested [laravel-efficient-uuid](https://github.com/michaeldyry
 
 namespace App;
 
-use Dyrynda\Database\Casts\EfficientUuid;
+use Dyrynda\Database\Support\Casts\EfficientUuid;
 use Dyrynda\Database\Support\GeneratesUuid;
 use Illuminate\Database\Eloquent\Model;
 
