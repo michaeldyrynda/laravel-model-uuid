@@ -14,7 +14,6 @@ class EfficientUuidPost extends Model
     public $timestamps = false;
 
     protected $casts = [
-        'uuid' => EfficientUuid::class,
         'custom_uuid' => EfficientUuid::class,
         'efficient_uuid' => EfficientUuid::class,
         'custom_efficient_uuid' => EfficientUuid::class,
