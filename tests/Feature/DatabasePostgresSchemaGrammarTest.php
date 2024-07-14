@@ -25,7 +25,10 @@ class DatabasePostgresSchemaGrammarTest extends TestCase
         $connection = m::mock(Connection::class);
 
         $this->assertEquals(
-            ['alter table "users" add column "foo" uuid not null, add column "bar" bytea not null'],
+            [
+                'alter table "users" add column "foo" uuid not null',
+                'alter table "users" add column "bar" bytea not null',
+            ],
             $blueprint->toSql($connection, new PostgresGrammar)
         );
     }

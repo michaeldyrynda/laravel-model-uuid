@@ -23,6 +23,7 @@ class DatabaseSQLiteSchemaGrammarTest extends TestCase
         });
 
         $connection = m::mock(Connection::class);
+        $connection->expects('getServerVersion')->once();
 
         $this->assertEquals(
             ['alter table "users" add column "foo" varchar not null', 'alter table "users" add column "bar" blob(256) not null'],

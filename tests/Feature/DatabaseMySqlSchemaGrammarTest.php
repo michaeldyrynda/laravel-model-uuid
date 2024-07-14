@@ -25,7 +25,10 @@ class DatabaseMySqlSchemaGrammarTest extends TestCase
         $connection = m::mock(Connection::class);
 
         $this->assertEquals(
-            ['alter table `users` add `foo` char(36) not null, add `bar` binary(16) not null'],
+            [
+                'alter table `users` add `foo` char(36) not null',
+                'alter table `users` add `bar` binary(16) not null',
+            ],
             $blueprint->toSql($connection, new MySqlGrammar)
         );
     }
