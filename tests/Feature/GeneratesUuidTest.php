@@ -13,7 +13,7 @@ class GeneratesUuidTest extends TestCase
      */
     public function it_gets_default_column_name()
     {
-        $testModelThatGeneratesUuid = new class()
+        $testModelThatGeneratesUuid = new class
         {
             use GeneratesUuid;
         };

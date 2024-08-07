@@ -25,7 +25,7 @@ class DatabaseInvalidSchemaGrammarTest extends TestCase
 
         $connection = m::mock(Connection::class);
 
-        $this->expectExceptionObject(new UnknownGrammarClass());
+        $this->expectExceptionObject(new UnknownGrammarClass);
 
         $blueprint->toSql($connection, new SqlServerGrammar);
     }
