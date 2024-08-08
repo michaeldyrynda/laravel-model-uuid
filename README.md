@@ -87,7 +87,7 @@ class Post extends Model
 
     public function uuidVersion(): string
     {
-        return 'uuid5';
+        return 'uuid6';
     }
 }
 ```
