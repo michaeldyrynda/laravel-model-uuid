@@ -24,6 +24,7 @@ use Ramsey\Uuid\UuidInterface;
  * @property string $uuidVersion
  *
  * @method static \Illuminate\Database\Eloquent\Builder whereUuid(string|string[] $uuid, ?string $uuidColumn = null)
+ * @method static \Illuminate\Database\Eloquent\Builder whereNotUuid(string|string[] $uuid, ?string $uuidColumn = null)
  */
 trait GeneratesUuid
 {
@@ -138,6 +139,24 @@ trait GeneratesUuid
     }
 
     /**
+     * Scope queries to find by UUID.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string|array  $uuid
+     * @param  string  $uuidColumn
+     */
+    public function scopeWhereNotUuid($query, $uuid, $uuidColumn = null): Builder
+    {
+        $uuidColumn = $this->guessUuidColumn($uuidColumn);
+        $uuid = $this->prepareUuid($uuid, $uuidColumn);
+
+        return $query->whereNotIn(
+            $this->qualifyColumn($uuidColumn),
+            Arr::wrap($uuid)
+        );
+    }
+
+    /**
      * Convert a single UUID or array of UUIDs to bytes.
      *
      * @param  \Illuminate\Contracts\Support\Arrayable|array|string  $uuid
@@ -169,6 +188,38 @@ trait GeneratesUuid
         $uuid = array_filter($uuid, function ($uuid) {
             return Uuid::isValid($uuid);
         });
+
+        return $uuid;
+    }
+
+
+    /**
+     * Guess UUID column based on model configurations or given uuid column
+     *
+     * @param  ?string  $uuidColumn
+     * @return string
+     */
+    protected function guessUuidColumn($uuidColumn = null): string
+    {
+        return ! is_null($uuidColumn) && in_array($uuidColumn, $this->uuidColumns())
+            ? $uuidColumn
+            : $this->uuidColumns()[0];
+    }
+
+    /**
+     * Prepare UUID by normalization
+     *
+     * @param  string|array  $uuid
+     * @param  string  $uuidColumn
+     * @return string|array
+     */
+    protected function prepareUuid($uuid, $uuidColumn): array|string
+    {
+        $uuid = $this->normaliseUuids($uuid);
+
+        if ($this->isClassCastable($uuidColumn)) {
+            $uuid = $this->bytesFromUuid($uuid);
+        }
 
         return $uuid;
     }
