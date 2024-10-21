@@ -122,15 +122,8 @@ trait GeneratesUuid
      */
     public function scopeWhereUuid($query, $uuid, $uuidColumn = null): Builder
     {
-        $uuidColumn = ! is_null($uuidColumn) && in_array($uuidColumn, $this->uuidColumns())
-            ? $uuidColumn
-            : $this->uuidColumns()[0];
-
-        $uuid = $this->normaliseUuids($uuid);
-
-        if ($this->isClassCastable($uuidColumn)) {
-            $uuid = $this->bytesFromUuid($uuid);
-        }
+        $uuidColumn = $this->guessUuidColumn($uuidColumn);
+        $uuid = $this->prepareUuid($uuid, $uuidColumn);
 
         return $query->whereIn(
             $this->qualifyColumn($uuidColumn),
