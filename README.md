@@ -17,13 +17,13 @@ I find myself using UUID across multiple projects of late, and packaged up this 
 
 For more information, check out [this post](https://www.percona.com/blog/2014/12/19/store-uuid-optimized-way/) on storing and working with UUID in an optimised manner.
 
-Take a look at [laravel-efficient-uuid](https://github.com/michaeldyrynda/laravel-efficient-uuid) if you want to make it easy to generate migrations that efficiently store UUID in your database.
+**Note**: The functionality of [laravel-efficient-uuid](https://github.com/michaeldyrynda/laravel-efficient-uuid) has been combined with this package as of version [8.0](https://github.com/michaeldyrynda/laravel-model-uuid/releases/tag/8.0.0).
 
 If you require compatibility with `ramsey/uuid` >= 4.1, please use version >= 6.2.0 of this package.
 
-As of version 7.1.0 this package supports only UUID versions 1 (`uuid1`), 4 (`uuid4`), 6 (`uuid6` - ordered) and `ordered` ([Laravel's ordered UUID v4](https://laravel.com/docs/master/helpers#method-str-ordered-uuid)) and 7 (`uuid7`). 
+As of version 7.1.0 this package supports only UUID versions 1 (`uuid1`), 4 (`uuid4`), 6 (`uuid6` - ordered) and `ordered` ([Laravel's ordered UUID v4](https://laravel.com/docs/master/helpers#method-str-ordered-uuid)) and 7 (`uuid7`).
 
-This package supports Laravel 10 and PHP 8.1 as minimum.
+This package supports Laravel 11 and PHP 8.2 as minimum.
 
 ## Code Samples
 
@@ -92,7 +92,7 @@ class Post extends Model
 }
 ```
 
-Whilst not recommended, if you _do_ choose to use a UUID as your primary model key (`id`), be sure to configure your model for this setup correctly. Not updating these properties will lead to Laravel attempting to convert your `id` column to an integer, which will be cast to `0`. When used in combination with [`laravel-efficient-uuid`](https://github.com/michaeldyrynda/laravel-efficient-uuid), this casting will result in a `Ramsey\Uuid\Exception\InvalidUuidStringException` being thrown.
+Whilst not recommended, if you _do_ choose to use a UUID as your primary model key (`id`), be sure to configure your model for this setup correctly. Not updating these properties will lead to Laravel attempting to convert your `id` column to an integer, which will be cast to `0`. When used in combination with the `EfficientUuid` cast, this casting will result in a `Ramsey\Uuid\Exception\InvalidUuidStringException` being thrown.
 
 ```php
 <?php
