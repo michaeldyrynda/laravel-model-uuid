@@ -71,7 +71,7 @@ The package will use `uuid` as the column name to store the generated UUID value
 
 You may also override the `uuidColumn` method on a per-model basis.
 
-By default, this package will use UUID version 4 values, however, you are welcome to use `uuid1`, `uuid4`, `uuid6`, or `uuid7` by specifying the protected property `$uuidVersion` in your model. Should you wish to take advantage of [ordered UUID (version 4) values that were introduced in Laravel 5.6](https://laravel.com/docs/master/helpers#method-str-ordered-uuid), you should specify `ordered` as the `$uuidVersion` in your model.
+By default, this package will use UUID version 4 values, however, you are welcome to use `uuid1`, `uuid4`, `uuid6`, or `uuid7` by specifying the protected property `$uuidVersion` in your model. Should you wish to take advantage of [ordered UUID (version 4) values that were introduced in Laravel 5.6](https://laravel.com/docs/master/helpers#method-str-ordered-uuid), you should return `ordered` from your model's `uuidVersion()` method.
 
 ```php
 <?php
