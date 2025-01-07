@@ -55,7 +55,7 @@ class Post extends Model
 }
 ```
 
-You can have multiple UUID columns in each table by specifying an array in the `uuidColumns` method. When querying using the `whereUuid` scope, the default column - specified by `uuidColumn` will be used.
+You can have multiple UUID columns in each table by specifying an array in the `uuidColumns` method. When querying using the `whereUuid` or `whereNotUuid` scope, the default column - specified by `uuidColumn` will be used.
 
 ```php
 class Post extends Model
@@ -126,6 +126,20 @@ $post = Post::whereUuid($uuid, 'custom_column')->first();
 
 // Find multiple posts with a custom column name
 $post = Post::whereUuid([$first, $second], 'custom_column')->get();
+
+
+
+// Exclude a specific post using the default (uuid) column name
+$post = Post::whereNotUuid($uuid)->first();
+
+// Exclude multiple posts using the default (uuid) column name
+$post = Post::whereNotUuid([$first, $second])->get();
+
+// Exclude a specific post using a custom column name
+$post = Post::whereNotUuid($uuid, 'custom_column')->first();
+
+// Exclude multiple posts using a custom column name
+$post = Post::whereNotUuid([$first, $second], 'custom_column')->get();
 ```
 
 If you use the suggested [laravel-efficient-uuid](https://github.com/michaeldyrynda/laravel-efficient-uuid) package, you will need to add a cast to your model in order to correctly set and retrieve your UUID values. This will ensure your UUIDs are written to your (MySQL) database as binary and presented as strings.
