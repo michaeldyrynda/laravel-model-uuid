@@ -56,6 +56,18 @@ class UuidTest extends TestCase
     }
 
     /** @test */
+    public function you_can_exclude_a_model_by_its_uuid()
+    {
+        $uuid = '55635d83-10bc-424f-bf3f-395ea7a5b47f';
+
+        Post::create(['title' => 'test post', 'uuid' => $uuid]);
+
+        $this->assertNull(
+            Post::whereNotUuid($uuid)->first()
+        );
+    }
+
+    /** @test */
     public function you_can_find_a_model_by_custom_uuid_parameter()
     {
         $uuid = '6499332d-25e1-4d75-bd92-c6ded0820fb3';
@@ -89,6 +101,24 @@ class UuidTest extends TestCase
     }
 
     /** @test */
+    public function you_can_exclude_by_array_of_uuids()
+    {
+        Post::create(['title' => 'first post', 'uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
+        Post::create(['title' => 'second post', 'uuid' => 'c7c26456-ddb0-45cd-9b1c-318296cce7a3']);
+        Post::create(['title' => 'third post', 'uuid' => 'e99d440e-fa25-45f2-ba2f-7c4c48f6fb5d']);
+
+        $uuids = [
+            '8ab48e77-d9cd-4fe7-ace5-A5A428590C18',
+            'c7c26456-ddb0-45cd-9b1c-318296cce7a3',
+        ];
+
+        $posts = Post::whereNotUuid($uuids)->get();
+
+        $this->assertEquals(1, $posts->count());
+        $this->assertEquals('e99d440e-fa25-45f2-ba2f-7c4c48f6fb5d', $posts->get(0)->uuid);
+    }
+
+    /** @test */
     public function you_can_search_by_array_of_efficient_uuids()
     {
         EfficientUuidPost::create(['title' => 'first post', 'efficient_uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
@@ -98,6 +128,24 @@ class UuidTest extends TestCase
             '8ab48e77-d9cd-4fe7-ace5-A5A428590C18',
             'c7c26456-ddb0-45cd-9b1c-318296cce7a3',
         ], 'efficient_uuid')->count());
+    }
+
+    /** @test */
+    public function you_can_exclude_by_array_of_efficient_uuids()
+    {
+        EfficientUuidPost::create(['title' => 'first post', 'efficient_uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
+        EfficientUuidPost::create(['title' => 'second post', 'efficient_uuid' => 'c7c26456-ddb0-45cd-9b1c-318296cce7a3']);
+        EfficientUuidPost::create(['title' => 'third post', 'efficient_uuid' => 'e99d440e-fa25-45f2-ba2f-7c4c48f6fb5d']);
+
+        $uuids = [
+            '8ab48e77-d9cd-4fe7-ace5-A5A428590C18',
+            'c7c26456-ddb0-45cd-9b1c-318296cce7a3',
+        ];
+
+        $posts = EfficientUuidPost::whereNotUuid($uuids, 'efficient_uuid')->get();
+
+        $this->assertEquals(1, $posts->count());
+        $this->assertSame('e99d440e-fa25-45f2-ba2f-7c4c48f6fb5d', $posts->get(0)->efficient_uuid);
     }
 
     /** @test */
@@ -113,6 +161,24 @@ class UuidTest extends TestCase
     }
 
     /** @test */
+    public function you_can_exclude_by_array_of_uuids_for_custom_column()
+    {
+        CustomCastUuidPost::create(['title' => 'first post', 'custom_uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
+        CustomCastUuidPost::create(['title' => 'second post', 'custom_uuid' => 'c7c26456-ddb0-45cd-9b1c-318296cce7a3']);
+        CustomCastUuidPost::create(['title' => 'third post', 'custom_uuid' => 'e99d440e-fa25-45f2-ba2f-7c4c48f6fb5d']);
+
+        $uuids = [
+            '8ab48e77-d9cd-4fe7-ace5-A5A428590C18',
+            'c7c26456-ddb0-45cd-9b1c-318296cce7a3',
+        ];
+
+        $posts = CustomCastUuidPost::whereNotUuid($uuids, 'custom_uuid')->get();
+
+        $this->assertEquals(1, $posts->count());
+        $this->assertSame('e99d440e-fa25-45f2-ba2f-7c4c48f6fb5d', $posts->get(0)->custom_uuid);
+    }
+
+    /** @test */
     public function you_can_search_by_array_of_uuids_which_contains_an_invalid_uuid()
     {
         Post::create(['title' => 'first post', 'uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
@@ -123,6 +189,25 @@ class UuidTest extends TestCase
             'c7c26456-ddb0-45cd-9b1c-318296cce7a3',
             'this is invalid',
         ])->count());
+    }
+
+    /** @test */
+    public function you_can_exclude_by_array_of_uuids_which_contains_an_invalid_uuid()
+    {
+        Post::create(['title' => 'first post', 'uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
+        Post::create(['title' => 'second post', 'uuid' => 'c7c26456-ddb0-45cd-9b1c-318296cce7a3']);
+        Post::create(['title' => 'third post', 'uuid' => 'e99d440e-fa25-45f2-ba2f-7c4c48f6fb5d']);
+
+        $uuids = [
+            '8ab48e77-d9cd-4fe7-ace5-A5A428590C18',
+            'c7c26456-ddb0-45cd-9b1c-318296cce7a3',
+            'this is invalid',
+        ];
+
+        $posts = Post::whereNotUuid($uuids)->get();
+
+        $this->assertEquals(1, $posts->count());
+        $this->assertEquals('e99d440e-fa25-45f2-ba2f-7c4c48f6fb5d', $posts->get(0)->uuid);
     }
 
     /** @test */
@@ -165,6 +250,18 @@ class UuidTest extends TestCase
     }
 
     /** @test */
+    public function you_can_exclude_a_model_by_uuid_without_casting()
+    {
+        $uuid = 'b270f651-4db8-407b-aade-8666aca2750e';
+
+        UncastPost::create(['title' => 'test-post', 'uuid' => $uuid]);
+
+        $post = UncastPost::whereNotUuid($uuid)->first();
+
+        $this->assertNull($post);
+    }
+
+    /** @test */
     public function you_can_find_a_model_by_uuid_with_casting()
     {
         $uuid = 'b270f651-4db8-407b-aade-8666aca2750e';
@@ -175,6 +272,18 @@ class UuidTest extends TestCase
 
         $this->assertInstanceOf(EfficientUuidPost::class, $post);
         $this->assertSame($uuid, $post->uuid);
+    }
+
+    /** @test */
+    public function you_can_exclude_a_model_by_uuid_with_casting()
+    {
+        $uuid = 'b270f651-4db8-407b-aade-8666aca2750e';
+
+        EfficientUuidPost::create(['title' => 'efficient uuid', 'uuid' => $uuid]);
+
+        $post = EfficientUuidPost::whereNotUuid($uuid)->first();
+
+        $this->assertNull($post);
     }
 
     /** @test */
