@@ -122,7 +122,7 @@ trait GeneratesUuid
      */
     public function scopeWhereUuid($query, $uuid, $uuidColumn = null): Builder
     {
-        $uuidColumn = $this->guessUuidColumn($uuidColumn);
+        $uuidColumn = $this->getUuidColumn($uuidColumn);
         $uuid = $this->prepareUuid($uuid, $uuidColumn);
 
         return $query->whereIn(
@@ -140,7 +140,7 @@ trait GeneratesUuid
      */
     public function scopeWhereNotUuid($query, $uuid, $uuidColumn = null): Builder
     {
-        $uuidColumn = $this->guessUuidColumn($uuidColumn);
+        $uuidColumn = $this->getUuidColumn($uuidColumn);
         $uuid = $this->prepareUuid($uuid, $uuidColumn);
 
         return $query->whereNotIn(
@@ -185,14 +185,12 @@ trait GeneratesUuid
         return $uuid;
     }
 
-
     /**
      * Guess UUID column based on model configurations or given uuid column
      *
      * @param  ?string  $uuidColumn
-     * @return string
      */
-    protected function guessUuidColumn($uuidColumn = null): string
+    protected function getUuidColumn($uuidColumn = null): string
     {
         return ! is_null($uuidColumn) && in_array($uuidColumn, $this->uuidColumns())
             ? $uuidColumn
@@ -204,7 +202,6 @@ trait GeneratesUuid
      *
      * @param  string|array  $uuid
      * @param  string  $uuidColumn
-     * @return string|array
      */
     protected function prepareUuid($uuid, $uuidColumn): array|string
     {
