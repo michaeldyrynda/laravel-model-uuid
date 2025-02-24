@@ -23,7 +23,7 @@ If you require compatibility with `ramsey/uuid` >= 4.1, please use version >= 6.
 
 As of version 7.1.0 this package supports only UUID versions 1 (`uuid1`), 4 (`uuid4`), 6 (`uuid6` - ordered) and `ordered` ([Laravel's ordered UUID v4](https://laravel.com/docs/master/helpers#method-str-ordered-uuid)) and 7 (`uuid7`).
 
-This package supports Laravel 11 and PHP 8.2 as minimum.
+This package supports Laravel 11/12 and PHP 8.2 as minimum.
 
 ## Code Samples
 
