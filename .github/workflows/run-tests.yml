@@ -13,14 +13,14 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.3, 8.2]
-        laravel: ['12.0', ^11.15]
+        php: [8.4, 8.3, 8.2]
+        laravel: ['12.0']
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }}
 
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:8.0
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: model_uuid
