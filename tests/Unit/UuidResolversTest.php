@@ -4,6 +4,8 @@ namespace Tests\Unit;
 
 use Dyrynda\Database\Support\GeneratesUuid;
 use Mockery;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class UuidResolversTest extends TestCase
@@ -21,13 +23,11 @@ class UuidResolversTest extends TestCase
     }
 
     /**
-     * @test
-     *
      * @param  string  $version
      * @param  string  $resolved
-     *
-     * @dataProvider provider_for_it_handles_uuid_versions
      */
+    #[DataProvider('provider_for_it_handles_uuid_versions')]
+    #[Test]
     public function it_handles_uuid_versions($version, $resolved)
     {
         $generator = Mockery::mock(UuidTestClass::class)->makePartial();

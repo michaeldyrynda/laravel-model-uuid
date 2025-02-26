@@ -3,13 +3,14 @@
 namespace Tests\Feature;
 
 use Dyrynda\Database\Support\Rules\EfficientUuidExists;
+use PHPUnit\Framework\Attributes\Test;
 use Ramsey\Uuid\Uuid;
 use Tests\Fixtures\EfficientUuidPost;
 use Tests\TestCase;
 
 class EfficientUuidExistsRuleTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_passes_valid_existing_uuid()
     {
         /** @var \Tests\Fixtures\EfficientUuidPost $post */
@@ -20,7 +21,7 @@ class EfficientUuidExistsRuleTest extends TestCase
         $this->assertTrue($rule->passes('efficient_uuid', $post->efficient_uuid));
     }
 
-    /** @test */
+    #[Test]
     public function it_fails_on_non_existing_uuid()
     {
         $uuid = Uuid::uuid4();
@@ -30,7 +31,7 @@ class EfficientUuidExistsRuleTest extends TestCase
         $this->assertFalse($rule->passes('post_id', $uuid));
     }
 
-    /** @test */
+    #[Test]
     public function it_fails_on_any_non_uuid_invalid_strings()
     {
         $uuid = '1235123564354633';
@@ -40,7 +41,7 @@ class EfficientUuidExistsRuleTest extends TestCase
         $this->assertFalse($rule->passes('post_id', $uuid));
     }
 
-    /** @test */
+    #[Test]
     public function it_works_with_custom_uuid_column_name()
     {
         /** @var \Tests\Fixtures\EfficientUuidPost $post */

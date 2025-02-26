@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Ramsey\Uuid\Uuid;
 use Tests\Fixtures\Comment;
 use Tests\Fixtures\CustomCastUuidPost;
@@ -24,7 +26,7 @@ class UuidTest extends TestCase
 {
     use WithFaker;
 
-    /** @test */
+    #[Test]
     public function it_sets_the_uuid_when_creating_a_new_model()
     {
         $post = Post::create(['title' => 'Test post']);
@@ -32,7 +34,7 @@ class UuidTest extends TestCase
         $this->assertNotNull($post->uuid);
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_override_the_uuid_if_it_is_already_set()
     {
         $uuid = '24f6c768-6276-4f34-bfa1-e7c8ba9514ea';
@@ -42,7 +44,7 @@ class UuidTest extends TestCase
         $this->assertSame($uuid, $post->uuid);
     }
 
-    /** @test */
+    #[Test]
     public function you_can_find_a_model_by_its_uuid()
     {
         $uuid = '55635d83-10bc-424f-bf3f-395ea7a5b47f';
@@ -55,7 +57,7 @@ class UuidTest extends TestCase
         $this->assertSame($uuid, $post->uuid);
     }
 
-    /** @test */
+    #[Test]
     public function you_can_exclude_a_model_by_its_uuid()
     {
         $uuid = '55635d83-10bc-424f-bf3f-395ea7a5b47f';
@@ -67,7 +69,7 @@ class UuidTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function you_can_find_a_model_by_custom_uuid_parameter()
     {
         $uuid = '6499332d-25e1-4d75-bd92-c6ded0820fb3';
@@ -88,7 +90,7 @@ class UuidTest extends TestCase
         $this->assertSame($custom_uuid, $post3->custom_uuid);
     }
 
-    /** @test */
+    #[Test]
     public function you_can_search_by_array_of_uuids()
     {
         Post::create(['title' => 'first post', 'uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
@@ -100,7 +102,7 @@ class UuidTest extends TestCase
         ])->count());
     }
 
-    /** @test */
+    #[Test]
     public function you_can_exclude_by_array_of_uuids()
     {
         Post::create(['title' => 'first post', 'uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
@@ -118,7 +120,7 @@ class UuidTest extends TestCase
         $this->assertEquals('e99d440e-fa25-45f2-ba2f-7c4c48f6fb5d', $posts->get(0)->uuid);
     }
 
-    /** @test */
+    #[Test]
     public function you_can_search_by_array_of_efficient_uuids()
     {
         EfficientUuidPost::create(['title' => 'first post', 'efficient_uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
@@ -130,7 +132,7 @@ class UuidTest extends TestCase
         ], 'efficient_uuid')->count());
     }
 
-    /** @test */
+    #[Test]
     public function you_can_exclude_by_array_of_efficient_uuids()
     {
         EfficientUuidPost::create(['title' => 'first post', 'efficient_uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
@@ -148,7 +150,7 @@ class UuidTest extends TestCase
         $this->assertSame('e99d440e-fa25-45f2-ba2f-7c4c48f6fb5d', $posts->get(0)->efficient_uuid);
     }
 
-    /** @test */
+    #[Test]
     public function you_can_search_by_array_of_uuids_for_custom_column()
     {
         CustomCastUuidPost::create(['title' => 'first post', 'custom_uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
@@ -160,7 +162,7 @@ class UuidTest extends TestCase
         ], 'custom_uuid')->count());
     }
 
-    /** @test */
+    #[Test]
     public function you_can_exclude_by_array_of_uuids_for_custom_column()
     {
         CustomCastUuidPost::create(['title' => 'first post', 'custom_uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
@@ -178,7 +180,7 @@ class UuidTest extends TestCase
         $this->assertSame('e99d440e-fa25-45f2-ba2f-7c4c48f6fb5d', $posts->get(0)->custom_uuid);
     }
 
-    /** @test */
+    #[Test]
     public function you_can_search_by_array_of_uuids_which_contains_an_invalid_uuid()
     {
         Post::create(['title' => 'first post', 'uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
@@ -191,7 +193,7 @@ class UuidTest extends TestCase
         ])->count());
     }
 
-    /** @test */
+    #[Test]
     public function you_can_exclude_by_array_of_uuids_which_contains_an_invalid_uuid()
     {
         Post::create(['title' => 'first post', 'uuid' => '8ab48e77-d9cd-4fe7-ace5-a5a428590c18']);
@@ -210,7 +212,7 @@ class UuidTest extends TestCase
         $this->assertEquals('e99d440e-fa25-45f2-ba2f-7c4c48f6fb5d', $posts->get(0)->uuid);
     }
 
-    /** @test */
+    #[Test]
     public function you_can_generate_a_uuid_without_casting()
     {
         $post = UncastPost::create(['title' => 'test post']);
@@ -218,7 +220,7 @@ class UuidTest extends TestCase
         $this->assertNotNull($post->uuid);
     }
 
-    /** @test */
+    #[Test]
     public function you_can_generate_a_uuid_with_casting_and_a_custom_field_name()
     {
         $post = CustomCastUuidPost::create(['title' => 'test post']);
@@ -226,7 +228,7 @@ class UuidTest extends TestCase
         $this->assertNotNull($post->custom_uuid);
     }
 
-    /** @test */
+    #[Test]
     public function you_can_specify_a_uuid_without_casting()
     {
         $uuid = 'aa9832e0-5fea-492c-8fe2-6f2d1e209209';
@@ -236,7 +238,7 @@ class UuidTest extends TestCase
         $this->assertSame($uuid, $post->uuid);
     }
 
-    /** @test */
+    #[Test]
     public function you_can_find_a_model_by_uuid_without_casting()
     {
         $uuid = 'b270f651-4db8-407b-aade-8666aca2750e';
@@ -249,7 +251,7 @@ class UuidTest extends TestCase
         $this->assertSame($uuid, $post->uuid);
     }
 
-    /** @test */
+    #[Test]
     public function you_can_exclude_a_model_by_uuid_without_casting()
     {
         $uuid = 'b270f651-4db8-407b-aade-8666aca2750e';
@@ -261,7 +263,7 @@ class UuidTest extends TestCase
         $this->assertNull($post);
     }
 
-    /** @test */
+    #[Test]
     public function you_can_find_a_model_by_uuid_with_casting()
     {
         $uuid = 'b270f651-4db8-407b-aade-8666aca2750e';
@@ -274,7 +276,7 @@ class UuidTest extends TestCase
         $this->assertSame($uuid, $post->uuid);
     }
 
-    /** @test */
+    #[Test]
     public function you_can_exclude_a_model_by_uuid_with_casting()
     {
         $uuid = 'b270f651-4db8-407b-aade-8666aca2750e';
@@ -286,7 +288,7 @@ class UuidTest extends TestCase
         $this->assertNull($post);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_time_ordered_uuids()
     {
         $post = OrderedPost::create(['title' => 'test-post']);
@@ -295,7 +297,7 @@ class UuidTest extends TestCase
         $this->assertNotNull($post->uuid);
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_configurable_uuid_column_names()
     {
         $post = CustomUuidPost::create(['title' => 'test-post']);
@@ -303,11 +305,8 @@ class UuidTest extends TestCase
         $this->assertNotNull($post->custom_uuid);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider factoriesWithUuidProvider
-     */
+    #[DataProvider('factoriesWithUuidProvider')]
+    #[Test]
     public function it_handles_working_with_various_uuid_casts($model, $column)
     {
         tap(factory($model)->create(), function ($post) use ($column) {
@@ -315,7 +314,7 @@ class UuidTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_setting_an_efficient_uuid()
     {
         tap(EfficientUuidPost::create([
@@ -330,7 +329,7 @@ class UuidTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_an_invalid_uuid()
     {
         $uuid = 'b270f651-4db8-407b-aade-8666aca2750e';
@@ -342,7 +341,7 @@ class UuidTest extends TestCase
         EfficientUuidPost::whereUuid('invalid uuid')->firstOrFail();
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_a_null_uuid_column()
     {
         tap(Model::withoutEvents(function () {
@@ -355,7 +354,7 @@ class UuidTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_a_null_efficient_uuid_column()
     {
         tap(Model::withoutEvents(function () {
@@ -368,11 +367,8 @@ class UuidTest extends TestCase
         });
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider uuidVersionsProvider
-     */
+    #[DataProvider('uuidVersionsProvider')]
+    #[Test]
     public function it_handles_supported_uuid_versions($model, $version)
     {
         tap($model::create(['title' => 'test title']), function ($model) use ($version) {
@@ -380,7 +376,7 @@ class UuidTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_queries_with_multiple_uuid_columns()
     {
         $post = factory(Post::class)->create([

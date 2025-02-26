@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Illuminate\Database\Schema\Blueprint;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\Concerns\MocksDatabaseConnection;
 use Tests\TestCase;
 
@@ -10,6 +11,7 @@ class DatabasePostgresSchemaGrammarTest extends TestCase
 {
     use MocksDatabaseConnection;
 
+    #[Test]
     public function test_adding_uuid()
     {
         $blueprint = new Blueprint($this->mockConnection('Postgres'), 'users', function ($table) {
