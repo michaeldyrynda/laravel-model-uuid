@@ -119,7 +119,7 @@ trait GeneratesUuid
     /**
      * Scope queries to find by UUID.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  Builder  $query
      * @param  string|array  $uuid
      * @param  string  $uuidColumn
      */
@@ -137,7 +137,7 @@ trait GeneratesUuid
     /**
      * Scope queries to find by UUID.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  Builder  $query
      * @param  string|array  $uuid
      * @param  string  $uuidColumn
      */
@@ -155,7 +155,7 @@ trait GeneratesUuid
     /**
      * Convert a single UUID or array of UUIDs to bytes.
      *
-     * @param  \Illuminate\Contracts\Support\Arrayable|array|string  $uuid
+     * @param  Arrayable|array|string  $uuid
      */
     protected function bytesFromUuid($uuid): array
     {
@@ -173,7 +173,7 @@ trait GeneratesUuid
     /**
      * Normalises a single or array of input UUIDs, filtering any invalid UUIDs.
      *
-     * @param  \Illuminate\Contracts\Support\Arrayable|array|string  $uuid
+     * @param  Arrayable|array|string  $uuid
      */
     protected function normaliseUuids($uuid): array
     {

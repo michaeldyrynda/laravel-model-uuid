@@ -2,12 +2,13 @@
 
 namespace Dyrynda\Database\Support\Rules;
 
+use Dyrynda\Database\Support\GeneratesUuid;
 use Illuminate\Contracts\Validation\Rule;
 use Ramsey\Uuid\Uuid;
 
 class EfficientUuidExists implements Rule
 {
-    /** @var \Dyrynda\Database\Support\GeneratesUuid */
+    /** @var GeneratesUuid */
     protected $model;
 
     /** @var string */

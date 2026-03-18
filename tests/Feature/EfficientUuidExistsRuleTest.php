@@ -13,7 +13,7 @@ class EfficientUuidExistsRuleTest extends TestCase
     #[Test]
     public function it_passes_valid_existing_uuid()
     {
-        /** @var \Tests\Fixtures\EfficientUuidPost $post */
+        /** @var EfficientUuidPost $post */
         $post = factory(EfficientUuidPost::class)->create();
 
         $rule = new EfficientUuidExists(EfficientUuidPost::class, 'efficient_uuid');
@@ -44,7 +44,7 @@ class EfficientUuidExistsRuleTest extends TestCase
     #[Test]
     public function it_works_with_custom_uuid_column_name()
     {
-        /** @var \Tests\Fixtures\EfficientUuidPost $post */
+        /** @var EfficientUuidPost $post */
         $post = factory(EfficientUuidPost::class)->create();
 
         $rule = new EfficientUuidExists(EfficientUuidPost::class, 'custom_efficient_uuid');

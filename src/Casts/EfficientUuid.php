@@ -3,6 +3,7 @@
 namespace Dyrynda\Database\Support\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 
 class EfficientUuid implements CastsAttributes
@@ -10,7 +11,7 @@ class EfficientUuid implements CastsAttributes
     /**
      * Transform the attribute from the underlying model values.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  Model  $model
      * @param  mixed  $value
      * @return mixed
      */
@@ -26,7 +27,7 @@ class EfficientUuid implements CastsAttributes
     /**
      * Transform the attribute to its underlying model values.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  Model  $model
      * @param  mixed  $value
      * @return array
      */

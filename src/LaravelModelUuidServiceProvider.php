@@ -35,7 +35,7 @@ class LaravelModelUuidServiceProvider extends PackageServiceProvider
         });
 
         Blueprint::macro('efficientUuid', function ($column): ColumnDefinition {
-            /** @var \Illuminate\Database\Schema\Blueprint $this */
+            /** @var Blueprint $this */
             return $this->addColumn('efficientUuid', $column);
         });
     }
