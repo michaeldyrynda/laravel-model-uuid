@@ -218,6 +218,97 @@ public function boot()
 }
 ```
 
+## Binary UUID relationships
+
+When using binary UUID storage (`EfficientUuid` cast with `BINARY(16)` columns), Eloquent relationships don't work out of the box because Laravel passes string UUID values in queries, which don't match the binary data stored in the database.
+
+The `UsesBinaryUuidBuilder` trait solves this by providing a custom query builder that automatically converts UUID strings to binary when querying columns that use the `EfficientUuid` cast. This enables `belongsTo`, `hasMany`, `hasOne`, eager loading, and other relationship operations to work transparently.
+
+To enable this, add the `UsesBinaryUuidBuilder` trait to **each model** in the relationship chain that uses binary UUID columns:
+
+```php
+<?php
+
+namespace App;
+
+use Dyrynda\Database\Support\Casts\EfficientUuid;
+use Dyrynda\Database\Support\GeneratesUuid;
+use Dyrynda\Database\Support\UsesBinaryUuidBuilder;
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    use GeneratesUuid, UsesBinaryUuidBuilder;
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    public function uuidColumn(): string
+    {
+        return 'id';
+    }
+
+    protected $casts = [
+        'id' => EfficientUuid::class,
+    ];
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+}
+```
+
+```php
+<?php
+
+namespace App;
+
+use Dyrynda\Database\Support\Casts\EfficientUuid;
+use Dyrynda\Database\Support\GeneratesUuid;
+use Dyrynda\Database\Support\UsesBinaryUuidBuilder;
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    use GeneratesUuid, UsesBinaryUuidBuilder;
+
+    public function uuidColumns(): array
+    {
+        return ['user_id'];
+    }
+
+    protected $casts = [
+        'user_id' => EfficientUuid::class,
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
+```
+
+With these traits in place, all standard Eloquent relationship operations work transparently:
+
+```php
+// Eager loading
+$posts = Post::with('user')->get();
+
+// Lazy loading
+$user = $post->user;
+$posts = $user->posts;
+
+// Standard where clauses on binary UUID columns
+$user = User::where('id', $uuid)->first();
+
+// Relationship existence queries
+$usersWithPosts = User::whereHas('posts')->get();
+```
+
+**Note:** The `UsesBinaryUuidBuilder` trait is opt-in and must be added to every model in the relationship chain that stores UUIDs as binary. Without it on both sides, relationship queries will fail to match records because UUID strings won't be converted to binary format for comparison.
+
 ## Installation
 
 This package is installed via [Composer](https://getcomposer.org/). To install, run the following command.
