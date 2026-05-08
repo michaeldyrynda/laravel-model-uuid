@@ -15,6 +15,10 @@ trait BindsOnUuid
      */
     public function resolveRouteBinding($value, $field = null): Model
     {
+        if (! is_null($field) && ! in_array($field, $this->uuidColumns())) {
+            return parent::resolveRouteBinding($value, $field);
+        }
+
         return self::whereUuid($value, $field)->firstOrFail();
     }
 
