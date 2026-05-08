@@ -75,3 +75,14 @@ it('fails on invalid uuid when custom route key used', function () {
     get("/posts/{$post->uuid}")->assertNotFound();
     get(route('posts.show', $post->uuid))->assertNotFound();
 });
+
+it('bypasses uuid binding when explicit non uuid route key is used', function () {
+    $post = factory(MultipleUuidRouteBoundPost::class)->create();
+
+    Route::middleware(SubstituteBindings::class)->get('/posts/{post:id}', function (MultipleUuidRouteBoundPost $post) {
+        return $post;
+    })->name('posts.show');
+
+    get("/posts/{$post->id}")->assertSuccessful();
+    get(route('posts.show', $post->id))->assertSuccessful();
+});
